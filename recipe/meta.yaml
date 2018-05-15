@@ -1,4 +1,4 @@
-{% set build = 0 %}
+{% set build = 1 %}
 {% set name = "lammps" %}
 {% set version = "stable_16Mar2018" %}
 {% set sha256 = "03f91d69f472c37a4008611dee13fad91b6bedc66dbf0393416cdacc751b57ff" %}
