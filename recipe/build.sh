@@ -17,6 +17,7 @@ cd ..
 
 # Parallel
 export LDFLAGS="-L$PREFIX/lib -lmpi $LDFLAGS"
+rm CMakeCache.txt 
 cmake ./cmake $args  
 make -j${NUM_CPUS}
 cp lmp $PREFIX/bin/lmp_mpi
