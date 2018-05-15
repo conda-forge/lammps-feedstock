@@ -18,4 +18,4 @@ make
 cd ./python
 python install.py # the installation currently fails because the library file liblammps.so does not exist!
 cd ..
-# cp liblammps.so ${SP_DIR} 
+cp lib/liblammps.so ${SP_DIR} 
