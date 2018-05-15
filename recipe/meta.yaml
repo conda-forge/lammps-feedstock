@@ -19,7 +19,7 @@ source:
 
 build:
   number: {{ build }}
-  string: {{pyver}}_{{ mpi }}_{{ build }}
+  string: {{ pyver }}_{{ mpi }}_{{ build }}
   skip: True  # [win]
 
 requirements:
