@@ -10,7 +10,7 @@ cp lmp $PREFIX/bin/lmp
 # Library
 cmake -DBUILD_SHARED_LIBS=ON ./cmake $args  
 make
-cp liblammps.so src  # For compatibility with the original make system.
+cp liblammps.* src  # For compatibility with the original make system.
 cd ./python
 python install.py 
 cd ..
