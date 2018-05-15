@@ -39,6 +39,7 @@ docker run -it \
            -e CONFIG \
            -e BINSTAR_TOKEN \
            -e HOST_USER_ID \
+           -e MPI_VARIANT="${MPI_VARIANT}" \
            condaforge/linux-anvil \
            bash \
            /home/conda/feedstock_root/.circleci/build_steps.sh
