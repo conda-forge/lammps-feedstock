@@ -18,3 +18,4 @@ make
 cd ./python
 python install.py
 cd ..
+cp liblammps.so ${SP_DIR} 
