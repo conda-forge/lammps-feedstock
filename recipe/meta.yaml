@@ -6,7 +6,6 @@
 {% set conda_version = "{:%Y.%m.%d}".format(date) %}
 {% set mpi = os.environ.get('MPI_VARIANT', 'mpich') %}
 {% set mpi_version = {'mpich': '3.2.*', 'openmpi': '3.0.*'}[mpi] %}
-{% set condapy = os.environ.get('CONDA_PY') %}
 
 package:
   name: {{ name|lower }}
@@ -19,7 +18,7 @@ source:
 
 build:
   number: {{ build }}
-  string: py{{ condapy }}_{{ mpi }}_{{ build }}
+  string: {{ mpi }}_{{ build }}
   skip: True  # [win]
 
 requirements:
