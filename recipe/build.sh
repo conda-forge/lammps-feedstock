@@ -6,11 +6,13 @@ args="-DENABLE_ASPHERE=ON -DENABLE_BODY=ON -DENABLE_CLASS2=ON -DENABLE_COLLOID=O
 cmake -DBUILD_MPI=ON ./cmake $args  
 make
 cp lmp $PREFIX/bin/lmp_mpi
+rm CMakeCache.txt 
 
 # serial 
 cmake ./cmake $args 
 make 
 cp lmp $PREFIX/bin/lmp_serial
+rm CMakeCache.txt
 
 # Library
 cmake -DBUILD_SHARED_LIBS=ON ./cmake $args  
@@ -19,3 +21,4 @@ cd ./python
 python install.py # the installation currently fails because the library file liblammps.so does not exist!
 cd ..
 cp liblammps.so ${SP_DIR} 
+rm CMakeCache.txt
