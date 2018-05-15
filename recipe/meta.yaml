@@ -44,8 +44,7 @@ test:
   imports:
     - lammps
   commands: 
-    - lmp_serial -help > help_serial.txt
-    - lmp_mpi -help > help_mpi.txt
+    - lmp -help > help_mpi.txt
 
 about:
   home: http://lammps.sandia.gov
