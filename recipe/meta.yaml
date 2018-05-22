@@ -1,12 +1,9 @@
-{% set build = 0 %}
+{% set build = 1 %}
 {% set name = "lammps" %}
 {% set version = "stable_16Mar2018" %}
 {% set sha256 = "03f91d69f472c37a4008611dee13fad91b6bedc66dbf0393416cdacc751b57ff" %}
 {% set date = datetime.datetime.strptime(version.split('_')[1], "%d%b%Y") %}
 {% set conda_version = "{:%Y.%m.%d}".format(date) %}
-{% set mpi = os.environ.get('MPI_VARIANT', 'mpich') %}
-{% set mpi_version = {'mpich': '3.2.*', 'openmpi': '3.0.*'}[mpi] %}
-{% set build_string = "py{}_{}_{}".format(environ.get('CONDA_PY', ''), mpi, build) %}
 
 package:
   name: {{ name|lower }}
@@ -19,7 +16,6 @@ source:
 
 build:
   number: {{ build }}
-  string: {{ build_string }}
   skip: True  # [win]
 
 requirements:
@@ -29,17 +25,17 @@ requirements:
     - {{ compiler('fortran') }}
     - cmake
     - make 
-  
   host:
     - python
     - setuptools
-    - {{ mpi }} {{ mpi_version }}
     - zlib
-
+    - openmpi {{ openmpi }}  # [mpi == "openmpi"]
+    - mpich   {{ mpich }}    # [mpi == "mpich"]
   run:
     - python
-    - {{ mpi }} {{ mpi_version }}
     - zlib
+    - openmpi {{ openmpi }}  # [mpi == "openmpi"]
+    - mpich   {{ mpich }}    # [mpi == "mpich"]
 
 test:
   imports:
@@ -50,7 +46,7 @@ test:
 
 about:
   home: http://lammps.sandia.gov
-  license: GPL-2.0
+  license: "GPL-2.0"
   license_family: GPL
   license_file: '{{ environ["RECIPE_DIR"] }}/LICENSE'
   summary: 'LAMMPS stands for Large-scale Atomic/Molecular Massively Parallel Simulator.'
