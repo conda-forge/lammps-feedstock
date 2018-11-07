@@ -45,6 +45,7 @@ test:
   imports:
     - lammps
   commands: 
+    - python -m 'import lammps; lammps.lammps()'
     - lmp_serial -help > help_serial.txt
     - # mpiexec -n 1 lmp_mpi -help > help_mpi.txt
 
