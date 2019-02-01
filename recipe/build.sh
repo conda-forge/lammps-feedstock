@@ -25,7 +25,7 @@ cd ..
 export LDFLAGS="-L$PREFIX/lib -lmpi $LDFLAGS"
 mkdir build_mpi
 cd build_mpi
-cmake ../cmake $args -DBUILD_MPI=ON 
+cmake -D BUILD_MPI=ON $args ../cmake 
 make # -j${NUM_CPUS}
 cp lmp $PREFIX/bin/lmp_mpi
 cd ..
