@@ -1,0 +1,30 @@
+build_number_decrement:
+- '0'
+c_compiler:
+- gcc
+cxx_compiler:
+- gxx
+fortran_compiler:
+- gfortran
+channel_sources:
+- conda-forge/label/gcc7,defaults
+channel_targets:
+- conda-forge gcc7
+docker_image:
+- condaforge/linux-anvil-comp7
+mpi:
+- mpich
+pin_run_as_build:
+  python:
+    min_pin: x.x
+    max_pin: x.x
+python:
+- '3.6'
+zip_keys:
+- - c_compiler
+  - cxx_compiler
+  - fortran_compiler
+  - channel_sources
+  - channel_targets
+  - docker_image
+  - build_number_decrement
