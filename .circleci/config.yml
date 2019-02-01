@@ -15,7 +15,7 @@ jobs:
             ./.circleci/fast_finish_ci_pr_build.sh
             ./.circleci/checkout_merge_commit.sh
       - run:
-          command: docker pull condaforge/linux-anvil
+          command: docker pull condaforge/linux-anvil-comp7
       - run:
           name: Print conda-build environment variables
           command: |
@@ -37,7 +37,7 @@ jobs:
             ./.circleci/fast_finish_ci_pr_build.sh
             ./.circleci/checkout_merge_commit.sh
       - run:
-          command: docker pull condaforge/linux-anvil
+          command: docker pull condaforge/linux-anvil-comp7
       - run:
           name: Print conda-build environment variables
           command: |
@@ -59,7 +59,7 @@ jobs:
             ./.circleci/fast_finish_ci_pr_build.sh
             ./.circleci/checkout_merge_commit.sh
       - run:
-          command: docker pull condaforge/linux-anvil
+          command: docker pull condaforge/linux-anvil-comp7
       - run:
           name: Print conda-build environment variables
           command: |
@@ -81,7 +81,7 @@ jobs:
             ./.circleci/fast_finish_ci_pr_build.sh
             ./.circleci/checkout_merge_commit.sh
       - run:
-          command: docker pull condaforge/linux-anvil
+          command: docker pull condaforge/linux-anvil-comp7
       - run:
           name: Print conda-build environment variables
           command: |
@@ -103,7 +103,7 @@ jobs:
             ./.circleci/fast_finish_ci_pr_build.sh
             ./.circleci/checkout_merge_commit.sh
       - run:
-          command: docker pull condaforge/linux-anvil
+          command: docker pull condaforge/linux-anvil-comp7
       - run:
           name: Print conda-build environment variables
           command: |
@@ -125,7 +125,7 @@ jobs:
             ./.circleci/fast_finish_ci_pr_build.sh
             ./.circleci/checkout_merge_commit.sh
       - run:
-          command: docker pull condaforge/linux-anvil
+          command: docker pull condaforge/linux-anvil-comp7
       - run:
           name: Print conda-build environment variables
           command: |

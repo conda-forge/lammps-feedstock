@@ -5,11 +5,9 @@ channel_sources:
 channel_targets:
 - conda-forge main
 docker_image:
-- condaforge/linux-anvil
+- condaforge/linux-anvil-comp7
 c_compiler:
 - toolchain_c
-cxx_compiler:
-- toolchain_cxx
 fortran_compiler:
 - toolchain_fort
 pin_run_as_build:
