@@ -216,9 +216,9 @@ workflows:
       - build_linux_c_compilergccmpiopenmpipython2.7
       - build_linux_c_compilergccmpiopenmpipython3.6
       - build_linux_c_compilergccmpiopenmpipython3.7
-      - build_linux_c_compilertoolchain_cmpimpichpython2.7
-      - build_linux_c_compilertoolchain_cmpimpichpython3.6
-      - build_linux_c_compilertoolchain_cmpimpichpython3.7
-      - build_linux_c_compilertoolchain_cmpiopenmpipython2.7
-      - build_linux_c_compilertoolchain_cmpiopenmpipython3.6
-      - build_linux_c_compilertoolchain_cmpiopenmpipython3.7
+      # - build_linux_c_compilertoolchain_cmpimpichpython2.7
+      # - build_linux_c_compilertoolchain_cmpimpichpython3.6
+      # - build_linux_c_compilertoolchain_cmpimpichpython3.7
+      # - build_linux_c_compilertoolchain_cmpiopenmpipython2.7
+      # - build_linux_c_compilertoolchain_cmpiopenmpipython3.6
+      # - build_linux_c_compilertoolchain_cmpiopenmpipython3.7
