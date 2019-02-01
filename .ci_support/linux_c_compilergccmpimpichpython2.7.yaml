@@ -22,6 +22,8 @@ python:
 - '2.7'
 zip_keys:
 - - c_compiler
+  - cxx_compiler
+  - fortran_compiler
   - channel_sources
   - channel_targets
   - docker_image
