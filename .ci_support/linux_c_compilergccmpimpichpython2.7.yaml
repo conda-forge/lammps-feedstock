@@ -11,7 +11,7 @@ channel_sources:
 channel_targets:
 - conda-forge gcc7
 docker_image:
-- conda/c3i-linux-64
+- condaforge/linux-anvil-comp7
 mpi:
 - mpich
 pin_run_as_build:
