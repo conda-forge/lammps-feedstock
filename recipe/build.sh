@@ -14,7 +14,7 @@ cd ..
 # Library
 mkdir build_lib
 cd build_lib
-cmake -D BUILD_LIB=ON $args ../cmake 
+cmake -D BUILD_LIB=ON -D BUILD_SHARED_LIBS=ON $args ../cmake 
 make # -j${NUM_CPUS}
 cp liblammps.* ../src  # For compatibility with the original make system.
 cd ../python
