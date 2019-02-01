@@ -8,7 +8,7 @@ args="-D PKG_KSPACE=ON -D PKG_MANYBODY=ON -D PKG_MOLECULE=ON"
 mkdir build_serial
 cd build_serial
 cmake $args ../cmake 
-make -j${NUM_CPUS}
+make # -j${NUM_CPUS}
 cp lmp $PREFIX/bin/lmp_serial
 cd ..
 
@@ -16,7 +16,7 @@ cd ..
 mkdir build_lib
 cd build_lib
 cmake -DBUILD_SHARED_LIBS=ON $args ../cmake 
-make -j${NUM_CPUS}
+make # -j${NUM_CPUS}
 cp liblammps.* ../src  # For compatibility with the original make system.
 cd ../python
 python install.py 
@@ -27,6 +27,6 @@ export LDFLAGS="-L$PREFIX/lib -lmpi $LDFLAGS"
 mkdir build_mpi
 cd build_mpi
 cmake ../cmake $args -DBUILD_MPI=ON 
-make -j${NUM_CPUS}
+make # -j${NUM_CPUS}
 cp lmp $PREFIX/bin/lmp_mpi
 cd ..
