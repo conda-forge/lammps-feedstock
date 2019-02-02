@@ -11,7 +11,7 @@ fortran_compiler:
 channel_sources:
 - conda-forge/label/gcc7,defaults
 channel_targets:
-- conda-forge gcc7
+- conda-forge main
 macos_machine:
 - x86_64-apple-darwin13.4.0
 macos_min_version:
@@ -30,4 +30,5 @@ zip_keys:
   - fortran_compiler
   - channel_sources
   - channel_targets
+  - mpi
   - build_number_decrement
