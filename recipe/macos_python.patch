@@ -1,0 +1,16 @@
+fix liblammps for Mac Os X
+author: Jan Janssen (MPIE)
+--- lammps-stable_12Dec2018/python/install.py.orig	2018-12-11 18:39:04.000000000 +0100
++++ lammps-stable_12Dec2018/python/install.py	2019-02-02 13:21:56.929765000 +0100
+@@ -36,7 +36,10 @@
+   str = "cp ../src/liblammps.so %s" % pydir
+   print(str)
+   try:
+-     shutil.copyfile("../src/liblammps.so", os.path.join(pydir,"liblammps.so") )
++     if sys.platform == 'darwin':
++       shutil.copyfile("../src/liblammps.dylib", os.path.join(pydir,"liblammps.dylib") )
++     else:
++       shutil.copyfile("../src/liblammps.so", os.path.join(pydir,"liblammps.so") )
+   except shutil.Error:
+     pass # source and destination are identical
+   sys.exit()
