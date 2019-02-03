@@ -17,18 +17,6 @@ jobs:
         CONFIG: osx_c_compilerclangmpimpichpython3.7
         CF_MAX_PY_VER: 37
         MPI_VARIANT: mpich
-      osx_c_compilerclangmpiopenmpipython2.7:
-        CONFIG: osx_c_compilerclangmpimpichpython2.7
-        CF_MAX_PY_VER: 27
-        MPI_VARIANT: openmpi
-      osx_c_compilerclangmpiopenmpipython3.6:
-        CONFIG: osx_c_compilerclangmpimpichpython3.6
-        CF_MAX_PY_VER: 36
-        MPI_VARIANT: openmpi
-      osx_c_compilerclangmpiopenmpipython3.7:
-        CONFIG: osx_c_compilerclangmpimpichpython3.7
-        CF_MAX_PY_VER: 37
-        MPI_VARIANT: openmpi
   timeoutInMinutes: 240
   steps:
   # TODO: Fast finish on azure pipelines?

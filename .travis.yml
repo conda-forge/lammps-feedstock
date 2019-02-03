@@ -11,9 +11,6 @@ env:
     - CONFIG=osx_c_compilerclangmpimpichpython2.7 MPI_VARIANT=mpich
     - CONFIG=osx_c_compilerclangmpimpichpython3.6 MPI_VARIANT=mpich
     - CONFIG=osx_c_compilerclangmpimpichpython3.7 MPI_VARIANT=mpich
-    - CONFIG=osx_c_compilerclangmpiopenmpipython2.7 MPI_VARIANT=openmpi
-    - CONFIG=osx_c_compilerclangmpiopenmpipython3.6 MPI_VARIANT=openmpi
-    - CONFIG=osx_c_compilerclangmpiopenmpipython3.7 MPI_VARIANT=openmpi
 
   global:
     # The BINSTAR_TOKEN secure variable. This is defined canonically in conda-forge.yml.
