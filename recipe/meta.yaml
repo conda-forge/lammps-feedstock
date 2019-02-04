@@ -1,4 +1,4 @@
-{% set build = 1 %}
+{% set build = 2 %}
 {% set name = "lammps" %}
 {% set version = "stable_12Dec2018" %}
 {% set sha256 = "643eaf2c677e2590e04df2b5be72acaa19007cb34992efe82d0e5beb79b9c865" %}
@@ -17,7 +17,8 @@ source:
   url: https://github.com/lammps/lammps/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
   patches:
-    - macos_python.patch
+    - macos_python_install.patch
+    - macos_python_lammps.patch
 
 build:
   number: {{ build }}
@@ -50,7 +51,7 @@ test:
     - lammps
   commands: 
     - lmp_serial -help > help_serial.txt
-    - mpiexec -n 1 lmp_mpi -help > help_mpi.txt
+    - mpiexec -n 1 lmp_mpi -help > help_mpi.txt  # [mpi == 'mpich']
 
 about:
   home: http://lammps.sandia.gov

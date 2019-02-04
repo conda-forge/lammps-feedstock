@@ -6,7 +6,7 @@ args="-D PKG_ASPHERE=ON -DPKG_BODY=ON -D PKG_CLASS2=ON -D PKG_COLLOID=ON -D PKG_
 # Serial
 mkdir build_serial
 cd build_serial
-cmake $args ../cmake 
+cmake -D BUILD_MPI=OFF -D BUILD_OMP=OFF $args ../cmake
 make # -j${NUM_CPUS}
 cp lmp $PREFIX/bin/lmp_serial
 cd ..
@@ -14,7 +14,7 @@ cd ..
 # Library
 mkdir build_lib
 cd build_lib
-cmake -D BUILD_LIB=ON -D BUILD_SHARED_LIBS=ON $args ../cmake 
+cmake -D BUILD_LIB=ON -D BUILD_SHARED_LIBS=ON -D BUILD_MPI=OFF -D BUILD_OMP=OFF $args ../cmake
 make # -j${NUM_CPUS}
 cp liblammps.* ../src  # For compatibility with the original make system.
 cd ../python
