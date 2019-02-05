@@ -1,4 +1,4 @@
-mpi:
+MPI_VARIANT:
 - mpich
 - openmpi
 python:
