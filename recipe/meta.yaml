@@ -19,7 +19,6 @@ source:
 
 build:
   number: {{ build }}
-  string: {{ build_string }}
   skip: True  # [win]
 
 requirements:
