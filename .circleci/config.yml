@@ -1,12 +1,15 @@
+# This file was generated automatically from conda-smithy. To update this configuration,
+# update the conda-forge.yml and/or the recipe/meta.yaml.
+# -*- mode: yaml -*-
+
 version: 2
 
 jobs:
-  build_linux_c_compilergccmpimpichpython2.7:
+  build_linux_mpimpichpython2.7:
     working_directory: ~/test
     machine: true
     environment:
-      - CONFIG: "linux_c_compilergccmpimpichpython2.7"
-      - MPI_VARIANT: "mpich"
+      - CONFIG: "linux_mpimpichpython2.7"
     steps:
       - checkout
       - run:
@@ -16,19 +19,14 @@ jobs:
             ./.circleci/checkout_merge_commit.sh
       - run:
           command: docker pull condaforge/linux-anvil-comp7
-      - run:
-          name: Print conda-build environment variables
-          command: |
-            echo "MPI_VARIANT=${MPI_VARIANT}"
       - run:
           # Run, test and (if we have a BINSTAR_TOKEN) upload the distributions.
           command: ./.circleci/run_docker_build.sh
-  build_linux_c_compilergccmpimpichpython3.6:
+  build_linux_mpimpichpython3.6:
     working_directory: ~/test
     machine: true
     environment:
-      - CONFIG: "linux_c_compilergccmpimpichpython3.6"
-      - MPI_VARIANT: "mpich"
+      - CONFIG: "linux_mpimpichpython3.6"
     steps:
       - checkout
       - run:
@@ -38,19 +36,14 @@ jobs:
             ./.circleci/checkout_merge_commit.sh
       - run:
           command: docker pull condaforge/linux-anvil-comp7
-      - run:
-          name: Print conda-build environment variables
-          command: |
-            echo "MPI_VARIANT=${MPI_VARIANT}"
       - run:
           # Run, test and (if we have a BINSTAR_TOKEN) upload the distributions.
           command: ./.circleci/run_docker_build.sh
-  build_linux_c_compilergccmpimpichpython3.7:
+  build_linux_mpimpichpython3.7:
     working_directory: ~/test
     machine: true
     environment:
-      - CONFIG: "linux_c_compilergccmpimpichpython3.7"
-      - MPI_VARIANT: "mpich"
+      - CONFIG: "linux_mpimpichpython3.7"
     steps:
       - checkout
       - run:
@@ -60,19 +53,14 @@ jobs:
             ./.circleci/checkout_merge_commit.sh
       - run:
           command: docker pull condaforge/linux-anvil-comp7
-      - run:
-          name: Print conda-build environment variables
-          command: |
-            echo "MPI_VARIANT=${MPI_VARIANT}"
       - run:
           # Run, test and (if we have a BINSTAR_TOKEN) upload the distributions.
           command: ./.circleci/run_docker_build.sh
-  build_linux_c_compilergccmpiopenmpipython2.7:
+  build_linux_mpiopenmpipython2.7:
     working_directory: ~/test
     machine: true
     environment:
-      - CONFIG: "linux_c_compilergccmpiopenmpipython2.7"
-      - MPI_VARIANT: "openmpi"
+      - CONFIG: "linux_mpiopenmpipython2.7"
     steps:
       - checkout
       - run:
@@ -82,19 +70,14 @@ jobs:
             ./.circleci/checkout_merge_commit.sh
       - run:
           command: docker pull condaforge/linux-anvil-comp7
-      - run:
-          name: Print conda-build environment variables
-          command: |
-            echo "MPI_VARIANT=${MPI_VARIANT}"
       - run:
           # Run, test and (if we have a BINSTAR_TOKEN) upload the distributions.
           command: ./.circleci/run_docker_build.sh
-  build_linux_c_compilergccmpiopenmpipython3.6:
+  build_linux_mpiopenmpipython3.6:
     working_directory: ~/test
     machine: true
     environment:
-      - CONFIG: "linux_c_compilergccmpiopenmpipython3.6"
-      - MPI_VARIANT: "openmpi"
+      - CONFIG: "linux_mpiopenmpipython3.6"
     steps:
       - checkout
       - run:
@@ -104,19 +87,14 @@ jobs:
             ./.circleci/checkout_merge_commit.sh
       - run:
           command: docker pull condaforge/linux-anvil-comp7
-      - run:
-          name: Print conda-build environment variables
-          command: |
-            echo "MPI_VARIANT=${MPI_VARIANT}"
       - run:
           # Run, test and (if we have a BINSTAR_TOKEN) upload the distributions.
           command: ./.circleci/run_docker_build.sh
-  build_linux_c_compilergccmpiopenmpipython3.7:
+  build_linux_mpiopenmpipython3.7:
     working_directory: ~/test
     machine: true
     environment:
-      - CONFIG: "linux_c_compilergccmpiopenmpipython3.7"
-      - MPI_VARIANT: "openmpi"
+      - CONFIG: "linux_mpiopenmpipython3.7"
     steps:
       - checkout
       - run:
@@ -126,10 +104,6 @@ jobs:
             ./.circleci/checkout_merge_commit.sh
       - run:
           command: docker pull condaforge/linux-anvil-comp7
-      - run:
-          name: Print conda-build environment variables
-          command: |
-            echo "MPI_VARIANT=${MPI_VARIANT}"
       - run:
           # Run, test and (if we have a BINSTAR_TOKEN) upload the distributions.
           command: ./.circleci/run_docker_build.sh
@@ -138,9 +112,9 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - build_linux_c_compilergccmpimpichpython2.7
-      - build_linux_c_compilergccmpimpichpython3.6
-      - build_linux_c_compilergccmpimpichpython3.7
-      - build_linux_c_compilergccmpiopenmpipython2.7
-      - build_linux_c_compilergccmpiopenmpipython3.6
-      - build_linux_c_compilergccmpiopenmpipython3.7
+      - build_linux_mpimpichpython2.7
+      - build_linux_mpimpichpython3.6
+      - build_linux_mpimpichpython3.7
+      - build_linux_mpiopenmpipython2.7
+      - build_linux_mpiopenmpipython3.6
+      - build_linux_mpiopenmpipython3.7

@@ -10,30 +10,24 @@ jobs:
   strategy:
     maxParallel: 8
     matrix:
-      linux_c_compilergccmpimpichpython2.7:
-        CONFIG: linux_c_compilergccmpimpichpython2.7
+      linux_mpimpichpython2.7:
+        CONFIG: linux_mpimpichpython2.7
         UPLOAD_PACKAGES: False
-        MPI_VARIANT: mpich
-      linux_c_compilergccmpimpichpython3.6:
-        CONFIG: linux_c_compilergccmpimpichpython3.6
+      linux_mpimpichpython3.6:
+        CONFIG: linux_mpimpichpython3.6
         UPLOAD_PACKAGES: False
-        MPI_VARIANT: mpich
-      linux_c_compilergccmpimpichpython3.7:
-        CONFIG: linux_c_compilergccmpimpichpython3.7
+      linux_mpimpichpython3.7:
+        CONFIG: linux_mpimpichpython3.7
         UPLOAD_PACKAGES: False
-        MPI_VARIANT: mpich
-      linux_c_compilergccmpiopenmpipython2.7:
-        CONFIG: linux_c_compilergccmpimpichpython2.7
+      linux_mpiopenmpipython2.7:
+        CONFIG: linux_mpiopenmpipython2.7
         UPLOAD_PACKAGES: False
-        MPI_VARIANT: openmpi
-      linux_c_compilergccmpiopenmpipython3.6:
-        CONFIG: linux_c_compilergccmpimpichpython3.6
+      linux_mpiopenmpipython3.6:
+        CONFIG: linux_mpiopenmpipython3.6
         UPLOAD_PACKAGES: False
-        MPI_VARIANT: openmpi
-      linux_c_compilergccmpiopenmpipython3.7:
-        CONFIG: linux_c_compilergccmpimpichpython3.7
+      linux_mpiopenmpipython3.7:
+        CONFIG: linux_mpiopenmpipython3.7
         UPLOAD_PACKAGES: False
-        MPI_VARIANT: openmpi
   steps:
   - script: |
       sudo pip install --upgrade pip
