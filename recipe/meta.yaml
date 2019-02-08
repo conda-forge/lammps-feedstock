@@ -37,12 +37,14 @@ requirements:
     - {{ mpi }}
     - zlib
     - fftw
+    - libpng
 
   run:
     - python
     - {{ mpi }}
     - zlib
     - fftw
+    - libpng
 
 test:
   imports:
