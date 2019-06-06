@@ -14,9 +14,6 @@ source:
   fn: {{ name }}-{{ conda_version }}.tar.gz
   url: https://github.com/lammps/lammps/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    - macos_python_install.patch
-    - macos_python_lammps.patch
 
 build:
   number: {{ build }}
