@@ -1,7 +1,7 @@
 fix liblammps for Mac Os X
 author: Jan Janssen (MPIE)
---- lammps-stable_12Dec2018/python/lammps.py.orig	2018-12-11 18:39:04.000000000 +0100
-+++ lammps-stable_12Dec2018/python/lammps.py	2019-02-02 13:21:56.929765000 +0100
+--- python/lammps.py.orig	2018-12-11 18:39:04.000000000 +0100
++++ python/lammps.py	2019-02-02 13:21:56.929765000 +0100
 @@ -85,14 +85,19 @@
      # fall back to loading with a relative path,
      #   typically requires LD_LIBRARY_PATH to be set appropriately
