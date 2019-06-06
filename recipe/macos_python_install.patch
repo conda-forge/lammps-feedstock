@@ -1,7 +1,7 @@
 fix liblammps for Mac Os X
 author: Jan Janssen (MPIE)
---- lammps-stable_12Dec2018/python/install.py.orig	2018-12-11 18:39:04.000000000 +0100
-+++ lammps-stable_12Dec2018/python/install.py	2019-02-02 13:21:56.929765000 +0100
+--- python/install.py.orig	2018-12-11 18:39:04.000000000 +0100
++++ python/install.py	2019-02-02 13:21:56.929765000 +0100
 @@ -22,6 +22,11 @@
  # copy lammps.py to pydir if it exists
  # if pydir not specified, install in site-packages via distutils setup()
