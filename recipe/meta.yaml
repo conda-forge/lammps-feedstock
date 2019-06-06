@@ -15,7 +15,7 @@ source:
   url: https://github.com/lammps/lammps/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
   patches: 
-    - macos_install.patch 
+    - macos_install.patch  # [osx]
 
 build:
   number: {{ build }}
