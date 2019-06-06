@@ -14,7 +14,7 @@ index 2e6ad9a..25556d0 100644
  install-python:
  	@$(PYTHON) ../python/install.py -v ../src/version.h \
 -		-m ../python/lammps.py -l ../src/liblammps.so
-+		-m ../python/lammps.py -l ../src/liblammps.dylib
++		-m ../python/lammps.py -l ../src/liblammps.*
  
  # Create a tarball of src dir and packages
  
