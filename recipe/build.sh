@@ -17,8 +17,9 @@ cd build_lib
 cmake -D BUILD_LIB=ON -D BUILD_SHARED_LIBS=ON -D BUILD_MPI=OFF -D BUILD_OMP=OFF $args ../cmake
 make # -j${NUM_CPUS}
 cp liblammps.* ../src
-cd ..
+cd ../src
 make install-python 
+cd ..
 
 # Parallel
 export LDFLAGS="-L$PREFIX/lib -lmpi $LDFLAGS"
