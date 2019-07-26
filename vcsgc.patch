@@ -1,0 +1,20 @@
+Add vcsgc
+author: Jan Janssen (MPIE)
+
+---
+ cmake/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/cmake/CMakeLists.txt b/cmake/CMakeLists.txt
+index 0849e03d..a366828d 100644
+--- cmake/CMakeLists.txt
++++ cmake/CMakeLists.txt
+@@ -181,7 +181,7 @@
+   USER-MANIFOLD USER-MEAMC USER-MGPT USER-MISC USER-MOFFF USER-MOLFILE
+   USER-NETCDF USER-PHONON USER-PLUMED USER-PTM USER-QTB USER-REAXC
+   USER-SCAFACOS USER-SDPD USER-SMD USER-SMTBQ USER-SPH USER-TALLY USER-UEF
+-  USER-VTK USER-QUIP USER-QMMM USER-YAFF USER-ADIOS)
++  USER-VTK USER-QUIP USER-QMMM USER-YAFF USER-ADIOS USER-VCSGC)
+ set(ACCEL_PACKAGES USER-OMP KOKKOS OPT USER-INTEL GPU)
+ foreach(PKG ${DEFAULT_PACKAGES} ${ACCEL_PACKAGES})
+   option(PKG_${PKG} "Build ${PKG} Package" OFF)
