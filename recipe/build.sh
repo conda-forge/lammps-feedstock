@@ -5,6 +5,9 @@ args="-D PKG_ASPHERE=ON -DPKG_BODY=ON -D PKG_CLASS2=ON -D PKG_COLLOID=ON -D PKG_
 # Plugins 
 mkdir src/USER-VCSGC
 cp vcsgc-lammps/fix_semigrandcanonical_mc.* src/USER-VCSGC
+cd src 
+make yes-user-vcsgc
+cd ..
 
 # Serial
 mkdir build_serial
