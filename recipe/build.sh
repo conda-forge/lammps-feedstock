@@ -4,6 +4,7 @@ args="-D PKG_ASPHERE=ON -DPKG_BODY=ON -D PKG_CLASS2=ON -D PKG_COLLOID=ON -D PKG_
 
 # Plugins 
 ls -al 
+ls -al src
 ls -al ..
 
 # Serial
