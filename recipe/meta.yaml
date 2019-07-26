@@ -16,10 +16,10 @@ source:
     sha256: {{ sha256 }}
     patches: 
       - macos_install.patch
-  - fn: vcsgc-lammps-master.tar.gz
-    url: https://gitlab.com/materials-modeling/vcsgc-lammps/-/archive/master/vcsgc-lammps-master.tar.gz
+  - fn: vcsgc-lammps.tar.gz
+    url: https://vcsgc-lammps.materialsmodeling.org/vcsgc-lammps.tgz
     sha256: b1eaa200eeb6eea9cf07b5fd4721a4c156c02ba0213f9c961979234ca9d98f9f
-    folder: src
+    folder: vcsgc-lammps
     
 build:
   number: {{ build }}
