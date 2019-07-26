@@ -19,6 +19,7 @@ source:
   - fn: vcsgc-lammps-master.tar.gz
     url: https://gitlab.com/materials-modeling/vcsgc-lammps/-/archive/master/vcsgc-lammps-master.tar.gz
     sha256: b1eaa200eeb6eea9cf07b5fd4721a4c156c02ba0213f9c961979234ca9d98f9f
+    folder: src
     
 build:
   number: {{ build }}
