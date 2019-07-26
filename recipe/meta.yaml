@@ -11,11 +11,14 @@ package:
   version: {{ conda_version }}
 
 source:
-  fn: {{ name }}-{{ conda_version }}.tar.gz
-  url: https://github.com/lammps/lammps/archive/{{ version }}.tar.gz
-  sha256: {{ sha256 }}
-  patches: 
-    - macos_install.patch
+  - fn: {{ name }}-{{ conda_version }}.tar.gz
+    url: https://github.com/lammps/lammps/archive/{{ version }}.tar.gz
+    sha256: {{ sha256 }}
+    patches: 
+      - macos_install.patch
+  - fn: vcsgc-lammps-master.tar.gz
+    url: https://gitlab.com/materials-modeling/vcsgc-lammps/-/archive/master/vcsgc-lammps-master.tar.gz
+    sha256: {{ sha256 }}
     
 build:
   number: {{ build }}
@@ -67,10 +70,5 @@ about:
   dev_url: https://github.com/lammps/lammps
 
 extra:
-  sources:
-    vcsgc-lammps-master:
-      fn: vcsgc-lammps-master.tar.gz
-      url: https://gitlab.com/materials-modeling/vcsgc-lammps/-/archive/master/vcsgc-lammps-master.tar.gz
-      sha256: {{ sha256 }}
   recipe-maintainers:
     - jan-janssen
