@@ -16,7 +16,7 @@ source:
     sha256: {{ sha256 }}
     patches: 
       - macos_install.patch
-    
+
 build:
   number: {{ build }}
   string: {{ build_string }}
