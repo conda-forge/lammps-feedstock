@@ -33,8 +33,7 @@ requirements:
     - {{ compiler('cxx') }}
     - {{ compiler('fortran') }}
     - cmake
-    - make 
-    - vim
+    - make
   
   host:
     - python
@@ -43,13 +42,11 @@ requirements:
     - zlib
     - fftw
     - libpng
-    - kim-api
 
   run:
     - python
     - {{ mpi }}
     - fftw
-    - kim-api
 
 test:
   imports:
