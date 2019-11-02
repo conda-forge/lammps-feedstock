@@ -12,15 +12,19 @@ cxx_compiler_version:
 - '7'
 docker_image:
 - condaforge/linux-anvil-comp7
+fftw:
+- '3'
 fortran_compiler:
 - gfortran
 fortran_compiler_version:
 - '7'
 libpng:
-- 1.6.35
+- '1.6'
 mpi:
 - mpich
 pin_run_as_build:
+  fftw:
+    max_pin: x
   libpng:
     max_pin: x.x
   python:
