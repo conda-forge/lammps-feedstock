@@ -42,11 +42,13 @@ requirements:
     - zlib
     - fftw
     - libpng
+    - kim-api
 
   run:
     - python
     - {{ mpi }}
     - fftw
+    - kim-api
 
 test:
   imports:
