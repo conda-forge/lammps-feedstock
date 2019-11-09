@@ -34,6 +34,7 @@ requirements:
     - {{ compiler('fortran') }}
     - cmake
     - make
+    - pkg-config
   
   host:
     - python
@@ -42,11 +43,13 @@ requirements:
     - zlib
     - fftw
     - libpng
+    - kim-api
 
   run:
     - python
     - {{ mpi }}
     - fftw
+    - kim-api
 
 test:
   imports:
