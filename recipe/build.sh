@@ -31,4 +31,6 @@ make # -j${NUM_CPUS}
 cp liblammps${SHLIB_EXT} ../src  # For compatibility with the original make system.
 cd ../src
 make install-python 
+mkdir -p $PREFIX/include/lammps
+cp library.h $PREFIX/include/lammps
 cd ..
