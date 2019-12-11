@@ -33,6 +33,5 @@ cd ../src
 make install-python 
 mkdir -p $PREFIX/include/lammps
 cp library.h $PREFIX/include/lammps
-mv "${SP_DIR}"/liblammps${SHLIB_EXT} "${PREFIX}"/lib/liblammps${SHLIB_EXT}
-ln -s "${PREFIX}"/lib/liblammps${SHLIB_EXT} "${SP_DIR}"/liblammps${SHLIB_EXT}
+cp "${SP_DIR}"/liblammps${SHLIB_EXT} "${PREFIX}"/lib/liblammps${SHLIB_EXT}
 cd ..
