@@ -34,5 +34,4 @@ make install-python
 mkdir -p $PREFIX/include/lammps
 cp library.h $PREFIX/include/lammps
 cp liblammps${SHLIB_EXT}* "${PREFIX}"/lib/
-ls "${PREFIX}"/lib/liblammps${SHLIB_EXT}*
 cd ..
