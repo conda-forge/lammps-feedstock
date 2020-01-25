@@ -28,6 +28,7 @@ mkdir build_lib
 cd build_lib
 cmake -D BUILD_LIB=ON -D BUILD_SHARED_LIBS=ON -D BUILD_MPI=ON $args ../cmake
 make # -j${NUM_CPUS}
+ls liblammps${SHLIB_EXT}*
 cp liblammps${SHLIB_EXT} ../src  # For compatibility with the original make system.
 cd ../src
 make install-python 
