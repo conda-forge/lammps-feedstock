@@ -28,12 +28,10 @@ mkdir build_lib
 cd build_lib
 cmake -D BUILD_LIB=ON -D BUILD_SHARED_LIBS=ON -D BUILD_MPI=ON $args ../cmake
 make # -j${NUM_CPUS}
-ls liblammps${SHLIB_EXT}*
-cp liblammps${SHLIB_EXT} ../src  # For compatibility with the original make system.
+cp liblammps${SHLIB_EXT}* ../src  # For compatibility with the original make system.
 cd ../src
 make install-python 
 mkdir -p $PREFIX/include/lammps
 cp library.h $PREFIX/include/lammps
-cp "${SP_DIR}"/liblammps${SHLIB_EXT} "${PREFIX}"/lib/liblammps${SHLIB_EXT}.0
-cd "${PREFIX}"/lib/
-ln -s liblammps${SHLIB_EXT}.0 liblammps${SHLIB_EXT}
+cp "${SP_DIR}"/liblammps${SHLIB_EXT}* "${PREFIX}"/lib/liblammps${SHLIB_EXT}
+cd ..
