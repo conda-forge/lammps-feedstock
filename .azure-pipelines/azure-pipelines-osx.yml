@@ -10,6 +10,9 @@ jobs:
   strategy:
     maxParallel: 8
     matrix:
+      osx_mpimpichpython3.6.____73_pypy:
+        CONFIG: osx_mpimpichpython3.6.____73_pypy
+        UPLOAD_PACKAGES: True
       osx_mpimpichpython3.6.____cpython:
         CONFIG: osx_mpimpichpython3.6.____cpython
         UPLOAD_PACKAGES: True
@@ -18,6 +21,9 @@ jobs:
         UPLOAD_PACKAGES: True
       osx_mpimpichpython3.8.____cpython:
         CONFIG: osx_mpimpichpython3.8.____cpython
+        UPLOAD_PACKAGES: True
+      osx_mpiopenmpipython3.6.____73_pypy:
+        CONFIG: osx_mpiopenmpipython3.6.____73_pypy
         UPLOAD_PACKAGES: True
       osx_mpiopenmpipython3.6.____cpython:
         CONFIG: osx_mpiopenmpipython3.6.____cpython
