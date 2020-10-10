@@ -8,47 +8,86 @@ jobs:
     vmImage: ubuntu-16.04
   strategy:
     matrix:
-      linux_64_mpimpichpython3.6.____73_pypy:
-        CONFIG: linux_64_mpimpichpython3.6.____73_pypy
+      linux_64_c_compiler_version7cxx_compiler_version7fortran_compiler_version7mpimpichpython3.6.____73_pypy:
+        CONFIG: linux_64_c_compiler_version7cxx_compiler_version7fortran_compiler_version7mpimpichpython3.6.____73_pypy
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: condaforge/linux-anvil-comp7
-      linux_64_mpimpichpython3.6.____cpython:
-        CONFIG: linux_64_mpimpichpython3.6.____cpython
+      linux_64_c_compiler_version7cxx_compiler_version7fortran_compiler_version7mpimpichpython3.6.____cpython:
+        CONFIG: linux_64_c_compiler_version7cxx_compiler_version7fortran_compiler_version7mpimpichpython3.6.____cpython
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: condaforge/linux-anvil-comp7
-      linux_64_mpimpichpython3.7.____cpython:
-        CONFIG: linux_64_mpimpichpython3.7.____cpython
+      linux_64_c_compiler_version7cxx_compiler_version7fortran_compiler_version7mpimpichpython3.7.____cpython:
+        CONFIG: linux_64_c_compiler_version7cxx_compiler_version7fortran_compiler_version7mpimpichpython3.7.____cpython
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: condaforge/linux-anvil-comp7
-      linux_64_mpimpichpython3.8.____cpython:
-        CONFIG: linux_64_mpimpichpython3.8.____cpython
+      linux_64_c_compiler_version7cxx_compiler_version7fortran_compiler_version7mpimpichpython3.8.____cpython:
+        CONFIG: linux_64_c_compiler_version7cxx_compiler_version7fortran_compiler_version7mpimpichpython3.8.____cpython
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: condaforge/linux-anvil-comp7
-      linux_64_mpimpichpython3.9.____cpython:
-        CONFIG: linux_64_mpimpichpython3.9.____cpython
+      linux_64_c_compiler_version7cxx_compiler_version7fortran_compiler_version7mpimpichpython3.9.____cpython:
+        CONFIG: linux_64_c_compiler_version7cxx_compiler_version7fortran_compiler_version7mpimpichpython3.9.____cpython
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: condaforge/linux-anvil-comp7
-      linux_64_mpiopenmpipython3.6.____73_pypy:
-        CONFIG: linux_64_mpiopenmpipython3.6.____73_pypy
+      linux_64_c_compiler_version7cxx_compiler_version7fortran_compiler_version7mpiopenmpipython3.6.____73_pypy:
+        CONFIG: linux_64_c_compiler_version7cxx_compiler_version7fortran_compiler_version7mpiopenmpipython3.6.____73_pypy
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: condaforge/linux-anvil-comp7
-      linux_64_mpiopenmpipython3.6.____cpython:
-        CONFIG: linux_64_mpiopenmpipython3.6.____cpython
+      linux_64_c_compiler_version7cxx_compiler_version7fortran_compiler_version7mpiopenmpipython3.6.____cpython:
+        CONFIG: linux_64_c_compiler_version7cxx_compiler_version7fortran_compiler_version7mpiopenmpipython3.6.____cpython
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: condaforge/linux-anvil-comp7
-      linux_64_mpiopenmpipython3.7.____cpython:
-        CONFIG: linux_64_mpiopenmpipython3.7.____cpython
+      linux_64_c_compiler_version7cxx_compiler_version7fortran_compiler_version7mpiopenmpipython3.7.____cpython:
+        CONFIG: linux_64_c_compiler_version7cxx_compiler_version7fortran_compiler_version7mpiopenmpipython3.7.____cpython
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: condaforge/linux-anvil-comp7
-      linux_64_mpiopenmpipython3.8.____cpython:
-        CONFIG: linux_64_mpiopenmpipython3.8.____cpython
+      linux_64_c_compiler_version7cxx_compiler_version7fortran_compiler_version7mpiopenmpipython3.8.____cpython:
+        CONFIG: linux_64_c_compiler_version7cxx_compiler_version7fortran_compiler_version7mpiopenmpipython3.8.____cpython
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: condaforge/linux-anvil-comp7
-      linux_64_mpiopenmpipython3.9.____cpython:
-        CONFIG: linux_64_mpiopenmpipython3.9.____cpython
+      linux_64_c_compiler_version7cxx_compiler_version7fortran_compiler_version7mpiopenmpipython3.9.____cpython:
+        CONFIG: linux_64_c_compiler_version7cxx_compiler_version7fortran_compiler_version7mpiopenmpipython3.9.____cpython
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: condaforge/linux-anvil-comp7
-    maxParallel: 8
+      linux_64_c_compiler_version9cxx_compiler_version9fortran_compiler_version9mpimpichpython3.6.____73_pypy:
+        CONFIG: linux_64_c_compiler_version9cxx_compiler_version9fortran_compiler_version9mpimpichpython3.6.____73_pypy
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: condaforge/linux-anvil-comp7
+      linux_64_c_compiler_version9cxx_compiler_version9fortran_compiler_version9mpimpichpython3.6.____cpython:
+        CONFIG: linux_64_c_compiler_version9cxx_compiler_version9fortran_compiler_version9mpimpichpython3.6.____cpython
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: condaforge/linux-anvil-comp7
+      linux_64_c_compiler_version9cxx_compiler_version9fortran_compiler_version9mpimpichpython3.7.____cpython:
+        CONFIG: linux_64_c_compiler_version9cxx_compiler_version9fortran_compiler_version9mpimpichpython3.7.____cpython
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: condaforge/linux-anvil-comp7
+      linux_64_c_compiler_version9cxx_compiler_version9fortran_compiler_version9mpimpichpython3.8.____cpython:
+        CONFIG: linux_64_c_compiler_version9cxx_compiler_version9fortran_compiler_version9mpimpichpython3.8.____cpython
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: condaforge/linux-anvil-comp7
+      linux_64_c_compiler_version9cxx_compiler_version9fortran_compiler_version9mpimpichpython3.9.____cpython:
+        CONFIG: linux_64_c_compiler_version9cxx_compiler_version9fortran_compiler_version9mpimpichpython3.9.____cpython
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: condaforge/linux-anvil-comp7
+      linux_64_c_compiler_version9cxx_compiler_version9fortran_compiler_version9mpiopenmpipython3.6.____73_pypy:
+        CONFIG: linux_64_c_compiler_version9cxx_compiler_version9fortran_compiler_version9mpiopenmpipython3.6.____73_pypy
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: condaforge/linux-anvil-comp7
+      linux_64_c_compiler_version9cxx_compiler_version9fortran_compiler_version9mpiopenmpipython3.6.____cpython:
+        CONFIG: linux_64_c_compiler_version9cxx_compiler_version9fortran_compiler_version9mpiopenmpipython3.6.____cpython
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: condaforge/linux-anvil-comp7
+      linux_64_c_compiler_version9cxx_compiler_version9fortran_compiler_version9mpiopenmpipython3.7.____cpython:
+        CONFIG: linux_64_c_compiler_version9cxx_compiler_version9fortran_compiler_version9mpiopenmpipython3.7.____cpython
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: condaforge/linux-anvil-comp7
+      linux_64_c_compiler_version9cxx_compiler_version9fortran_compiler_version9mpiopenmpipython3.8.____cpython:
+        CONFIG: linux_64_c_compiler_version9cxx_compiler_version9fortran_compiler_version9mpiopenmpipython3.8.____cpython
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: condaforge/linux-anvil-comp7
+      linux_64_c_compiler_version9cxx_compiler_version9fortran_compiler_version9mpiopenmpipython3.9.____cpython:
+        CONFIG: linux_64_c_compiler_version9cxx_compiler_version9fortran_compiler_version9mpiopenmpipython3.9.____cpython
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: condaforge/linux-anvil-comp7
   timeoutInMinutes: 360
 
   steps:
