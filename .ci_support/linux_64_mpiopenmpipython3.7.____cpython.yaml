@@ -21,7 +21,7 @@ fortran_compiler_version:
 libpng:
 - '1.6'
 mpi:
-- mpich
+- openmpi
 pin_run_as_build:
   fftw:
     max_pin: x
@@ -34,5 +34,11 @@ pin_run_as_build:
     max_pin: x.x
 python:
 - 3.7.* *_cpython
+target_platform:
+- linux-64
+zip_keys:
+- - c_compiler_version
+  - cxx_compiler_version
+  - fortran_compiler_version
 zlib:
 - '1.2'
