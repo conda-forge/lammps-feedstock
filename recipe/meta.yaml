@@ -19,7 +19,7 @@ source:
       - vcsgc.patch
   - fn: vcsgc-lammps.tar.gz
     url: https://vcsgc-lammps.materialsmodeling.org/vcsgc-lammps.tgz
-    sha256: 6423a696b1b131e63f58e651ea098875ab844b2a07ad27d7b2b8fdd7f45d4954
+    sha256: f5b79f1bd72e226189ac4780503e3295e794d289dc2e1c8d3f948488ca995738
     folder: vcsgc-lammps
     
 build:
