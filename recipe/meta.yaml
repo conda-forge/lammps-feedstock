@@ -1,7 +1,7 @@
-{% set build = 4 %}
+{% set build = 0 %}
 {% set name = "lammps" %}
-{% set version = "stable_3Mar2020" %}
-{% set sha256 = "a1a2e3e763ef5baecea258732518d75775639db26e60af1634ab385ed89224d1" %}
+{% set version = "stable_29Oct2020" %}
+{% set sha256 = "759705e16c1fedd6aa6e07d028cc0c78d73c76b76736668420946a74050c3726" %}
 {% set date = datetime.datetime.strptime(version.split('_')[1], "%d%b%Y") %}
 {% set conda_version = "{:%Y.%m.%d}".format(date) %}
 {% set build_string = "py{}_{}_{}".format(environ.get('CONDA_PY', ''), mpi, build) %}
@@ -44,13 +44,12 @@ requirements:
     - fftw
     - libpng
     - kim-api
+    - libcurl
 
   run:
     - python
     - {{ mpi }}
-    - fftw
     - kim-api
-    - libcurl
 
 test:
   imports:

@@ -8,65 +8,35 @@ jobs:
     vmImage: macOS-10.15
   strategy:
     matrix:
-      osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version7mpimpichpython3.6.____73_pypy:
-        CONFIG: osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version7mpimpichpython3.6.____73_pypy
+      osx_64_mpimpichpython3.6.____73_pypy:
+        CONFIG: osx_64_mpimpichpython3.6.____73_pypy
         UPLOAD_PACKAGES: 'True'
-      osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version7mpimpichpython3.6.____cpython:
-        CONFIG: osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version7mpimpichpython3.6.____cpython
+      osx_64_mpimpichpython3.6.____cpython:
+        CONFIG: osx_64_mpimpichpython3.6.____cpython
         UPLOAD_PACKAGES: 'True'
-      osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version7mpimpichpython3.7.____cpython:
-        CONFIG: osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version7mpimpichpython3.7.____cpython
+      osx_64_mpimpichpython3.7.____cpython:
+        CONFIG: osx_64_mpimpichpython3.7.____cpython
         UPLOAD_PACKAGES: 'True'
-      osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version7mpimpichpython3.8.____cpython:
-        CONFIG: osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version7mpimpichpython3.8.____cpython
+      osx_64_mpimpichpython3.8.____cpython:
+        CONFIG: osx_64_mpimpichpython3.8.____cpython
         UPLOAD_PACKAGES: 'True'
-      osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version7mpimpichpython3.9.____cpython:
-        CONFIG: osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version7mpimpichpython3.9.____cpython
+      osx_64_mpimpichpython3.9.____cpython:
+        CONFIG: osx_64_mpimpichpython3.9.____cpython
         UPLOAD_PACKAGES: 'True'
-      osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version7mpiopenmpipython3.6.____73_pypy:
-        CONFIG: osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version7mpiopenmpipython3.6.____73_pypy
+      osx_64_mpiopenmpipython3.6.____73_pypy:
+        CONFIG: osx_64_mpiopenmpipython3.6.____73_pypy
         UPLOAD_PACKAGES: 'True'
-      osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version7mpiopenmpipython3.6.____cpython:
-        CONFIG: osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version7mpiopenmpipython3.6.____cpython
+      osx_64_mpiopenmpipython3.6.____cpython:
+        CONFIG: osx_64_mpiopenmpipython3.6.____cpython
         UPLOAD_PACKAGES: 'True'
-      osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version7mpiopenmpipython3.7.____cpython:
-        CONFIG: osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version7mpiopenmpipython3.7.____cpython
+      osx_64_mpiopenmpipython3.7.____cpython:
+        CONFIG: osx_64_mpiopenmpipython3.7.____cpython
         UPLOAD_PACKAGES: 'True'
-      osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version7mpiopenmpipython3.8.____cpython:
-        CONFIG: osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version7mpiopenmpipython3.8.____cpython
+      osx_64_mpiopenmpipython3.8.____cpython:
+        CONFIG: osx_64_mpiopenmpipython3.8.____cpython
         UPLOAD_PACKAGES: 'True'
-      osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version7mpiopenmpipython3.9.____cpython:
-        CONFIG: osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version7mpiopenmpipython3.9.____cpython
-        UPLOAD_PACKAGES: 'True'
-      osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version9mpimpichpython3.6.____73_pypy:
-        CONFIG: osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version9mpimpichpython3.6.____73_pypy
-        UPLOAD_PACKAGES: 'True'
-      osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version9mpimpichpython3.6.____cpython:
-        CONFIG: osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version9mpimpichpython3.6.____cpython
-        UPLOAD_PACKAGES: 'True'
-      osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version9mpimpichpython3.7.____cpython:
-        CONFIG: osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version9mpimpichpython3.7.____cpython
-        UPLOAD_PACKAGES: 'True'
-      osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version9mpimpichpython3.8.____cpython:
-        CONFIG: osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version9mpimpichpython3.8.____cpython
-        UPLOAD_PACKAGES: 'True'
-      osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version9mpimpichpython3.9.____cpython:
-        CONFIG: osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version9mpimpichpython3.9.____cpython
-        UPLOAD_PACKAGES: 'True'
-      osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version9mpiopenmpipython3.6.____73_pypy:
-        CONFIG: osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version9mpiopenmpipython3.6.____73_pypy
-        UPLOAD_PACKAGES: 'True'
-      osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version9mpiopenmpipython3.6.____cpython:
-        CONFIG: osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version9mpiopenmpipython3.6.____cpython
-        UPLOAD_PACKAGES: 'True'
-      osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version9mpiopenmpipython3.7.____cpython:
-        CONFIG: osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version9mpiopenmpipython3.7.____cpython
-        UPLOAD_PACKAGES: 'True'
-      osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version9mpiopenmpipython3.8.____cpython:
-        CONFIG: osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version9mpiopenmpipython3.8.____cpython
-        UPLOAD_PACKAGES: 'True'
-      osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version9mpiopenmpipython3.9.____cpython:
-        CONFIG: osx_64_c_compiler_version10cxx_compiler_version10fortran_compiler_version9mpiopenmpipython3.9.____cpython
+      osx_64_mpiopenmpipython3.9.____cpython:
+        CONFIG: osx_64_mpiopenmpipython3.9.____cpython
         UPLOAD_PACKAGES: 'True'
   timeoutInMinutes: 360
 
