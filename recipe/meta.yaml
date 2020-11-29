@@ -44,13 +44,12 @@ requirements:
     - fftw
     - libpng
     - kim-api
+    - libcurl
 
   run:
     - python
     - {{ mpi }}
-    - fftw
     - kim-api
-    - libcurl
 
 test:
   imports:
