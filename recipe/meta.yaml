@@ -49,6 +49,7 @@ requirements:
     - python
     - {{ mpi }}
     - kim-api
+    - mpi4py
 
 test:
   imports:
