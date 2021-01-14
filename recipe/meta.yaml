@@ -44,12 +44,12 @@ requirements:
     - libpng
     - kim-api
     - libcurl
+    - mpi4py
 
   run:
     - python
     - {{ mpi }}
     - kim-api
-    - mpi4py
 
 test:
   imports:
