@@ -4,13 +4,13 @@ Date: Tue, 9 Feb 2021 22:22:23 +0100
 Subject: [PATCH] domain
 
 ---
- mlip/src/external/MLIP4LAMMPS/USER-MLIP/pair_MLIP.cpp | 1 +
+ src/external/MLIP4LAMMPS/USER-MLIP/pair_MLIP.cpp | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/mlip/src/external/MLIP4LAMMPS/USER-MLIP/pair_MLIP.cpp b/mlip/src/external/MLIP4LAMMPS/USER-MLIP/pair_MLIP.cpp
+diff --git a/src/external/MLIP4LAMMPS/USER-MLIP/pair_MLIP.cpp b/src/external/MLIP4LAMMPS/USER-MLIP/pair_MLIP.cpp
 index 106ab7c..b711d67 100644
---- a/mlip/src/external/MLIP4LAMMPS/USER-MLIP/pair_MLIP.cpp
-+++ b/mlip/src/external/MLIP4LAMMPS/USER-MLIP/pair_MLIP.cpp
+--- a/src/external/MLIP4LAMMPS/USER-MLIP/pair_MLIP.cpp
++++ b/src/external/MLIP4LAMMPS/USER-MLIP/pair_MLIP.cpp
 @@ -33,6 +33,7 @@
  #include "neigh_list.h"
  #include "memory.h"
