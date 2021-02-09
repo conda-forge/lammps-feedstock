@@ -15,7 +15,8 @@ source:
     sha256: {{ sha256 }}
     patches: 
       - macos_install.patch
-      - vcsgc.patch
+      - vcsgc.patch  # [macos]
+      - vcsgc_mtp.patch  # [linux]
   - fn: vcsgc-lammps.tar.gz
     url: https://vcsgc-lammps.materialsmodeling.org/vcsgc-lammps.tgz
     sha256: f5b79f1bd72e226189ac4780503e3295e794d289dc2e1c8d3f948488ca995738
