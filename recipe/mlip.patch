@@ -1,0 +1,21 @@
+From fb7716ced61c0a6b7452efed61b995dcd905162d Mon Sep 17 00:00:00 2001
+From: Jan Janssen <jan-janssen@users.noreply.github.com>
+Date: Tue, 9 Feb 2021 21:38:44 +0100
+Subject: [PATCH] Link to library
+
+---
+ make/LAMMPS/Makefile.lammps.template | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/make/LAMMPS/Makefile.lammps.template b/make/LAMMPS/Makefile.lammps.template
+index 22f217a..f605e8e 100644
+--- a/make/LAMMPS/Makefile.lammps.template
++++ b/make/LAMMPS/Makefile.lammps.template
+@@ -1,5 +1,5 @@
+ # Settings that the LAMMPS build will import when this package library is used
+ 
+ mlip_SYSINC =
+-mlip_SYSLIB = -std=c++11
+-mlip_SYSPATH = 
++mlip_SYSLIB = -std=c++11 -lmlip
++mlip_SYSPATH = -L${PREFIX}/lib
