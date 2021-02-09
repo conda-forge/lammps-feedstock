@@ -9,12 +9,8 @@ cp vcsgc-lammps/fix_semigrandcanonical_mc.* src/USER-VCSGC
 # Mlip
 if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
   args=$args" -D PKG_USER-MLIP=ON"
-  mkdir -p lib/mlip
-  cp ${PREFIX}/lib/libmlip.a lib/mlip
-  cp mlip/make/LAMMPS/Makefile.lammps.template lib/mlip/Makefile.lammps
+  export LDFLAGS="-L$PREFIX/lib -lmlip $LDFLAGS"
   cp -r mlip/src/external/MLIP4LAMMPS/USER-MLIP src/
-  cp mlip/make/LAMMPS/Install.sh src/USER-MLIP/
-  cp mlip/make/LAMMPS/README src/USER-MLIP/
 fi
 
 # Serial
