@@ -13,8 +13,7 @@ if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
   cp mlip/make/LAMMPS/Makefile.lammps.template lib/mlip/Makefile.lammps
   cp -r mlip/src/external/MLIP4LAMMPS/USER-MLIP src/
   cp mlip/make/LAMMPS/Install.sh src/USER-MLIP/
-  cp README src/USER-MLIP/
-  cd $LAMMPS_PATH/src
+  cp mlip/make/LAMMPS/README src/USER-MLIP/
 fi
 
 # Serial
