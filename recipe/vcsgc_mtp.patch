@@ -42,14 +42,14 @@ index 0000000000..fb37722a0b
 +# - Find mlip
 +# Find the native MLIP libraries.
 +#
-+#  MLIP_LIBRARIES    - List of libraries of the QUIP package
-+#  MLIP_FOUND        - True if QUIP library was found.
++#  MLIP_LIBRARIES    - List of libraries of the MLIP package
++#  MLIP_FOUND        - True if MLIP library was found.
 +#
 +
 +find_library(MLIP_LIBRARY NAMES mlip)
 +
 +include(FindPackageHandleStandardArgs)
-+# handle the QUIETLY and REQUIRED arguments and set QUIP_FOUND to TRUE
++# handle the QUIETLY and REQUIRED arguments and set MLIP_FOUND to TRUE
 +# if all listed variables are TRUE
 +
 +find_package_handle_standard_args(MLIP DEFAULT_MSG MLIP_LIBRARY)
