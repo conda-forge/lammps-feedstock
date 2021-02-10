@@ -9,7 +9,6 @@ cp vcsgc-lammps/fix_semigrandcanonical_mc.* src/USER-VCSGC
 # Mlip
 if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
   args=$args" -D PKG_USER-MLIP=ON"
-  ${CC} -L${PREFIX}/lib -lmlip  # check lmlip is installed 
   export LDFLAGS="$LDFLAGS -lmlip"
   cp -r mlip/src/external/MLIP4LAMMPS/USER-MLIP src/
 fi
