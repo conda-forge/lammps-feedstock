@@ -48,6 +48,7 @@ requirements:
     - zlib
     - fftw
     - libpng
+    - libcblas  # [linux]
     - kim-api
     - libcurl
     - mpi4py
