@@ -1,12 +1,16 @@
-Add vcsgc and mlip
-author: Jan Janssen (MPIE)
+From 7438b2e95744adb22d25ba6362293b72489ea1d3 Mon Sep 17 00:00:00 2001
+From: Jan Janssen <jan-janssen@users.noreply.github.com>
+Date: Wed, 10 Feb 2021 11:04:57 +0100
+Subject: [PATCH] ADD MPT VCSGC
 
 ---
- cmake/CMakeLists.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ cmake/CMakeLists.txt                   | 4 ++--
+ cmake/Modules/Packages/USER-MLIP.cmake | 2 ++
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+ create mode 100644 cmake/Modules/Packages/USER-MLIP.cmake
 
 diff --git a/cmake/CMakeLists.txt b/cmake/CMakeLists.txt
-index 42e6d12ffb..cf1d9fc15d 100644
+index 696a1b8cdd..7adde54afb 100644
 --- a/cmake/CMakeLists.txt
 +++ b/cmake/CMakeLists.txt
 @@ -112,7 +112,7 @@ set(STANDARD_PACKAGES ASPHERE BODY CLASS2 COLLOID COMPRESS DIPOLE
@@ -18,3 +22,20 @@ index 42e6d12ffb..cf1d9fc15d 100644
  set(SUFFIX_PACKAGES CORESHELL USER-OMP KOKKOS OPT USER-INTEL GPU)
  foreach(PKG ${STANDARD_PACKAGES} ${SUFFIX_PACKAGES})
    option(PKG_${PKG} "Build ${PKG} Package" OFF)
+@@ -374,7 +374,7 @@ else()
+ endif()
+ 
+ foreach(PKG_WITH_INCL KSPACE PYTHON VORONOI USER-COLVARS USER-MOLFILE USER-NETCDF USER-PLUMED USER-QMMM
+-        USER-QUIP USER-SCAFACOS USER-SMD USER-VTK KIM LATTE MESSAGE MSCG COMPRESS)
++        USER-QUIP USER-SCAFACOS USER-SMD USER-VTK KIM LATTE MESSAGE MSCG COMPRESS USER-MLIP)
+   if(PKG_${PKG_WITH_INCL})
+     include(Packages/${PKG_WITH_INCL})
+   endif()
+diff --git a/cmake/Modules/Packages/USER-MLIP.cmake b/cmake/Modules/Packages/USER-MLIP.cmake
+new file mode 100644
+index 0000000000..15df686bdc
+--- /dev/null
++++ b/cmake/Modules/Packages/USER-MLIP.cmake
+@@ -0,0 +1,2 @@
++find_package(MLIP REQUIRED)
++target_link_libraries(lammps PRIVATE MLIP::MLIP)
