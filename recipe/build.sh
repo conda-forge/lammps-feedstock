@@ -10,7 +10,6 @@ cp vcsgc-lammps/fix_semigrandcanonical_mc.* src/USER-VCSGC
 if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
   args=$args" -D PKG_USER-MLIP=ON"
   cp -r mlip/src/external/MLIP4LAMMPS/USER-MLIP src/
-  cp ${RECIPE_DIR}/USER-MLIP.cmake cmake/Modules/Packages/
 fi
 
 # Serial
