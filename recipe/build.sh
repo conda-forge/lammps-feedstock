@@ -9,7 +9,7 @@ cp vcsgc-lammps/fix_semigrandcanonical_mc.* src/USER-VCSGC
 # Mlip
 if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
   args=$args" -D PKG_USER-MLIP=ON"
-  export LDFLAGS="-L$PREFIX/lib -lmlip $LDFLAGS"
+  export LDFLAGS="$LDFLAGS -lmlip"
   cp -r mlip/src/external/MLIP4LAMMPS/USER-MLIP src/
 fi
 
@@ -22,7 +22,7 @@ cp lmp $PREFIX/bin/lmp_serial
 cd ..
 
 # Parallel
-export LDFLAGS="-L$PREFIX/lib -lmpi $LDFLAGS"
+export LDFLAGS="$LDFLAGS -lmpi"
 mkdir build_mpi
 cd build_mpi
 cmake -D BUILD_MPI=ON -D PKG_MPIIO=ON $args ../cmake 
