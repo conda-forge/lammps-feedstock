@@ -14,9 +14,6 @@ if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
   cp -r n2p2/src/interface/LAMMPS/src/USER-NNP src/
 fi
 
-# Validate 
-cat cmake/Modules/Packages/USER-NNP.cmake
-
 # Serial
 mkdir build_serial
 cd build_serial
