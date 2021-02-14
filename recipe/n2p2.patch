@@ -1,0 +1,102 @@
+From 52279dc8a0a9f755e3a004176f6d4670d24686b5 Mon Sep 17 00:00:00 2001
+From: Alin Marin Elena <alin@elena.space>
+Date: Mon, 13 Jul 2020 18:45:33 +0100
+Subject: [PATCH] n2p2 support
+
+---
+ cmake/CMakeLists.txt                  |  6 ++--
+ cmake/Modules/FindN2P2.cmake          | 40 +++++++++++++++++++++++++++
+ cmake/Modules/Packages/USER-NNP.cmake |  3 ++
+ 3 files changed, 46 insertions(+), 3 deletions(-)
+ create mode 100644 cmake/Modules/FindN2P2.cmake
+ create mode 100644 cmake/Modules/Packages/USER-NNP.cmake
+
+diff --git a/cmake/CMakeLists.txt b/cmake/CMakeLists.txt
+index 960bc69d2..157c4d10e 100644
+--- a/cmake/CMakeLists.txt
++++ b/cmake/CMakeLists.txt
+@@ -119,7 +119,7 @@ set(STANDARD_PACKAGES ASPHERE BODY CLASS2 COLLOID COMPRESS DIPOLE
+   USER-MANIFOLD USER-MEAMC USER-MESONT USER-MGPT USER-MISC USER-MOFFF USER-MOLFILE
+   USER-NETCDF USER-PHONON USER-PLUMED USER-PTM USER-QTB USER-REACTION
+   USER-REAXC USER-SCAFACOS USER-SDPD USER-SMD USER-SMTBQ USER-SPH USER-TALLY
+-  USER-UEF USER-VTK USER-QUIP USER-QMMM USER-YAFF USER-ADIOS)
++  USER-UEF USER-VTK USER-QUIP USER-QMMM USER-YAFF USER-ADIOS USER-NNP)
+ set(SUFFIX_PACKAGES CORESHELL USER-OMP KOKKOS OPT USER-INTEL GPU)
+ foreach(PKG ${STANDARD_PACKAGES} ${SUFFIX_PACKAGES})
+   option(PKG_${PKG} "Build ${PKG} Package" OFF)
+@@ -281,7 +281,7 @@ if(NOT ENABLE_SANITIZER STREQUAL "none")
+   endif()
+ endif()
+ 
+-if(PKG_MSCG OR PKG_USER-ATC OR PKG_USER-AWPMD OR PKG_USER-QUIP OR PKG_LATTE)
++if(PKG_MSCG OR PKG_USER-ATC OR PKG_USER-AWPMD OR PKG_USER-QUIP OR PKG_LATTE OR PKG_USER-NNP)
+   enable_language(C)
+   find_package(LAPACK)
+   find_package(BLAS)
+@@ -360,7 +360,7 @@ else()
+ endif()
+ 
+ foreach(PKG_WITH_INCL KSPACE PYTHON VORONOI USER-COLVARS USER-MOLFILE USER-NETCDF USER-PLUMED USER-QMMM
+-        USER-QUIP USER-SCAFACOS USER-SMD USER-VTK KIM LATTE MESSAGE MSCG COMPRESS)
++    USER-QUIP USER-NNP USER-SCAFACOS USER-SMD USER-VTK KIM LATTE MESSAGE MSCG COMPRESS)
+   if(PKG_${PKG_WITH_INCL})
+     include(Packages/${PKG_WITH_INCL})
+   endif()
+diff --git a/cmake/Modules/FindN2P2.cmake b/cmake/Modules/FindN2P2.cmake
+new file mode 100644
+index 000000000..c4fc1beeb
+--- /dev/null
++++ b/cmake/Modules/FindN2P2.cmake
+@@ -0,0 +1,40 @@
++# - Find N2P2
++# Find the native N2P2 libraries.
++#
++#  N2P2_LIBRARIES    - List of libraries of the N2P2 package
++#  N2P2_FOUND        - True if N2P2 library was found.
++#
++
++find_path(N2P2_INCLUDE_DIR InterfaceLammps.h PATHS ENV N2P2ROOT PATH_SUFFIXES include )
++find_library(NNP_LIBRARY NAMES nnp PATHS ENV N2P2ROOT PATH_SUFFIXES lib)
++find_library(NNPIF_LIBRARY NAMES nnpif PATHS ENV N2P2ROOT PATH_SUFFIXES lib)
++
++include(FindPackageHandleStandardArgs)
++# handle the QUIETLY and REQUIRED arguments and set QUIP_FOUND to TRUE
++# if all listed variables are TRUE
++
++find_package_handle_standard_args(N2P2 DEFAULT_MSG
++  NNP_LIBRARY
++  NNPIF_LIBRARY
++  N2P2_INCLUDE_DIR)
++# Copy the results to the output variables and target.
++if(N2P2_FOUND)
++  set(N2P2_LIBRARIES ${NNP_LIBRARY} ${NNPIF_LIBRARY})
++  set(N2P2_INCLUDE_DIRS ${N2P2_INCLUDE_DIR})
++
++  if(NOT TARGET N2P2::NNP)
++    add_library(N2P2::NNP1 UNKNOWN IMPORTED)
++    set_target_properties(N2P2::NNP1 PROPERTIES
++      IMPORTED_LOCATION "${NNP_LIBRARY}"
++      INTERFACE_INCLUDE_DIRECTORIES "${N2P2_INCLUDE_DIR}")
++    add_library(N2P2::NNPIF UNKNOWN IMPORTED)
++    set_target_properties(N2P2::NNPIF PROPERTIES
++      IMPORTED_LOCATION "${NNPIF_LIBRARY}"
++      INTERFACE_INCLUDE_DIRECTORIES "${N2P2_INCLUDE_DIR}")
++   add_library(N2P2::NNP INTERFACE IMPORTED)
++   set_property(TARGET N2P2::NNP PROPERTY
++      INTERFACE_LINK_LIBRARIES N2P2::NNP1 N2P2::NNPIF)
++  endif()
++endif()
++
++mark_as_advanced(NNP_LIBRARY N2P2_INCLUDE_DIR NNPIF_LIBRARY)
+diff --git a/cmake/Modules/Packages/USER-NNP.cmake b/cmake/Modules/Packages/USER-NNP.cmake
+new file mode 100644
+index 000000000..a9f073f21
+--- /dev/null
++++ b/cmake/Modules/Packages/USER-NNP.cmake
+@@ -0,0 +1,3 @@
++find_package(N2P2 REQUIRED)
++target_link_libraries(lammps PRIVATE N2P2::NNP ${LAPACK_LIBRARIES})
++
+-- 
+2.27.0
+
