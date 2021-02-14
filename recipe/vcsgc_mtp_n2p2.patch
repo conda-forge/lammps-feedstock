@@ -1,0 +1,134 @@
+From ffe926b22f0a41fe8375598db4e27fd3b47723d0 Mon Sep 17 00:00:00 2001
+From: Jan Janssen <jan-janssen@users.noreply.github.com>
+Date: Wed, 10 Feb 2021 11:21:24 +0100
+Subject: [PATCH] Add MLIP and VCSGC
+
+---
+ cmake/CMakeLists.txt                   |  4 ++--
+ cmake/Modules/FindMLIP.cmake           | 27 ++++++++++++++++++++++++++
+ cmake/Modules/FindN2P2.cmake           | 40 +++++++++++++++++++++++++++
+ cmake/Modules/Packages/USER-MLIP.cmake |  2 ++
+ cmake/Modules/Packages/USER-NNP.cmake  |  2 ++
+ 5 files changed, 73 insertions(+), 2 deletions(-)
+ create mode 100644 cmake/Modules/FindMLIP.cmake
+ create mode 100644 cmake/Modules/FindN2P2.cmake
+ create mode 100644 cmake/Modules/Packages/USER-MLIP.cmake
+ create mode 100644 cmake/Modules/Packages/USER-NNP.cmake
+
+diff --git a/cmake/CMakeLists.txt b/cmake/CMakeLists.txt
+index 696a1b8cdd..7adde54afb 100644
+--- a/cmake/CMakeLists.txt
++++ b/cmake/CMakeLists.txt
+@@ -112,7 +112,7 @@ set(STANDARD_PACKAGES ASPHERE BODY CLASS2 COLLOID COMPRESS DIPOLE
+   USER-MANIFOLD USER-MEAMC USER-MESONT USER-MGPT USER-MISC USER-MOFFF USER-MOLFILE
+   USER-NETCDF USER-PHONON USER-PLUMED USER-PTM USER-QTB USER-REACTION
+   USER-REAXC USER-SCAFACOS USER-SDPD USER-SMD USER-SMTBQ USER-SPH USER-TALLY
+-  USER-UEF USER-VTK USER-QUIP USER-QMMM USER-YAFF USER-ADIOS)
++  USER-UEF USER-VTK USER-QUIP USER-QMMM USER-YAFF USER-ADIOS USER-VCSGC USER-MLIP USER-NNP)
+ set(SUFFIX_PACKAGES CORESHELL USER-OMP KOKKOS OPT USER-INTEL GPU)
+ foreach(PKG ${STANDARD_PACKAGES} ${SUFFIX_PACKAGES})
+   option(PKG_${PKG} "Build ${PKG} Package" OFF)
+@@ -374,7 +374,7 @@ else()
+ endif()
+ 
+ foreach(PKG_WITH_INCL KSPACE PYTHON VORONOI USER-COLVARS USER-MOLFILE USER-NETCDF USER-PLUMED USER-QMMM
+-        USER-QUIP USER-SCAFACOS USER-SMD USER-VTK KIM LATTE MESSAGE MSCG COMPRESS)
++        USER-QUIP USER-SCAFACOS USER-SMD USER-VTK KIM LATTE MESSAGE MSCG COMPRESS USER-MLIP USER-NNP)
+   if(PKG_${PKG_WITH_INCL})
+     include(Packages/${PKG_WITH_INCL})
+   endif()
+diff --git a/cmake/Modules/FindMLIP.cmake b/cmake/Modules/FindMLIP.cmake
+new file mode 100644
+index 0000000000..fb37722a0b
+--- /dev/null
++++ b/cmake/Modules/FindMLIP.cmake
+@@ -0,0 +1,27 @@
++# - Find mlip
++# Find the native MLIP libraries.
++#
++#  MLIP_LIBRARIES    - List of libraries of the MLIP package
++#  MLIP_FOUND        - True if MLIP library was found.
++#
++
++find_library(MLIP_LIBRARY NAMES mlip)
++
++include(FindPackageHandleStandardArgs)
++# handle the QUIETLY and REQUIRED arguments and set MLIP_FOUND to TRUE
++# if all listed variables are TRUE
++
++find_package_handle_standard_args(MLIP DEFAULT_MSG MLIP_LIBRARY)
++
++# Copy the results to the output variables and target.
++if(MLIP_FOUND)
++  set(MLIP_LIBRARIES ${MLIP_LIBRARY})
++
++  if(NOT TARGET MLIP::MLIP)
++    add_library(MLIP::MLIP UNKNOWN IMPORTED)
++    set_target_properties(MLIP::MLIP PROPERTIES
++      IMPORTED_LOCATION "${MLIP_LIBRARY}")
++  endif()
++endif()
++
++mark_as_advanced(MLIP_LIBRARY)
+diff --git a/cmake/Modules/Packages/USER-MLIP.cmake b/cmake/Modules/Packages/USER-MLIP.cmake
+new file mode 100644
+index 0000000000..15df686bdc
+--- /dev/null
++++ b/cmake/Modules/Packages/USER-MLIP.cmake
+@@ -0,0 +1,2 @@
++find_package(MLIP REQUIRED)
++target_link_libraries(lammps PRIVATE MLIP::MLIP)
+diff --git a/cmake/Modules/FindN2P2.cmake b/cmake/Modules/FindN2P2.cmake
+new file mode 100644
+index 0000000000..c4fc1beeb6
+--- /dev/null
++++ b/cmake/Modules/FindN2P2.cmake
+@@ -0,0 +1,40 @@
++# - Find N2P2
++# Find the native N2P2 libraries.
++#
++#  N2P2_LIBRARIES    - List of libraries of the N2P2 package
++#  N2P2_FOUND        - True if N2P2 library was found.
++#
++
++find_path(N2P2_INCLUDE_DIR InterfaceLammps.h PATHS ENV N2P2ROOT PATH_SUFFIXES include )
++find_library(NNP_LIBRARY NAMES nnp PATHS ENV N2P2ROOT PATH_SUFFIXES lib)
++find_library(NNPIF_LIBRARY NAMES nnpif PATHS ENV N2P2ROOT PATH_SUFFIXES lib)
++
++include(FindPackageHandleStandardArgs)
++# handle the QUIETLY and REQUIRED arguments and set QUIP_FOUND to TRUE
++# if all listed variables are TRUE
++
++find_package_handle_standard_args(N2P2 DEFAULT_MSG
++  NNP_LIBRARY
++  NNPIF_LIBRARY
++  N2P2_INCLUDE_DIR)
++# Copy the results to the output variables and target.
++if(N2P2_FOUND)
++  set(N2P2_LIBRARIES ${NNP_LIBRARY} ${NNPIF_LIBRARY})
++  set(N2P2_INCLUDE_DIRS ${N2P2_INCLUDE_DIR})
++
++  if(NOT TARGET N2P2::NNP)
++    add_library(N2P2::NNP1 UNKNOWN IMPORTED)
++    set_target_properties(N2P2::NNP1 PROPERTIES
++      IMPORTED_LOCATION "${NNP_LIBRARY}"
++      INTERFACE_INCLUDE_DIRECTORIES "${N2P2_INCLUDE_DIR}")
++    add_library(N2P2::NNPIF UNKNOWN IMPORTED)
++    set_target_properties(N2P2::NNPIF PROPERTIES
++      IMPORTED_LOCATION "${NNPIF_LIBRARY}"
++      INTERFACE_INCLUDE_DIRECTORIES "${N2P2_INCLUDE_DIR}")
++   add_library(N2P2::NNP INTERFACE IMPORTED)
++   set_property(TARGET N2P2::NNP PROPERTY
++      INTERFACE_LINK_LIBRARIES N2P2::NNP1 N2P2::NNPIF)
++  endif()
++endif()
++
++mark_as_advanced(NNP_LIBRARY N2P2_INCLUDE_DIR NNPIF_LIBRARY)
+diff --git a/cmake/Modules/Packages/USER-NNP.cmake b/cmake/Modules/Packages/USER-NNP.cmake
+new file mode 100644
+index 0000000000..70695a3ac4
+--- /dev/null
++++ b/cmake/Modules/Packages/USER-NNP.cmake
+@@ -0,0 +1,2 @@
++find_package(N2P2 REQUIRED)
++target_link_libraries(lammps PRIVATE N2P2::NNP)
