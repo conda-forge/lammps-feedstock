@@ -23,9 +23,9 @@ index 000000000..c4fc1beeb
 +#  N2P2_FOUND        - True if N2P2 library was found.
 +#
 +
-+find_path(N2P2_INCLUDE_DIR InterfaceLammps.h PATHS ENV N2P2ROOT PATH_SUFFIXES include )
-+find_library(NNP_LIBRARY NAMES nnp PATHS ENV N2P2ROOT PATH_SUFFIXES lib)
-+find_library(NNPIF_LIBRARY NAMES nnpif PATHS ENV N2P2ROOT PATH_SUFFIXES lib)
++# find_path(N2P2_INCLUDE_DIR InterfaceLammps.h PATHS ENV N2P2ROOT PATH_SUFFIXES include )
++find_library(NNP_LIBRARY NAMES nnp)
++find_library(NNPIF_LIBRARY NAMES nnpif)
 +
 +include(FindPackageHandleStandardArgs)
 +# handle the QUIETLY and REQUIRED arguments and set QUIP_FOUND to TRUE
@@ -38,7 +38,7 @@ index 000000000..c4fc1beeb
 +# Copy the results to the output variables and target.
 +if(N2P2_FOUND)
 +  set(N2P2_LIBRARIES ${NNP_LIBRARY} ${NNPIF_LIBRARY})
-+  set(N2P2_INCLUDE_DIRS ${N2P2_INCLUDE_DIR})
++  # set(N2P2_INCLUDE_DIRS ${N2P2_INCLUDE_DIR})
 +
 +  if(NOT TARGET N2P2::NNP)
 +    add_library(N2P2::NNP1 UNKNOWN IMPORTED)
@@ -55,7 +55,7 @@ index 000000000..c4fc1beeb
 +  endif()
 +endif()
 +
-+mark_as_advanced(NNP_LIBRARY N2P2_INCLUDE_DIR NNPIF_LIBRARY)
++mark_as_advanced(NNP_LIBRARY NNPIF_LIBRARY)
 diff --git a/cmake/Modules/Packages/USER-NNP.cmake b/cmake/Modules/Packages/USER-NNP.cmake
 new file mode 100644
 index 000000000..a9f073f21
