@@ -17,6 +17,7 @@ fi
 # Serial
 mkdir build_serial
 cd build_serial
+cat cmake/Modules/Packages/USER-NNP.cmake
 cmake -D BUILD_MPI=OFF -D BUILD_OMP=OFF -D PKG_MPIIO=OFF $args ../cmake
 make # -j${NUM_CPUS}
 cp lmp $PREFIX/bin/lmp_serial
