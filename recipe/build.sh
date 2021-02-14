@@ -6,11 +6,12 @@ args="-D PKG_ASPHERE=ON -DPKG_BODY=ON -D PKG_CLASS2=ON -D PKG_COLLOID=ON -D PKG_
 mkdir src/USER-VCSGC
 cp vcsgc-lammps/fix_semigrandcanonical_mc.* src/USER-VCSGC
 
-# Mlip
+# Mlip and n2p2
 if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
-  args=$args" -D PKG_USER-MLIP=ON"
+  args=$args" -D PKG_USER-MLIP=ON -D PKG_USER-NNP=ON"
   export LDFLAGS="-L$PREFIX/lib -lcblas $LDFLAGS"
   cp -r mlip/src/external/MLIP4LAMMPS/USER-MLIP src/
+  cp -r n2p2/src/interface/LAMMPS/src/USER-NNP src/
 fi
 
 # Serial
