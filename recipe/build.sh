@@ -14,10 +14,12 @@ if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
   cp -r n2p2/src/interface/LAMMPS/src/USER-NNP src/
 fi
 
+# Validate 
+cat cmake/Modules/Packages/USER-NNP.cmake
+
 # Serial
 mkdir build_serial
 cd build_serial
-cat cmake/Modules/Packages/USER-NNP.cmake
 cmake -D BUILD_MPI=OFF -D BUILD_OMP=OFF -D PKG_MPIIO=OFF $args ../cmake
 make # -j${NUM_CPUS}
 cp lmp $PREFIX/bin/lmp_serial
