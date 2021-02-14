@@ -4,44 +4,12 @@ Date: Mon, 13 Jul 2020 18:45:33 +0100
 Subject: [PATCH] n2p2 support
 
 ---
- cmake/CMakeLists.txt                  |  6 ++--
  cmake/Modules/FindN2P2.cmake          | 40 +++++++++++++++++++++++++++
  cmake/Modules/Packages/USER-NNP.cmake |  3 ++
- 3 files changed, 46 insertions(+), 3 deletions(-)
+ 2 files changed, 43 insertions(+), 0 deletions(-)
  create mode 100644 cmake/Modules/FindN2P2.cmake
  create mode 100644 cmake/Modules/Packages/USER-NNP.cmake
 
-diff --git a/cmake/CMakeLists.txt b/cmake/CMakeLists.txt
-index 960bc69d2..157c4d10e 100644
---- a/cmake/CMakeLists.txt
-+++ b/cmake/CMakeLists.txt
-@@ -119,7 +119,7 @@ set(STANDARD_PACKAGES ASPHERE BODY CLASS2 COLLOID COMPRESS DIPOLE
-   USER-MANIFOLD USER-MEAMC USER-MESONT USER-MGPT USER-MISC USER-MOFFF USER-MOLFILE
-   USER-NETCDF USER-PHONON USER-PLUMED USER-PTM USER-QTB USER-REACTION
-   USER-REAXC USER-SCAFACOS USER-SDPD USER-SMD USER-SMTBQ USER-SPH USER-TALLY
--  USER-UEF USER-VTK USER-QUIP USER-QMMM USER-YAFF USER-ADIOS)
-+  USER-UEF USER-VTK USER-QUIP USER-QMMM USER-YAFF USER-ADIOS USER-NNP)
- set(SUFFIX_PACKAGES CORESHELL USER-OMP KOKKOS OPT USER-INTEL GPU)
- foreach(PKG ${STANDARD_PACKAGES} ${SUFFIX_PACKAGES})
-   option(PKG_${PKG} "Build ${PKG} Package" OFF)
-@@ -281,7 +281,7 @@ if(NOT ENABLE_SANITIZER STREQUAL "none")
-   endif()
- endif()
- 
--if(PKG_MSCG OR PKG_USER-ATC OR PKG_USER-AWPMD OR PKG_USER-QUIP OR PKG_LATTE)
-+if(PKG_MSCG OR PKG_USER-ATC OR PKG_USER-AWPMD OR PKG_USER-QUIP OR PKG_LATTE OR PKG_USER-NNP)
-   enable_language(C)
-   find_package(LAPACK)
-   find_package(BLAS)
-@@ -360,7 +360,7 @@ else()
- endif()
- 
- foreach(PKG_WITH_INCL KSPACE PYTHON VORONOI USER-COLVARS USER-MOLFILE USER-NETCDF USER-PLUMED USER-QMMM
--        USER-QUIP USER-SCAFACOS USER-SMD USER-VTK KIM LATTE MESSAGE MSCG COMPRESS)
-+    USER-QUIP USER-NNP USER-SCAFACOS USER-SMD USER-VTK KIM LATTE MESSAGE MSCG COMPRESS)
-   if(PKG_${PKG_WITH_INCL})
-     include(Packages/${PKG_WITH_INCL})
-   endif()
 diff --git a/cmake/Modules/FindN2P2.cmake b/cmake/Modules/FindN2P2.cmake
 new file mode 100644
 index 000000000..c4fc1beeb
