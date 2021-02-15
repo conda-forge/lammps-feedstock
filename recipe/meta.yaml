@@ -56,7 +56,7 @@ requirements:
 
   run:
     - python
-    - importlib_metadata
+    - setuptools
     - {{ mpi }}
     - kim-api
     - mlip  # [linux]
