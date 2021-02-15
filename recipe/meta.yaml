@@ -57,14 +57,14 @@ requirements:
     - libcurl
     - mpi4py
     - mlip  # [linux]
-    - n2p2  # [linux]
+    - n2p2 =2.1.1  # [linux]
 
   run:
     - python
     - {{ mpi }}
     - kim-api
     - mlip  # [linux]
-    - n2p2  # [linux]
+    - n2p2 =2.1.1  # [linux]
 
 test:
   imports:
