@@ -1,4 +1,4 @@
-{% set build = 1 %}
+{% set build = 2 %}
 {% set name = "lammps" %}
 {% set version = "patch_10Feb2021" %}
 {% set sha256 = "2c5ba2c7935ad559ca94ee826e8727e65b49ef4582eb856534fffba70e44101a" %}
@@ -58,6 +58,7 @@ requirements:
     - mpi4py
     - mlip  # [linux]
     - n2p2 =2.1.1  # [linux]
+    - quippy  # [linux]
 
   run:
     - python
@@ -66,6 +67,7 @@ requirements:
     - kim-api
     - mlip  # [linux]
     - n2p2 =2.1.1  # [linux]
+    - quippy  # [linux]
 
 test:
   imports:
