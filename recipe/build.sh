@@ -8,10 +8,11 @@ cp vcsgc-lammps/fix_semigrandcanonical_mc.* src/USER-VCSGC
 
 # Mlip and n2p2
 if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
-  args=$args" -D PKG_USER-MLIP=ON -D PKG_USER-NNP=ON -D PKG_USER-QUIP=ON"
+  args=$args" -D PKG_USER-MLIP=ON -D PKG_USER-NNP=ON -D PKG_USER-QUIP=ON -D PKG_USER-PACE=ON"
   export LDFLAGS="-L$PREFIX/lib -lcblas $LDFLAGS"
   cp -r mlip/src/external/MLIP4LAMMPS/USER-MLIP src/
   cp -r n2p2/src/interface/LAMMPS/src/USER-NNP src/
+  cp -r USER-PACE src/
 fi
 
 # Serial
