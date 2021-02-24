@@ -32,7 +32,7 @@ source:
     folder: n2p2
   - fn: user-pace.tar.gz
     url: https://github.com/jan-janssen/user-pace/archive/2978de0d005e69324dddbfd25a95bb82228167c8.tar.gz
-    sha256: 90fbc0756132984d0d7e6d92d2f53358c120e75f148910d90c027158163251b9
+    sha256: 30f2f548881362258e5d8f5995830311213da3c80162836b13c59314b474a352
     folder: USER-PACE
     
 build:
