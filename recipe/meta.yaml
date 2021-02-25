@@ -1,4 +1,4 @@
-{% set build = 3 %}
+{% set build = 4 %}
 {% set name = "lammps" %}
 {% set version = "patch_10Feb2021" %}
 {% set sha256 = "2c5ba2c7935ad559ca94ee826e8727e65b49ef4582eb856534fffba70e44101a" %}
@@ -30,10 +30,10 @@ source:
     url: https://github.com/CompPhysVienna/n2p2/archive/v2.1.1.tar.gz
     sha256: 90fbc0756132984d0d7e6d92d2f53358c120e75f148910d90c027158163251b9
     folder: n2p2
-  - fn: user-pace.tar.gz
-    url: https://github.com/jan-janssen/user-pace/archive/2978de0d005e69324dddbfd25a95bb82228167c8.tar.gz
+  - fn: lammps-user-pace.tar.gz
+    url: https://github.com/ICAMS/lammps-user-pace/archive/v.2021.2.3.tar.gz
     sha256: 30f2f548881362258e5d8f5995830311213da3c80162836b13c59314b474a352
-    folder: USER-PACE
+    folder: lammps-user-pace
     
 build:
   number: {{ build }}
