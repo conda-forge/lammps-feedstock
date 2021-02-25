@@ -32,7 +32,7 @@ source:
     folder: n2p2
   - fn: lammps-user-pace.tar.gz
     url: https://github.com/ICAMS/lammps-user-pace/archive/v.2021.2.3.tar.gz
-    sha256: 30f2f548881362258e5d8f5995830311213da3c80162836b13c59314b474a352
+    sha256: fa249434c13deab599213971b9650aee2ea7d02736ed154de1eeba1be05ac523
     folder: lammps-user-pace
     
 build:
