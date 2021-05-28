@@ -5,14 +5,12 @@ args="-D PKG_ASPHERE=ON -DPKG_BODY=ON -D PKG_CLASS2=ON -D PKG_COLLOID=ON -D PKG_
 # Plugins 
 mkdir src/USER-VCSGC
 cp vcsgc-lammps/fix_semigrandcanonical_mc.* src/USER-VCSGC
-cp -r lammps-user-pace/USER-PACE src/
 
 # Mlip and n2p2
 if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
-  args=$args" -D PKG_USER-MLIP=ON -D PKG_USER-NNP=ON -D PKG_USER-QUIP=ON"
+  args=$args" -D PKG_USER-MLIP=ON -D PKG_USER-HDNNP=ON -D PKG_USER-QUIP=ON"
   export LDFLAGS="-L$PREFIX/lib -lcblas $LDFLAGS"
   cp -r mlip/src/external/MLIP4LAMMPS/USER-MLIP src/
-  cp -r n2p2/src/interface/LAMMPS/src/USER-NNP src/
 fi
 
 # Serial
