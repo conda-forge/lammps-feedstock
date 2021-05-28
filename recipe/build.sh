@@ -5,7 +5,6 @@ args="-D PKG_ASPHERE=ON -DPKG_BODY=ON -D PKG_CLASS2=ON -D PKG_COLLOID=ON -D PKG_
 # Plugins 
 mkdir src/USER-VCSGC
 cp vcsgc-lammps/fix_semigrandcanonical_mc.* src/USER-VCSGC
-cp -r lammps-user-pace/USER-PACE src/
 
 # Mlip and n2p2
 if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
