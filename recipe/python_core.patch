@@ -1,0 +1,49 @@
+From 232ae5e8568a413cc7f3524ca718d0d5b72c7914 Mon Sep 17 00:00:00 2001
+From: Richard Berger <richard.berger@temple.edu>
+Date: Tue, 1 Jun 2021 17:36:45 -0400
+Subject: [PATCH] Fix typo in core.py
+
+---
+ python/lammps/core.py | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
+
+diff --git a/python/lammps/core.py b/python/lammps/core.py
+index 9941b41bed2..13743a16ff3 100644
+--- a/python/lammps/core.py
++++ b/python/lammps/core.py
+@@ -312,8 +312,7 @@ def __init__(self,name='',cmdargs=None,ptr=None,comm=None):
+         pass
+ 
+     # if no ptr provided, create an instance of LAMMPS
+-    #   don't know how to pass an MPI communicator from PyPar
+-    #   but we can pass an MPI communicator from mpi4py v2.0.0 and later
++    #   we can pass an MPI communicator from mpi4py v2.0.0 and later
+     #   no_mpi call lets LAMMPS use MPI_COMM_WORLD
+     #   cargs = array of C strings from args
+     # if ptr, then are embedding Python in LAMMPS input script
+@@ -1134,10 +1133,10 @@ def gather_atoms(self,name,dtype,count):
+     with ExceptionCheck(self):
+       if dtype == 0:
+         data = ((count*natoms)*c_int)()
+-        self.lib.lammps_gather_atoms(self.lmp,name,type,count,data)
++        self.lib.lammps_gather_atoms(self.lmp,name,dtype,count,data)
+       elif dtype == 1:
+         data = ((count*natoms)*c_double)()
+-        self.lib.lammps_gather_atoms(self.lmp,name,type,count,data)
++        self.lib.lammps_gather_atoms(self.lmp,name,dtype,count,data)
+       else:
+         return None
+     return data
+@@ -1150,10 +1149,10 @@ def gather_atoms_concat(self,name,dtype,count):
+     with ExceptionCheck(self):
+       if dtype == 0:
+         data = ((count*natoms)*c_int)()
+-        self.lib.lammps_gather_atoms_concat(self.lmp,name,type,count,data)
++        self.lib.lammps_gather_atoms_concat(self.lmp,name,dtype,count,data)
+       elif dtype == 1:
+         data = ((count*natoms)*c_double)()
+-        self.lib.lammps_gather_atoms_concat(self.lmp,name,type,count,data)
++        self.lib.lammps_gather_atoms_concat(self.lmp,name,dtype,count,data)
+       else:
+           return None
+     return data
