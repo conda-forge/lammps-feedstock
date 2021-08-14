@@ -1,7 +1,7 @@
-{% set build = 2 %}
+{% set build = 0 %}
 {% set name = "lammps" %}
-{% set version = "patch_27May2021" %}
-{% set sha256 = "f9f29970941f406d5c250de52a4cd07e5a4e44ae3b5ffed46edd019d998b8c33" %}
+{% set version = "patch_30Jul2021" %}
+{% set sha256 = "c5e998c8282a835d2bcba4fceffe3cecdf9aed9bdf79fa9c945af573e632f6e7" %}
 {% set date = datetime.datetime.strptime(version.split('_')[1], "%d%b%Y") %}
 {% set conda_version = "{:%Y.%m.%d}".format(date) %}
 
@@ -16,7 +16,6 @@ source:
     patches: 
       - macos_install.patch
       - vcsgc_mtp_n2p2.patch
-      - python_core.patch
   - fn: vcsgc-lammps.tar.gz
     url: https://vcsgc-lammps.materialsmodeling.org/vcsgc-lammps.tgz
     sha256: 9227413d3f1ef4205bd06b48f91df4b461dccf88540c756e43ab848df908a6ba
