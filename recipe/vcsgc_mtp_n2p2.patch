@@ -15,7 +15,7 @@ diff --git a/cmake/CMakeLists.txt b/cmake/CMakeLists.txt
 index a778c89d42e..23a3140fbbf 100644
 --- a/cmake/CMakeLists.txt
 +++ b/cmake/CMakeLists.txt
-@@ -221,7 +221,10 @@ set(STANDARD_PACKAGES
+@@ -221,7 +221,9 @@ set(STANDARD_PACKAGES
    UEF
    VORONOI
    VTK
