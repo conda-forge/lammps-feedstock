@@ -4,35 +4,28 @@ Date: Fri, 28 May 2021 09:11:33 +0200
 Subject: [PATCH] Patches
 
 ---
- cmake/CMakeLists.txt                   |  4 ++--
+ cmake/CMakeLists.txt                   |  4 +++-
  cmake/Modules/FindMLIP.cmake           | 27 ++++++++++++++++++++++++++
  cmake/Modules/Packages/USER-MLIP.cmake |  2 ++
- 3 files changed, 31 insertions(+), 2 deletions(-)
+ 3 files changed, 32 insertions(+), 1 deletions(-)
  create mode 100644 cmake/Modules/FindMLIP.cmake
  create mode 100644 cmake/Modules/Packages/USER-MLIP.cmake
 
 diff --git a/cmake/CMakeLists.txt b/cmake/CMakeLists.txt
-index aa6b0ed583c..6c40664605f 100644
+index a778c89d42e..23a3140fbbf 100644
 --- a/cmake/CMakeLists.txt
 +++ b/cmake/CMakeLists.txt
-@@ -146,7 +146,7 @@ set(STANDARD_PACKAGES ASPHERE BODY CLASS2 COLLOID COMPRESS DIPOLE
-   USER-HDNNP USER-LB USER-MANIFOLD USER-MDI USER-MEAMC USER-MESONT USER-MGPT USER-MISC
-   USER-MOFFF USER-MOLFILE USER-NETCDF USER-PHONON USER-PLUMED USER-PTM USER-QTB
-   USER-RANN USER-REACTION USER-REAXC USER-SCAFACOS USER-SDPD USER-SMD USER-SMTBQ USER-SPH
--  USER-TALLY USER-UEF USER-VTK USER-QUIP USER-QMMM USER-YAFF USER-PACE USER-BROWNIAN)
-+  USER-TALLY USER-UEF USER-VTK USER-QUIP USER-QMMM USER-YAFF USER-PACE USER-BROWNIAN USER-VCSGC USER-MLIP)
+@@ -221,7 +221,10 @@ set(STANDARD_PACKAGES
+   UEF
+   VORONOI
+   VTK
+-  YAFF)
++  YAFF
++  USER-VCSGC
++  USER-MLIP)
  
- set(SUFFIX_PACKAGES CORESHELL GPU KOKKOS OPT USER-INTEL USER-OMP)
+ set(SUFFIX_PACKAGES CORESHELL GPU KOKKOS OPT INTEL OPENMP)
  
-@@ -349,7 +349,7 @@ else()
- endif()
- 
- foreach(PKG_WITH_INCL KSPACE PYTHON MLIAP VORONOI USER-COLVARS USER-HDNNP USER-MDI USER-MOLFILE USER-NETCDF USER-PLUMED
--        USER-QMMM USER-QUIP USER-SCAFACOS USER-SMD USER-VTK KIM LATTE MESSAGE MSCG COMPRESS USER-PACE)
-+        USER-QMMM USER-QUIP USER-SCAFACOS USER-SMD USER-VTK KIM LATTE MESSAGE MSCG COMPRESS USER-PACE USER-MLIP)
-   if(PKG_${PKG_WITH_INCL})
-     include(Packages/${PKG_WITH_INCL})
-   endif()
 diff --git a/cmake/Modules/FindMLIP.cmake b/cmake/Modules/FindMLIP.cmake
 new file mode 100644
 index 00000000000..97c229ef148
