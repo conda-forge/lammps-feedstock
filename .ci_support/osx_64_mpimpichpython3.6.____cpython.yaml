@@ -18,6 +18,8 @@ fortran_compiler:
 - gfortran
 fortran_compiler_version:
 - '9'
+hdf5:
+- 1.12.1
 libcurl:
 - '7'
 libpng:
