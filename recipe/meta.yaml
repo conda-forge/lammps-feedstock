@@ -1,4 +1,4 @@
-{% set build = 1 %}
+{% set build = 2 %}
 {% set name = "lammps" %}
 {% set version = "patch_30Jul2021" %}
 {% set sha256 = "c5e998c8282a835d2bcba4fceffe3cecdf9aed9bdf79fa9c945af573e632f6e7" %}
@@ -47,6 +47,7 @@ requirements:
     - {{ mpi }}
     - zlib
     - fftw
+    - hdf5
     - libpng
     - libcblas  # [linux]
     - kim-api
