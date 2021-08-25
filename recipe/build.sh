@@ -14,8 +14,7 @@ if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
 fi
 
 # HDF5
-export HDF5_LIBRARIES="${PREFIX}/lib"
-export HDF5_INCLUDE_DIRS="${PREFIX}/include"
+export LDFLAGS="-L$PREFIX/lib -lhdf5 $LDFLAGS"
 
 # Serial
 mkdir build_serial
