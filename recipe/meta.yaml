@@ -47,6 +47,7 @@ requirements:
     - {{ mpi }}
     - zlib
     - fftw
+    - hdf5
     - libpng
     - libcblas  # [linux]
     - kim-api
