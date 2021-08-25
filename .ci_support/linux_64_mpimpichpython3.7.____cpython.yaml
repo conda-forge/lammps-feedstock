@@ -20,6 +20,8 @@ fortran_compiler:
 - gfortran
 fortran_compiler_version:
 - '9'
+hdf5:
+- 1.12.1
 libcblas:
 - 3.8 *netlib
 libcurl:
