@@ -13,6 +13,10 @@ if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
   cp -r mlip/src/external/MLIP4LAMMPS/USER-MLIP src/
 fi
 
+# HDF5
+export HDF5_LIBRARIES="${PREFIX}/lib"
+export HDF5_INCLUDE_DIRS="${PREFIX}/include"
+
 # Serial
 mkdir build_serial
 cd build_serial
