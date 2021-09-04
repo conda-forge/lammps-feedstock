@@ -54,7 +54,7 @@ requirements:
     - libcurl
     - mpi4py
     - mlip  # [linux]
-    - n2p2 =2.1.1  # [linux]
+    - n2p2 =2.1.4  # [linux]
     - quippy =0.0.1=*_2  # [linux]
     - latte
 
@@ -64,7 +64,7 @@ requirements:
     - {{ mpi }}
     - kim-api
     - mlip  # [linux]
-    - n2p2 =2.1.1  # [linux]
+    - n2p2 =2.1.4  # [linux]
     - quippy =0.0.1=*_2  # [linux]
     - latte
 
