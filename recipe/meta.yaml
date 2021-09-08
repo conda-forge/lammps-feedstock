@@ -1,4 +1,4 @@
-{% set build = 7 %}
+{% set build = 8 %}
 {% set name = "lammps" %}
 {% set version = "patch_30Jul2021" %}
 {% set sha256 = "c5e998c8282a835d2bcba4fceffe3cecdf9aed9bdf79fa9c945af573e632f6e7" %}
@@ -40,6 +40,7 @@ requirements:
     - cmake
     - make
     - pkg-config
+    - cython
   
   host:
     - python
