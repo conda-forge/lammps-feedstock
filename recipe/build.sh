@@ -16,7 +16,7 @@ fi
 # pypy does not support LAMMPS internal Python 
 PYTHON_IMPL=$($PYTHON -c "import platform; print(platform.python_implementation())")
 if [ "$PYTHON_IMPL" != "PyPy" ]; then
-  args=$args" -D MLIAP_ENABLE_PYTHON=ON -D PKG_PYTHON=ON -D PYTHON_EXECUTABLE=python"
+  args=$args" -D MLIAP_ENABLE_PYTHON=ON -D PKG_PYTHON=ON -D PYTHON_EXECUTABLE=${PYTHON}"
 fi
 
 # Serial
