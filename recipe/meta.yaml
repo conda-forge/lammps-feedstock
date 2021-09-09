@@ -1,4 +1,4 @@
-{% set build = 0 %}
+{% set build = 1 %}
 {% set name = "lammps" %}
 {% set version = "patch_31Aug2021" %}
 {% set sha256 = "532c42576a79d72682deaf43225ca773ed9f9e35deb484a82f91905b6cba23ec" %}
@@ -16,6 +16,7 @@ source:
     patches: 
       - macos_install.patch
       - vcsgc_mtp_n2p2.patch
+      - mliappy.patch
   - fn: vcsgc-lammps.tar.gz
     url: https://vcsgc-lammps.materialsmodeling.org/vcsgc-lammps.tgz
     sha256: 9227413d3f1ef4205bd06b48f91df4b461dccf88540c756e43ab848df908a6ba
