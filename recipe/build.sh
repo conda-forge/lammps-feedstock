@@ -14,7 +14,8 @@ if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
 fi
 
 # pypy does not support LAMMPS internal Python 
-if [[ "$python_impl" != "pypy"  ]]; then
+PYTHON_IMPL=$($PYTHON -c "import platform; print(platform.python_implementation())")
+if [ "$PYTHON_IMPL" != "PyPy" ]; then
   args=$args" -D MLIAP_ENABLE_PYTHON=ON -D PKG_PYTHON=ON"
 fi
 
