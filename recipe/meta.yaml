@@ -1,4 +1,4 @@
-{% set build = 8 %}
+{% set build = 9 %}
 {% set name = "lammps" %}
 {% set version = "patch_30Jul2021" %}
 {% set sha256 = "c5e998c8282a835d2bcba4fceffe3cecdf9aed9bdf79fa9c945af573e632f6e7" %}
@@ -57,7 +57,6 @@ requirements:
     - mlip  # [linux]
     - n2p2 =2.1.4  # [linux]
     - quippy =0.0.1=*_2  # [linux]
-    - latte
 
   run:
     - python
@@ -67,7 +66,6 @@ requirements:
     - mlip  # [linux]
     - n2p2 =2.1.4  # [linux]
     - quippy =0.0.1=*_2  # [linux]
-    - latte
 
 test:
   imports:
