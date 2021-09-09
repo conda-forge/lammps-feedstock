@@ -40,11 +40,10 @@ requirements:
     - cmake
     - make
     - pkg-config
-    - cython
-    - python
   
   host:
     - python
+    - cython
     - setuptools
     - {{ mpi }}
     - zlib
