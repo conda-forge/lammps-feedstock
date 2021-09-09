@@ -57,7 +57,6 @@ requirements:
     - mlip  # [linux]
     - n2p2 =2.1.4  # [linux]
     - quippy =0.0.1=*_2  # [linux]
-    - latte
 
   run:
     - python
@@ -67,7 +66,6 @@ requirements:
     - mlip  # [linux]
     - n2p2 =2.1.4  # [linux]
     - quippy =0.0.1=*_2  # [linux]
-    - latte
 
 test:
   imports:
