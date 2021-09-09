@@ -43,6 +43,7 @@ requirements:
   
   host:
     - python
+    - cython
     - setuptools
     - {{ mpi }}
     - zlib

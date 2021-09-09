@@ -13,6 +13,12 @@ if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
   cp -r mlip/src/external/MLIP4LAMMPS/USER-MLIP src/
 fi
 
+# pypy does not support LAMMPS internal Python 
+PYTHON_IMPL=$($PYTHON -c "import platform; print(platform.python_implementation())")
+if [ "$PYTHON_IMPL" != "PyPy" ]; then
+  args=$args" -D MLIAP_ENABLE_PYTHON=ON -D PKG_PYTHON=ON -D Python_ROOT_DIR=${PREFIX} -D Python_FIND_STRATEGY=LOCATION"
+fi
+
 # Serial
 mkdir build_serial
 cd build_serial
