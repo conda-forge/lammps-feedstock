@@ -1,4 +1,4 @@
-{% set build = 1 %}
+{% set build = 2 %}
 {% set name = "lammps" %}
 {% set version = "patch_31Aug2021" %}
 {% set sha256 = "532c42576a79d72682deaf43225ca773ed9f9e35deb484a82f91905b6cba23ec" %}
@@ -77,7 +77,7 @@ test:
 
 about:
   home: http://lammps.sandia.gov
-  license: GPL-2.0
+  license: GPL-2.0-only
   license_family: GPL
   license_file: '{{ environ["RECIPE_DIR"] }}/LICENSE'
   summary: 'LAMMPS stands for Large-scale Atomic/Molecular Massively Parallel Simulator.'
