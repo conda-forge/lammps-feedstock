@@ -54,6 +54,7 @@ requirements:
     - libcblas  # [linux]
     - libblas  # [linux]
     - liblapack  # [linux]
+    - liblapacke  # [linux]
     - kim-api
     - libcurl
     - mpi4py
