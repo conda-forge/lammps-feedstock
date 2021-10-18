@@ -52,6 +52,7 @@ requirements:
     - hdf5
     - libpng
     - libcblas  # [linux]
+    - libblas  # [linux]
     - liblapack  # [linux]
     - kim-api
     - libcurl
