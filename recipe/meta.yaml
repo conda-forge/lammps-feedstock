@@ -52,6 +52,7 @@ requirements:
     - hdf5
     - libpng
     - libcblas  # [linux]
+    - liblapack  # [linux]
     - kim-api
     - libcurl
     - mpi4py
