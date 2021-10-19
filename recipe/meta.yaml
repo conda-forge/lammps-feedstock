@@ -1,7 +1,7 @@
-{% set build = 6 %}
+{% set build = 0 %}
 {% set name = "lammps" %}
-{% set version = "patch_31Aug2021" %}
-{% set sha256 = "532c42576a79d72682deaf43225ca773ed9f9e35deb484a82f91905b6cba23ec" %}
+{% set version = "stable_29Sep2021" %}
+{% set sha256 = "2dff656cb21fd9a6d46c818741c99d400cfb1b12102604844663b655fb2f893d" %}
 {% set date = datetime.datetime.strptime(version.split('_')[1], "%d%b%Y") %}
 {% set conda_version = "{:%Y.%m.%d}".format(date) %}
 
@@ -52,6 +52,8 @@ requirements:
     - hdf5
     - libpng
     - libcblas  # [linux]
+    - libblas  # [linux]
+    - liblapack  # [linux]
     - kim-api
     - libcurl
     - mpi4py
