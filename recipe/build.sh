@@ -9,7 +9,7 @@ cp vcsgc-lammps/fix_semigrandcanonical_mc.* src/USER-VCSGC
 # Mlip and n2p2
 if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
   args=$args" -D PKG_USER-MLIP=ON -D PKG_ML-HDNNP=ON -D DOWNLOAD_N2P2=OFF -D N2P2_DIR=${PREFIX} -D PKG_ML-QUIP=ON -D PKG_LATTE=ON -D DOWNLOAD_QUIP=OFF"
-  export LDFLAGS="-L$PREFIX/lib -lcblas -lblas -llapack $LDFLAGS"
+  export LDFLAGS="-L$PREFIX/lib -lcblas -lblas -llapack -fopenmp $LDFLAGS"
   cp -r mlip/src/external/MLIP4LAMMPS/USER-MLIP src/
 fi
 
