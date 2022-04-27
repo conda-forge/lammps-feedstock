@@ -22,7 +22,7 @@ fi
 # Serial
 mkdir build_serial
 cd build_serial
-cmake -D BUILD_MPI=OFF -D BUILD_OMP=OFF -D PKG_MPIIO=OFF $args ../cmake
+cmake ${CMAKE_ARGS} -D BUILD_MPI=OFF -D BUILD_OMP=OFF -D PKG_MPIIO=OFF $args ../cmake
 make # -j${NUM_CPUS}
 cp lmp $PREFIX/bin/lmp_serial
 cd ..
