@@ -42,11 +42,13 @@ cd build_lib
 cmake -D BUILD_LIB=ON -D BUILD_SHARED_LIBS=ON -D BUILD_MPI=ON -D PKG_MPIIO=ON -D LAMMPS_EXCEPTIONS=yes $args ../cmake
 make # -j${NUM_CPUS}
 cp liblammps${SHLIB_EXT}* ../src  # For compatibility with the original make system.
-cp libyaml-cpp-pace${SHLIB_EXT}* ../src
+cp liblammps_pace.* ../src
+cp build-yaml-cpp/libyaml-cpp-pace${SHLIB_EXT}* ../src
 cd ../src
 make install-python 
 mkdir -p $PREFIX/include/lammps
 cp library.h $PREFIX/include/lammps
 cp liblammps${SHLIB_EXT}* "${PREFIX}"/lib/
+cp liblammps_pace.* "${PREFIX}"/lib/
 cp libyaml-cpp-pace${SHLIB_EXT}* "${PREFIX}"/lib/
 cd ..
