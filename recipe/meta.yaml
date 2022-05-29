@@ -65,6 +65,7 @@ requirements:
     - python
     - setuptools
     - {{ mpi }}
+    - openssh
     - kim-api
     - mlip  # [linux]
     - n2p2 =2.1.4  # [linux]
