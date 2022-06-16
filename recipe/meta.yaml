@@ -1,7 +1,7 @@
-{% set build = 1 %}
+{% set build = 4 %}
 {% set name = "lammps" %}
-{% set version = "patch_27Oct2021" %}
-{% set sha256 = "c06f682fcf9d5921ca90c857a104e90fba0fe65decaac9732745e4da49281938" %}
+{% set version = "stable_29Sep2021_update3" %}
+{% set sha256 = "e4c274f0dc5fdedc43f2b365156653d1105197a116ff2bafe893523cdb22532e" %}
 {% set date = datetime.datetime.strptime(version.split('_')[1], "%d%b%Y") %}
 {% set conda_version = "{:%Y.%m.%d}".format(date) %}
 
