@@ -49,6 +49,6 @@ make install-python
 mkdir -p $PREFIX/include/lammps
 cp library.h $PREFIX/include/lammps
 cp liblammps${SHLIB_EXT}* "${PREFIX}"/lib/
-cp liblammps_pace.* "${PREFIX}"/lib/
-cp libyaml-cpp-pace${SHLIB_EXT}* "${PREFIX}"/lib/
+#cp liblammps_pace.* "${PREFIX}"/lib/
+#cp libyaml-cpp-pace${SHLIB_EXT}* "${PIX}"/lib/REF
 cd ..
