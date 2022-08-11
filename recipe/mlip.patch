@@ -5,8 +5,8 @@ Subject: [PATCH] Update pair_MLIP.h
 
 ---
  LAMMPS/USER-MLIP/pair_MLIP.cpp | 2 --
- LAMMPS/USER-MLIP/pair_MLIP.h   | 2 +-
- 2 file changed, 1 insertion(+), 3 deletion(-)
+ LAMMPS/USER-MLIP/pair_MLIP.h   | 4 ++--
+ 2 file changed, 2 insertion(+), 4 deletion(-)
 
 diff --git a/LAMMPS/USER-MLIP/pair_MLIP.h b/LAMMPS/USER-MLIP/pair_MLIP.h
 index 36e5296..dc81719 100644
@@ -17,12 +17,23 @@ index 36e5296..dc81719 100644
  extern void MLIP_init(const char*, const char*, int, double&, int&);
  extern void MLIP_calc_cfg(int, double*, double**, int*, int*, double&, double**, double*);
 -extern void MLIP_calc_nbh(int, int*, int*, int**, int, int, double**, int*, double**, double&, double*, double**);
+-extern void MLIP_finalize();
 +extern void MLIP_calc_nbh(int, int*, int*, int**, double**, int*, double**, double&, double*, double**);
++extern void MLIP_fnlz();
  extern void MLIP_finalize();
  
  namespace LAMMPS_NS {
 --- a/LAMMPS/USER-MLIP/pair_MLIP.cpp
 +++ b/LAMMPS/USER-MLIP/pair_MLIP.cpp
+@@ -64,7 +64,7 @@ PairMLIP::~PairMLIP()
+       memory->destroy(cutsq);
+   }
+   
+-  if (inited) MLIP_finalize();
++  if (inited) MLIP_fnlz();
+ }
+ 
+ /* ---------------------------------------------------------------------- */
 @@ -86,8 +86,6 @@ void PairMLIP::compute(int eflag, int vflag)
  		  list->ilist, 
  		  list->numneigh, 
@@ -32,3 +43,12 @@ index 36e5296..dc81719 100644
  		  atom->x, 
  		  atom->type,
  		  atom->f,
+@@ -203,7 +201,7 @@ void PairMLIP::init_style()
+       error->all(FLERR, "Pair style MLIP requires Newton pair on");
+ 
+   if (inited)
+-    MLIP_finalize();
++    MLIP_fnlz();
+   
+   if (MLIPlog_filename[0] != '\0')
+     MLIP_init(MLIPsettings_filename, MLIPlog_filename, atom->ntypes, cutoff, mode);
