@@ -20,7 +20,6 @@ index 36e5296..dc81719 100644
 -extern void MLIP_finalize();
 +extern void MLIP_calc_nbh(int, int*, int*, int**, double**, int*, double**, double&, double*, double**);
 +extern void MLIP_fnlz();
- extern void MLIP_finalize();
  
  namespace LAMMPS_NS {
 --- a/LAMMPS/USER-MLIP/pair_MLIP.cpp
@@ -42,7 +41,7 @@ index 36e5296..dc81719 100644
 -		  atom->nghost,
  		  atom->x, 
  		  atom->type,
- 		  atom->f,
+ 		  atom->f, 
 @@ -203,7 +201,7 @@ void PairMLIP::init_style()
        error->all(FLERR, "Pair style MLIP requires Newton pair on");
  
