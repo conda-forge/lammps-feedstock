@@ -19,7 +19,7 @@ source:
       - mliappy.patch
   - fn: lammps-plugins.tar.gz
     url: https://github.com/lammps/lammps-plugins/archive/{{ version }}.tar.gz
-    sha256: 9227413d3f1ef4205bd06b48f91df4b461dccf88540c756e43ab848df908a6ba
+    sha256: 6d8bd8bc29cfebfddf215232acce910eaef403032ea8e276745455446875f1ac
     folder: lammps-plugins
   - fn: mlip.tar.gz
     url: https://gitlab.com/ashapeev/mlip-1-legacy/-/archive/master/mlip-1-legacy-master.tar.gz
