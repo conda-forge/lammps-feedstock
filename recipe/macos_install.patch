@@ -1,22 +1,22 @@
-From 6f7ba48adf1e67cdf30e6a7bc9e1ab6d587d4b85 Mon Sep 17 00:00:00 2001
+From 6cec9c5821d86744e26a5fcd5c90145f65a60497 Mon Sep 17 00:00:00 2001
 From: Jan Janssen <jan-janssen@users.noreply.github.com>
-Date: Thu, 26 May 2022 09:22:29 -0600
-Subject: [PATCH] Update Makefile
+Date: Thu, 11 Aug 2022 13:34:37 -0600
+Subject: [PATCH] Mac OS X install fix
 
 ---
  src/Makefile | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/Makefile b/src/Makefile
-index bedce0c2c4d..ae85c9370cc 100644
+index 649a1ad0026..608de54b548 100644
 --- a/src/Makefile
 +++ b/src/Makefile
-@@ -460,7 +460,7 @@ mpi-stubs:
+@@ -461,7 +461,7 @@ mpi-stubs:
  sinclude ../lib/python/Makefile.lammps
  install-python:
  	@rm -rf ../python/build
--	@$(PYTHON) ../python/install.py -p ../python/lammps -l ../src/liblammps.so
-+	@$(PYTHON) ../python/install.py -p ../python/lammps -l ../src/liblammps.[ds]*[a-z]
+-	@$(PYTHON) ../python/install.py -p ../python/lammps -l ../src/liblammps.so -w $(PWD)
++	@$(PYTHON) ../python/install.py -p ../python/lammps -l ../src/liblammps.[ds]*[a-z] -w $(PWD)
  
  # Create a tarball of src dir and packages
  
