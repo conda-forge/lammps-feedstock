@@ -4,9 +4,9 @@ Date: Thu, 11 Aug 2022 20:55:20 +0000
 Subject: [PATCH] Update pair_MLIP.h
 
 ---
- LAMMPS/USER-MLIP/pair_MLIP.cpp | 2 --
+ LAMMPS/USER-MLIP/pair_MLIP.cpp | 6 ++----
  LAMMPS/USER-MLIP/pair_MLIP.h   | 4 ++--
- 2 file changed, 2 insertion(+), 4 deletion(-)
+ 2 file changed, 4 insertion(+), 6 deletion(-)
 
 diff --git a/LAMMPS/USER-MLIP/pair_MLIP.h b/LAMMPS/USER-MLIP/pair_MLIP.h
 index 36e5296..dc81719 100644
