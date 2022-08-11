@@ -22,11 +22,9 @@ source:
     sha256: 6d8bd8bc29cfebfddf215232acce910eaef403032ea8e276745455446875f1ac
     folder: lammps-plugins
   - fn: mlip.tar.gz
-    url: https://gitlab.com/ashapeev/mlip-1-legacy/-/archive/master/mlip-1-legacy-master.tar.gz
+    url: https://gitlab.com/ashapeev/interface-lammps-mlip-2/-/archive/master/interface-lammps-mlip-2-master.tar.gz
     sha256: b7b8624ea9e1ee57bdc083e214c607c0de8a87643dcdc8d56c6c7084a4109f68
     folder: mlip
-    patches:
-      - domain.patch
     
 build:
   number: {{ build }}
