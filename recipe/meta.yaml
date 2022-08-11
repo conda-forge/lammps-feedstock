@@ -46,6 +46,7 @@ requirements:
     - python
     - cython
     - setuptools
+    - pip
     - {{ mpi }}
     - zlib
     - fftw
