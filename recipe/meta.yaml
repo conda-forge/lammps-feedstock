@@ -1,7 +1,7 @@
-{% set build = 6 %}
+{% set build = 0 %}
 {% set name = "lammps" %}
-{% set version = "stable_29Sep2021_update3" %}
-{% set sha256 = "e4c274f0dc5fdedc43f2b365156653d1105197a116ff2bafe893523cdb22532e" %}
+{% set version = "stable_23Jun2022_update1" %}
+{% set sha256 = "58e3b2b984f8935bb0db5631e143be2826c45ffd48844f7c394f36624a3e17a2" %}
 {% set date = datetime.datetime.strptime(version.split('_')[1], "%d%b%Y") %}
 {% set conda_version = "{:%Y.%m.%d}".format(date) %}
 
@@ -17,16 +17,16 @@ source:
       - macos_install.patch
       - vcsgc_mtp_n2p2.patch
       - mliappy.patch
-  - fn: vcsgc-lammps.tar.gz
-    url: https://vcsgc-lammps.materialsmodeling.org/vcsgc-lammps.tgz
-    sha256: 9227413d3f1ef4205bd06b48f91df4b461dccf88540c756e43ab848df908a6ba
-    folder: vcsgc-lammps
+  - fn: lammps-plugins.tar.gz
+    url: https://github.com/lammps/lammps-plugins/archive/{{ version }}.tar.gz
+    sha256: 6d8bd8bc29cfebfddf215232acce910eaef403032ea8e276745455446875f1ac
+    folder: lammps-plugins
   - fn: mlip.tar.gz
-    url: https://gitlab.com/ashapeev/mlip-1-legacy/-/archive/master/mlip-1-legacy-master.tar.gz
-    sha256: b7b8624ea9e1ee57bdc083e214c607c0de8a87643dcdc8d56c6c7084a4109f68
+    url: https://gitlab.com/ashapeev/interface-lammps-mlip-2/-/archive/master/interface-lammps-mlip-2-master.tar.gz
+    sha256: 37c5d9315cbc28e4b1cff36bbfac5b2b331fddcdf5fbcfd45e51c545137e969e
     folder: mlip
     patches:
-      - domain.patch
+      - mlip.patch
     
 build:
   number: {{ build }}
@@ -41,6 +41,10 @@ requirements:
     - cmake
     - make
     - pkg-config
+    - python
+    - cython
+    - setuptools
+    - pip
   
   host:
     - python
@@ -65,6 +69,7 @@ requirements:
   run:
     - python
     - setuptools
+    - pip
     - {{ mpi }}
     - kim-api
     - mlip  # [linux]
