@@ -42,6 +42,7 @@ requirements:
     - make
     - pkg-config
     - python
+    - cython
     - setuptools
     - pip
   
