@@ -41,15 +41,11 @@ requirements:
     - cmake
     - make
     - pkg-config
-    - python
-    - pip
-    - setuptools
   
   host:
     - python
     - cython
     - setuptools
-    - pip
     - {{ mpi }}
     - zlib
     - fftw
@@ -69,6 +65,7 @@ requirements:
   run:
     - python
     - setuptools
+    - pip
     - {{ mpi }}
     - kim-api
     - mlip  # [linux]
