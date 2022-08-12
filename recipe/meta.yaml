@@ -41,6 +41,9 @@ requirements:
     - cmake
     - make
     - pkg-config
+    - python
+    - setuptools
+    - pip
   
   host:
     - python
