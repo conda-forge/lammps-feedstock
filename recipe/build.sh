@@ -15,7 +15,7 @@ fi
 # pypy does not support LAMMPS internal Python 
 PYTHON_IMPL=$($PYTHON -c "import platform; print(platform.python_implementation())")
 if [ "$PYTHON_IMPL" != "PyPy" ]; then
-  args=$args" -D MLIAP_ENABLE_PYTHON=ON -D Python_ROOT_DIR=${PREFIX} -D Python_FIND_STRATEGY=LOCATION"
+  args=$args" -D MLIAP_ENABLE_PYTHON=ON -D PKG_PYTHON=ON -D Python_ROOT_DIR=${PREFIX} -D Python_FIND_STRATEGY=LOCATION"
 fi
 
 # Serial
@@ -38,7 +38,7 @@ cd ..
 # Library
 mkdir build_lib
 cd build_lib
-cmake -D BUILD_LIB=ON -D BUILD_SHARED_LIBS=ON -D BUILD_MPI=ON -D PKG_MPIIO=ON -D LAMMPS_EXCEPTIONS=yes -D PKG_PYTHON=ON $args ../cmake
+cmake -D BUILD_LIB=ON -D BUILD_SHARED_LIBS=ON -D BUILD_MPI=ON -D PKG_MPIIO=ON -D LAMMPS_EXCEPTIONS=yes $args ../cmake
 make # -j${NUM_CPUS}
 cp liblammps${SHLIB_EXT}* ../src  # For compatibility with the original make system.
 cd ../src
