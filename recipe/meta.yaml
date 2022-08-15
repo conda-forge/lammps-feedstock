@@ -46,6 +46,7 @@ requirements:
     - python
     - cython
     - setuptools
+    - pip
     - {{ mpi }}
     - zlib
     - fftw
@@ -65,7 +66,6 @@ requirements:
   run:
     - python
     - setuptools
-    - pip
     - {{ mpi }}
     - kim-api
     - mlip  # [linux]
