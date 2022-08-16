@@ -1,22 +1,22 @@
-fix liblammps for Mac Os X
-author: Jan Janssen (MPIE)
+From 6cec9c5821d86744e26a5fcd5c90145f65a60497 Mon Sep 17 00:00:00 2001
+From: Jan Janssen <jan-janssen@users.noreply.github.com>
+Date: Thu, 11 Aug 2022 13:34:37 -0600
+Subject: [PATCH] Mac OS X install fix
 
 ---
  src/Makefile | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/Makefile b/src/Makefile
-index 2e6ad9a..25556d0 100644
+index 649a1ad0026..608de54b548 100644
 --- a/src/Makefile
 +++ b/src/Makefile
-@@ -280,7 +280,7 @@ mpi-stubs:
+@@ -461,7 +461,7 @@ mpi-stubs:
+ sinclude ../lib/python/Makefile.lammps
  install-python:
  	@rm -rf ../python/build
- 	@$(PYTHON) ../python/install.py -v ../src/version.h \
--		-p ../python/lammps -l ../src/liblammps.so
-+		-p ../python/lammps -l ../src/liblammps.[ds]*[a-z]
+-	@$(PYTHON) ../python/install.py -p ../python/lammps -l ../src/liblammps.so -w $(PWD)
++	@$(PYTHON) ../python/install.py -p ../python/lammps -l ../src/liblammps.[ds]*[a-z] -w $(PWD)
  
  # Create a tarball of src dir and packages
  
--- 
-2.21.0

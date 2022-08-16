@@ -3,14 +3,13 @@
 args="-D PKG_ASPHERE=ON -DPKG_BODY=ON -D PKG_CLASS2=ON -D PKG_ML-IAP=ON -D PKG_COLLOID=ON -D PKG_COMPRESS=OFF -D PKG_CORESHELL=ON -D PKG_DIPOLE=ON -D PKG_H5MD=ON -D PKG_GRANULAR=ON -D PKG_KSPACE=ON -D PKG_MANYBODY=ON -D PKG_ML-PACE=OFF -D PKG_MC=ON -D PKG_MISC=ON -D PKG_MOLECULE=ON -D PKG_PERI=ON -D PKG_REPLICA=ON -D PKG_RIGID=ON -D PKG_SHOCK=ON -D PKG_ML-SNAP=ON -D PKG_SRD=ON -D PKG_OPT=ON -D PKG_KIM=ON -D PKG_GPU=OFF -D PKG_KOKKOS=OFF -D PKG_MSCG=OFF -D PKG_MEAM=ON -D PKG_PHONON=ON -D PKG_REAXFF=ON -D WITH_GZIP=ON -D PKG_USER-VCSGC=ON -D PKG_MISC=ON -D PKG_COLVARS=ON -D PKG_EXTRA-COMPUTE=ON -D PKG_EXTRA-DUMP=ON -D PKG_EXTRA-FIX=ON -D PKG_EXTRA-MOLECULE=ON -D PKG_EXTRA-PAIR=ON -D DOWNLOAD_KIM=OFF -D PKG_PLUGIN=ON -D PKG_VORONOI=ON"
 
 # Plugins 
-mkdir src/USER-VCSGC
-cp vcsgc-lammps/fix_semigrandcanonical_mc.* src/USER-VCSGC
+cp -r lammps-plugins/USER-VCSGC src
 
 # Mlip and n2p2
 if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
   args=$args" -D PKG_USER-MLIP=ON -D PKG_ML-HDNNP=ON -D DOWNLOAD_N2P2=OFF -D N2P2_DIR=${PREFIX} -D PKG_ML-QUIP=ON -D PKG_LATTE=ON -D DOWNLOAD_QUIP=OFF"
   export LDFLAGS="-L$PREFIX/lib -lcblas -lblas -llapack -fopenmp $LDFLAGS"
-  cp -r mlip/src/external/MLIP4LAMMPS/USER-MLIP src/
+  cp -r mlip/LAMMPS/USER-MLIP src/
 fi
 
 # pypy does not support LAMMPS internal Python 
@@ -42,8 +41,9 @@ cd build_lib
 cmake -D BUILD_LIB=ON -D BUILD_SHARED_LIBS=ON -D BUILD_MPI=ON -D PKG_MPIIO=ON -D LAMMPS_EXCEPTIONS=yes $args ../cmake
 make # -j${NUM_CPUS}
 cp liblammps${SHLIB_EXT}* ../src  # For compatibility with the original make system.
+cd ../python
+$PYTHON -m pip install . --no-deps -vv
 cd ../src
-make install-python 
 mkdir -p $PREFIX/include/lammps
 cp library.h $PREFIX/include/lammps
 cp liblammps${SHLIB_EXT}* "${PREFIX}"/lib/
