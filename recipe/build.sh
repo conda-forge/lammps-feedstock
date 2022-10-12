@@ -64,7 +64,7 @@ fi
 # Serial
 mkdir build_serial
 cd build_serial
-cmake -D BUILD_MPI=OFF -D BUILD_OMP=OFF -D PKG_MPIIO=OFF $args ../cmake
+cmake -D BUILD_MPI=OFF -D BUILD_OMP=OFF -D PKG_MPIIO=OFF $args ${CMAKE_ARGS} ../cmake
 make # -j${NUM_CPUS}
 cp lmp $PREFIX/bin/lmp_serial
 cd ..
@@ -73,7 +73,7 @@ cd ..
 export LDFLAGS="-L$PREFIX/lib -lmpi $LDFLAGS"
 mkdir build_mpi
 cd build_mpi
-cmake -D BUILD_MPI=ON -D PKG_MPIIO=ON $args ../cmake 
+cmake -D BUILD_MPI=ON -D PKG_MPIIO=ON $args ${CMAKE_ARGS} ../cmake 
 make # -j${NUM_CPUS}
 cp lmp $PREFIX/bin/lmp_mpi
 cd ..
@@ -81,7 +81,7 @@ cd ..
 # Library
 mkdir build_lib
 cd build_lib
-cmake -D BUILD_LIB=ON -D BUILD_SHARED_LIBS=ON -D BUILD_MPI=ON -D PKG_MPIIO=ON -D LAMMPS_EXCEPTIONS=yes $args ../cmake
+cmake -D BUILD_LIB=ON -D BUILD_SHARED_LIBS=ON -D BUILD_MPI=ON -D PKG_MPIIO=ON -D LAMMPS_EXCEPTIONS=yes $args ${CMAKE_ARGS} ../cmake
 make # -j${NUM_CPUS}
 cp liblammps${SHLIB_EXT}* ../src  # For compatibility with the original make system.
 cd ../python
