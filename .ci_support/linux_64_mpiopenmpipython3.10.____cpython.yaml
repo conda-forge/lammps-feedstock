@@ -30,6 +30,8 @@ libcurl:
 - '7'
 liblapack:
 - 3.9 *netlib
+libnetcdf:
+- 4.8.1
 libpng:
 - '1.6'
 mpi:
@@ -39,16 +41,8 @@ mpich:
 openmpi:
 - '4'
 pin_run_as_build:
-  fftw:
-    max_pin: x
-  libcurl:
-    max_pin: x
-  libpng:
-    max_pin: x.x
   python:
     min_pin: x.x
-    max_pin: x.x
-  zlib:
     max_pin: x.x
 python:
 - 3.10.* *_cpython
