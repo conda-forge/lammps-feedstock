@@ -16,7 +16,6 @@ source:
     patches: 
       - macos_install.patch
       - vcsgc_mtp_n2p2.patch
-      - mliappy.patch
   - fn: lammps-plugins.tar.gz
     url: https://github.com/lammps/lammps-plugins/archive/{{ version }}.tar.gz
     sha256: 6d8bd8bc29cfebfddf215232acce910eaef403032ea8e276745455446875f1ac
