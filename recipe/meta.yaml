@@ -18,7 +18,7 @@ source:
       - vcsgc_mtp_n2p2.patch
   - fn: lammps-plugins.tar.gz
     url: https://github.com/lammps/lammps-plugins/archive/{{ version }}.tar.gz
-    sha256: 6d8bd8bc29cfebfddf215232acce910eaef403032ea8e276745455446875f1ac
+    sha256: 62e37e99d3b2437ed423d9d7ccc90a3fef5e872c37faf52877fedb3694a526c2
     folder: lammps-plugins
   - fn: mlip.tar.gz
     url: https://gitlab.com/ashapeev/interface-lammps-mlip-2/-/archive/dd71d892c590fe79c9800946dc8984de91c05480/interface-lammps-mlip-2-master.tar.gz
