@@ -42,12 +42,12 @@ requirements:
     - make
     - pkg-config
     - python                                 # [build_platform != target_platform]
-    - cython                                 # [build_platform != target_platform]
-    - cross-python_{{ target_platform }} * 27_cpython     # [build_platform != target_platform]
+    - cython 0.29.32 *_0                                 # [build_platform != target_platform]
+    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
   
   host:
     - python
-    - cython
+    - cython 0.29.32 *_0
     - setuptools
     - pip
     - {{ mpi }}
