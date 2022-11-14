@@ -17,6 +17,7 @@ source:
       - macos_install.patch
       - vcsgc_mtp_n2p2.patch
       - mliappy.patch
+      - fix-cython.patch
   - fn: lammps-plugins.tar.gz
     url: https://github.com/lammps/lammps-plugins/archive/{{ version }}.tar.gz
     sha256: 6d8bd8bc29cfebfddf215232acce910eaef403032ea8e276745455446875f1ac
@@ -42,12 +43,12 @@ requirements:
     - make
     - pkg-config
     - python                                 # [build_platform != target_platform]
-    - cython 0.29.32 *_0                                 # [build_platform != target_platform]
+    - cython                                 # [build_platform != target_platform]
     - cross-python_{{ target_platform }}     # [build_platform != target_platform]
   
   host:
     - python
-    - cython 0.29.32 *_0
+    - cython
     - setuptools
     - pip
     - {{ mpi }}
