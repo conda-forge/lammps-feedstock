@@ -82,5 +82,5 @@ $PYTHON -m pip install . --no-deps -vv
 cd ../src
 mkdir -p $PREFIX/include/lammps
 cp library.h $PREFIX/include/lammps
-cp liblammps${SHLIB_EXT}* "${PREFIX}"/lib/
+cp -d liblammps*${SHLIB_EXT}* "${PREFIX}"/lib/
 cd ..
