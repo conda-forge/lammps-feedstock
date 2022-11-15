@@ -11,9 +11,6 @@ jobs:
       osx_64_mpimpichpython3.10.____cpython:
         CONFIG: osx_64_mpimpichpython3.10.____cpython
         UPLOAD_PACKAGES: 'True'
-      osx_64_mpimpichpython3.7.____cpython:
-        CONFIG: osx_64_mpimpichpython3.7.____cpython
-        UPLOAD_PACKAGES: 'True'
       osx_64_mpimpichpython3.8.____cpython:
         CONFIG: osx_64_mpimpichpython3.8.____cpython
         UPLOAD_PACKAGES: 'True'
@@ -22,9 +19,6 @@ jobs:
         UPLOAD_PACKAGES: 'True'
       osx_64_mpiopenmpipython3.10.____cpython:
         CONFIG: osx_64_mpiopenmpipython3.10.____cpython
-        UPLOAD_PACKAGES: 'True'
-      osx_64_mpiopenmpipython3.7.____cpython:
-        CONFIG: osx_64_mpiopenmpipython3.7.____cpython
         UPLOAD_PACKAGES: 'True'
       osx_64_mpiopenmpipython3.8.____cpython:
         CONFIG: osx_64_mpiopenmpipython3.8.____cpython

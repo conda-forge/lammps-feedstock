@@ -69,25 +69,21 @@ make # -j${NUM_CPUS}
 cp lmp $PREFIX/bin/lmp_serial
 cd ..
 
-# Parallel
+# Parallel and library
 export LDFLAGS="-L$PREFIX/lib -lmpi $LDFLAGS"
 mkdir build_mpi
 cd build_mpi
-cmake -D BUILD_MPI=ON -D PKG_MPIIO=ON $args ${CMAKE_ARGS} ../cmake 
+cmake -D BUILD_LIB=ON -D BUILD_SHARED_LIBS=ON -D LAMMPS_INSTALL_RPATH=ON -D BUILD_MPI=ON -D PKG_MPIIO=ON -D LAMMPS_EXCEPTIONS=yes $args ${CMAKE_ARGS} ../cmake
 make # -j${NUM_CPUS}
 cp lmp $PREFIX/bin/lmp_mpi
-cd ..
-
-# Library
-mkdir build_lib
-cd build_lib
-cmake -D BUILD_LIB=ON -D BUILD_SHARED_LIBS=ON -D BUILD_MPI=ON -D PKG_MPIIO=ON -D LAMMPS_EXCEPTIONS=yes $args ${CMAKE_ARGS} ../cmake
-make # -j${NUM_CPUS}
 cp liblammps${SHLIB_EXT}* ../src  # For compatibility with the original make system.
 cd ../python
 $PYTHON -m pip install . --no-deps -vv
 cd ../src
 mkdir -p $PREFIX/include/lammps
 cp library.h $PREFIX/include/lammps
-cp liblammps${SHLIB_EXT}* "${PREFIX}"/lib/
+cp -a liblammps*${SHLIB_EXT}* "${PREFIX}"/lib/
+if [[ "${target_platform}" == "osx-64" ]] || [[ "${target_platform}" == "osx-arm64" ]]; then
+  ln -s liblammps.dylib ${PREFIX}/lib/liblammps.0.dylib
+fi
 cd ..
