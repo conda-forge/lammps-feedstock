@@ -83,4 +83,7 @@ cd ../src
 mkdir -p $PREFIX/include/lammps
 cp library.h $PREFIX/include/lammps
 cp -a liblammps*${SHLIB_EXT}* "${PREFIX}"/lib/
+if [[ "${target_platform}" == "osx-64" ]] || [[ "${target_platform}" == "osx-arm64" ]]; then
+  ln -s liblammps.dylib ${PREFIX}/lib/liblammps.0.dylib
+fi
 cd ..
