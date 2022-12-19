@@ -45,7 +45,7 @@ args+=" -D PKG_USER-VCSGC=ON"
 args+=" -D PKG_VORONOI=ON"
 args+=" -D WITH_GZIP=ON"
 # plumed
-args+=" -D DOWNLOAD_PLUMED=yes"
+args+=" -D PKG_PLUMED=yes"
 args+=" -D PLUMED_MODE=runtime"
 
 # Plugins
