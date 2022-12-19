@@ -67,6 +67,7 @@ requirements:
     - n2p2 =2.1.4  # [linux]
     - quippy =0.0.1=*_4  # [linux]
     - voro
+    - plumed
 
   run:
     - python
@@ -77,6 +78,7 @@ requirements:
     - n2p2 =2.1.4  # [linux]
     - quippy =0.0.1=*_4  # [linux]
     - voro
+    - plumed
 
 test:
   imports:
