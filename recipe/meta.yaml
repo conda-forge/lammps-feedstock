@@ -65,7 +65,7 @@ requirements:
     - mpi4py
     - mlip  # [linux]
     - n2p2 =2.1.4  # [linux]
-    - quippy =0.0.1=*_4  # [linux]
+    - quippy =0.0.1=*_6  # [linux]
     - voro
     - plumed
 
