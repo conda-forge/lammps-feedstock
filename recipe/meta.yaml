@@ -64,7 +64,7 @@ requirements:
     - libcurl
     - mpi4py
     - mlip  # [linux]
-    - n2p2 =2.2.0 # [linux]
+    - n2p2 =2.2.0  # [linux]
     - quippy =0.0.1=*_4  # [linux]
     - voro
     - plumed
