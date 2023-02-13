@@ -75,7 +75,7 @@ requirements:
     - {{ mpi }}
     - kim-api
     - mlip  # [linux]
-    - n2p2 =2.1.4  # [linux]
+    - n2p2 =2.2.0  # [linux]
     - quippy =0.0.1=*_4  # [linux]
     - voro
     - plumed
