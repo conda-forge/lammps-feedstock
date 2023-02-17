@@ -1,4 +1,4 @@
-{% set build = 9 %}
+{% set build = 10 %}
 {% set name = "lammps" %}
 {% set version = "stable_23Jun2022_update1" %}
 {% set sha256 = "58e3b2b984f8935bb0db5631e143be2826c45ffd48844f7c394f36624a3e17a2" %}
@@ -65,7 +65,7 @@ requirements:
     - mpi4py
     - mlip  # [linux]
     - n2p2 =2.2.0  # [linux]
-    - quippy =0.0.1=*_6  # [linux]
+    - quippy =0.9.12  # [linux]
     - voro
     - plumed
 
@@ -76,7 +76,7 @@ requirements:
     - kim-api
     - mlip  # [linux]
     - n2p2 =2.2.0  # [linux]
-    - quippy =0.0.1=*_6  # [linux]
+    - quippy =0.9.12  # [linux]
     - voro
     - plumed
 
