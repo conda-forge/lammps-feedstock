@@ -1,11 +1,11 @@
-About lammps
-============
+About lammps-feedstock
+======================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/lammps-feedstock/blob/main/LICENSE.txt)
 
 Home: http://lammps.sandia.gov
 
 Package license: GPL-2.0-only
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/lammps-feedstock/blob/main/LICENSE.txt)
 
 Summary: LAMMPS stands for Large-scale Atomic/Molecular Massively Parallel Simulator.
 
