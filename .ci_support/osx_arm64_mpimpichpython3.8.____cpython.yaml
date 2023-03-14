@@ -23,7 +23,7 @@ hdf5:
 libcurl:
 - '7'
 libjpeg_turbo:
-- '2'
+- 2.1.5
 libnetcdf:
 - 4.9.1
 libpng:
