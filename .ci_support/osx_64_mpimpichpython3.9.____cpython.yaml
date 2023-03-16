@@ -25,7 +25,7 @@ libcurl:
 libjpeg_turbo:
 - 2.1.5
 libnetcdf:
-- 4.9.1
+- 4.9.2
 libpng:
 - '1.6'
 macos_machine:

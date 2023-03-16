@@ -33,7 +33,7 @@ libjpeg_turbo:
 liblapack:
 - 3.9 *netlib
 libnetcdf:
-- 4.9.1
+- 4.9.2
 libpng:
 - '1.6'
 mpi:
