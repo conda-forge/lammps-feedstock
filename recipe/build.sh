@@ -42,7 +42,6 @@ args+=" -D PKG_REPLICA=ON"
 args+=" -D PKG_RIGID=ON"
 args+=" -D PKG_SHOCK=ON"
 args+=" -D PKG_SRD=ON"
-args+=" -D PKG_USER-VCSGC=ON"
 args+=" -D PKG_VORONOI=ON"
 args+=" -D WITH_GZIP=ON"
 # plumed
@@ -50,8 +49,6 @@ args+=" -D PKG_PLUMED=yes"
 args+=" -D PLUMED_MODE=runtime"
 
 # Plugins
-cp -r lammps-plugins/USER-VCSGC src
-
 # Mlip and n2p2
 if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
   args=$args" -D PKG_USER-MLIP=ON -D PKG_ML-HDNNP=ON -D DOWNLOAD_N2P2=OFF -D N2P2_DIR=${PREFIX} -D PKG_ML-QUIP=ON -D PKG_LATTE=ON -D DOWNLOAD_QUIP=OFF"
