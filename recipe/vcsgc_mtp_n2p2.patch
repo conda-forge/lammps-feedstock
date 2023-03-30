@@ -4,7 +4,7 @@ Date: Fri, 28 May 2021 09:11:33 +0200
 Subject: [PATCH] Patches
 
 ---
- cmake/CMakeLists.txt                   |  6 ++++--
+ cmake/CMakeLists.txt                   |  5 +++--
  cmake/Modules/FindMLIP.cmake           | 27 ++++++++++++++++++++++++++
  cmake/Modules/Packages/USER-MLIP.cmake |  2 ++
  3 files changed, 33 insertions(+), 2 deletions(-)
@@ -15,13 +15,12 @@ diff --git a/cmake/CMakeLists.txt b/cmake/CMakeLists.txt
 index a778c89d42e..23a3140fbbf 100644
 --- a/cmake/CMakeLists.txt
 +++ b/cmake/CMakeLists.txt
-@@ -269,7 +269,9 @@ set(STANDARD_PACKAGES
+@@ -269,7 +269,8 @@ set(STANDARD_PACKAGES
    UEF
    VORONOI
    VTK
 -  YAFF)
 +  YAFF
-+  USER-VCSGC
 +  USER-MLIP)
  
  set(SUFFIX_PACKAGES CORESHELL GPU KOKKOS OPT INTEL OPENMP)
@@ -30,8 +29,8 @@ index a778c89d42e..23a3140fbbf 100644
  endif()
  
  foreach(PKG_WITH_INCL KSPACE PYTHON ML-IAP VORONOI COLVARS ML-HDNNP MDI MOLFILE NETCDF
--        PLUMED QMMM ML-QUIP SCAFACOS MACHDYN VTK KIM LATTE MSCG COMPRESS ML-PACE)
-+        PLUMED QMMM ML-QUIP SCAFACOS MACHDYN VTK KIM LATTE MSCG COMPRESS ML-PACE USER-MLIP)
+-        PLUMED QMMM ML-QUIP SCAFACOS MACHDYN VTK KIM LATTE MSCG COMPRESS ML-PACE LEPTON)
++        PLUMED QMMM ML-QUIP SCAFACOS MACHDYN VTK KIM LATTE MSCG COMPRESS ML-PACE LEPTON USER-MLIP)
    if(PKG_${PKG_WITH_INCL})
      include(Packages/${PKG_WITH_INCL})
    endif()
