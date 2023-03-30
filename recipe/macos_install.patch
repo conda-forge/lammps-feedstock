@@ -1,22 +1,22 @@
-From 6cec9c5821d86744e26a5fcd5c90145f65a60497 Mon Sep 17 00:00:00 2001
+From b6d895348ec7422c101d779f1a828fe930d9ade3 Mon Sep 17 00:00:00 2001
 From: Jan Janssen <jan-janssen@users.noreply.github.com>
-Date: Thu, 11 Aug 2022 13:34:37 -0600
-Subject: [PATCH] Mac OS X install fix
+Date: Thu, 30 Mar 2023 10:49:14 -0700
+Subject: [PATCH] Update Makefile
 
 ---
  src/Makefile | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/Makefile b/src/Makefile
-index 649a1ad0026..608de54b548 100644
+index 676bd6d260e..671d112d712 100644
 --- a/src/Makefile
 +++ b/src/Makefile
-@@ -461,7 +461,7 @@ mpi-stubs:
+@@ -468,7 +468,7 @@ mpi-stubs:
  sinclude ../lib/python/Makefile.lammps
  install-python:
  	@rm -rf ../python/build
--	@$(PYTHON) ../python/install.py -p ../python/lammps -l ../src/liblammps.so -w $(PWD)
-+	@$(PYTHON) ../python/install.py -p ../python/lammps -l ../src/liblammps.[ds]*[a-z] -w $(PWD)
+-	@$(PYTHON) ../python/install.py -p ../python/lammps -l ../src/liblammps.so -w $(PWD) -v $(PWD)/version.h
++	@$(PYTHON) ../python/install.py -p ../python/lammps -l ../src/liblammps.[ds]*[a-z] -w $(PWD) -v $(PWD)/version.h
  
  # Create a tarball of src dir and packages
  
