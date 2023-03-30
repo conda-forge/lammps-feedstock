@@ -21,17 +21,19 @@ fortran_compiler:
 fortran_compiler_version:
 - '11'
 hdf5:
-- 1.12.2
+- 1.14.0
 libblas:
 - 3.9 *netlib
 libcblas:
 - 3.9 *netlib
 libcurl:
 - '7'
+libjpeg_turbo:
+- 2.1.5
 liblapack:
 - 3.9 *netlib
 libnetcdf:
-- 4.9.1
+- 4.9.2
 libpng:
 - '1.6'
 mpi:
