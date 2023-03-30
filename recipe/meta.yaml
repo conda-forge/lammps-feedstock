@@ -1,6 +1,7 @@
 {% set build = 0 %}
 {% set name = "lammps" %}
 {% set version = "patch_8Feb2023" %}
+{% set version_plugins = "patch_22Dec2022" %}
 {% set sha256 = "60221242145da4479e5b207d9a0eed90af4168d7a297b4dc8c0e7f2b3215602e" %}
 {% set date = datetime.datetime.strptime(version.split('_')[1], "%d%b%Y") %}
 {% set conda_version = "{:%Y.%m.%d}".format(date) %}
@@ -18,7 +19,7 @@ source:
       - vcsgc_mtp_n2p2.patch
       - fix-cython.patch
   - fn: lammps-plugins.tar.gz
-    url: https://github.com/lammps/lammps-plugins/archive/{{ version }}.tar.gz
+    url: https://github.com/lammps/lammps-plugins/archive/{{ version_plugins }}.tar.gz
     sha256: 6d8bd8bc29cfebfddf215232acce910eaef403032ea8e276745455446875f1ac
     folder: lammps-plugins
   - fn: mlip.tar.gz
