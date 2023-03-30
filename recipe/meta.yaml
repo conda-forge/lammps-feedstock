@@ -50,6 +50,7 @@ requirements:
   host:
     - python
     - cython
+    - numpy
     - setuptools
     - pip
     - {{ mpi }}
@@ -75,6 +76,7 @@ requirements:
     - python
     - setuptools
     - {{ mpi }}
+    - {{ pin_compatible("numpy") }}
     - kim-api
     - mlip  # [linux]
     - n2p2 =2.2.0  # [linux]
