@@ -1,4 +1,4 @@
-{% set build = 0 %}
+{% set build = 1 %}
 {% set name = "lammps" %}
 {% set version = "patch_28Mar2023_update1" %}
 {% set version_plugins = "patch_22Dec2022" %}
@@ -87,6 +87,7 @@ requirements:
 test:
   imports:
     - lammps
+    - lammps.mliap
   commands: 
     - lmp_serial -help > help_serial.txt
     - mpiexec -n 1 lmp_mpi -help > help_mpi.txt  # [mpi == 'mpich']
