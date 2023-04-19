@@ -13,4 +13,4 @@ print("Successfully imported Lammps!")
 import platform
 if platform.system() == "Linux" and platform.python_implementation() == "CPython":
     from lammps.mliap import activate_mliappy
-    print("Successfully imported mliap")
+    print("Successfully imported mliap!")
