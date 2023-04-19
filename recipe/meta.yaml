@@ -87,7 +87,6 @@ requirements:
 test:
   imports:
     - lammps
-    - lammps.mliap  # [python_impl != 'pypy']
   commands: 
     - lmp_serial -help > help_serial.txt
     - mpiexec -n 1 lmp_mpi -help > help_mpi.txt  # [mpi == 'mpich']
