@@ -54,6 +54,9 @@ if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
   args=$args" -D PKG_USER-MLIP=ON -D PKG_ML-HDNNP=ON -D DOWNLOAD_N2P2=OFF -D N2P2_DIR=${PREFIX} -D PKG_ML-QUIP=ON -D PKG_LATTE=ON -D DOWNLOAD_QUIP=OFF"
   export LDFLAGS="-L$PREFIX/lib -lcblas -lblas -llapack -fopenmp $LDFLAGS"
   cp -r mlip/LAMMPS/USER-MLIP src/
+  if [[ ${cuda_compiler_version} != "None" ]]; then
+    args=$args"-D PKG_KOKKOS=yes -D Kokkos_ENABLE_CUDA=yes"
+  fi
 else
   CXXFLAGS="${CXXFLAGS} -DTARGET_OS_OSX=1"
 fi
