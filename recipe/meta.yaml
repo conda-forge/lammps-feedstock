@@ -31,8 +31,8 @@ source:
     
 build:
   number: {{ build }}
-  string: cuda{{ cuda_compiler_version | replace('.', '') }}_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ mpi }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
-  string: cpu_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ mpi }}_{{ PKG_BUILDNUM }}                                                 # [cuda_compiler_version == "None"]
+  string: cuda{{ cuda_compiler_version | replace('.', '') }}_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ mpi }}_{{ build }}  # [cuda_compiler_version != "None"]
+  string: cpu_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ mpi }}_{{ build }}                                                 # [cuda_compiler_version == "None"]
   skip: True  # [win]
 
 requirements:
