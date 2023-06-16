@@ -31,14 +31,17 @@ source:
     
 build:
   number: {{ build }}
-  string: py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ mpi }}_{{ build }} 
+  string: cuda{{ cuda_compiler_version | replace('.', '') }}_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ mpi }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
+  string: cpu_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ mpi }}_{{ PKG_BUILDNUM }}                                                 # [cuda_compiler_version == "None"]
   skip: True  # [win]
+  skip: True  # [cuda_compiler_version == "10.2"]
 
 requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - {{ compiler('fortran') }}
+    - {{ compiler('cuda') }}    # [cuda_compiler_version != "None"]
     - sysroot_linux-64 2.17  # [linux]
     - cmake
     - make
@@ -83,13 +86,14 @@ requirements:
     - quippy =0.9.12  # [linux]
     - voro
     - plumed
+    - __cuda  # [cuda_compiler_version != "None"]
 
 test:
   imports:
     - lammps
   commands: 
-    - lmp_serial -help > help_serial.txt
-    - mpiexec -n 1 lmp_mpi -help > help_mpi.txt  # [mpi == 'mpich']
+    - lmp_serial -help > help_serial.txt  # [cuda_compiler_version == "None"]
+    - mpiexec -n 1 lmp_mpi -help > help_mpi.txt  # [mpi == 'mpich' and cuda_compiler_version == "None"] 
 
 about:
   home: http://lammps.sandia.gov
