@@ -1,4 +1,4 @@
-{% set build = 2 %}
+{% set build = 3 %}
 {% set name = "lammps" %}
 {% set version = "patch_28Mar2023_update1" %}
 {% set version_plugins = "patch_22Dec2022" %}
@@ -35,6 +35,8 @@ build:
   string: cpu_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ mpi }}_{{ PKG_BUILDNUM }}                                                 # [cuda_compiler_version == "None"]
   skip: True  # [win]
   skip: True  # [cuda_compiler_version == "10.2"]
+  track_features:
+    - cudatoolkit               # [cuda_compiler_version != "None"]
 
 requirements:
   build:
