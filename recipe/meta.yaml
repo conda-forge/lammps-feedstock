@@ -76,7 +76,7 @@ requirements:
     - quippy =0.9.12  # [linux]
     - voro
     - plumed
-
+    - kokkos  # [cuda_compiler_version != "None"]
   run:
     - python
     - setuptools
@@ -89,6 +89,7 @@ requirements:
     - voro
     - plumed
     - __cuda  # [cuda_compiler_version != "None"]
+    - kokkos  # [cuda_compiler_version != "None"]
 
 test:
   imports:
