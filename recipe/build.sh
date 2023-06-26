@@ -55,7 +55,7 @@ if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
   export LDFLAGS="-L$PREFIX/lib -lcblas -lblas -llapack -fopenmp $LDFLAGS"
   cp -r mlip/LAMMPS/USER-MLIP src/
   if [[ ${cuda_compiler_version} != "None" ]]; then
-    args=$args" -D PKG_KOKKOS=yes -D Kokkos_ENABLE_CUDA=yes"
+    args=$args" -D PKG_KOKKOS=yes -D Kokkos_ENABLE_CUDA=yes ${Kokkos_OPT_ARGS}"
   fi
 else
   CXXFLAGS="${CXXFLAGS} -DTARGET_OS_OSX=1"
