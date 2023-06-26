@@ -5,6 +5,7 @@
 {% set sha256 = "dca4fb5747668c8c9a6d62d3f8c8637d06da9801f2b119a9a61e74eb7275ef2b" %}
 {% set date = datetime.datetime.strptime(version.split('_')[1], "%d%b%Y") %}
 {% set conda_version = "{:%Y.%m.%d}".format(date) %}
+{% set cuda_major = environ.get("cuda_compiler_version", "0.0").split(".")[0]|int %}
 
 package:
   name: {{ name|lower }}
