@@ -1,0 +1,70 @@
+c_compiler:
+- gcc
+c_compiler_version:
+- '12'
+cdt_name:
+- cos6
+channel_sources:
+- conda-forge
+channel_targets:
+- conda-forge main
+cuda_compiler:
+- None
+cuda_compiler_version:
+- None
+cxx_compiler:
+- gxx
+cxx_compiler_version:
+- '12'
+docker_image:
+- quay.io/condaforge/linux-anvil-cos7-x86_64
+fftw:
+- '3'
+fortran_compiler:
+- gfortran
+fortran_compiler_version:
+- '12'
+hdf5:
+- 1.12.2
+libblas:
+- 3.9 *netlib
+libcblas:
+- 3.9 *netlib
+libcurl:
+- '8'
+libjpeg_turbo:
+- 2.1.5
+liblapack:
+- 3.9 *netlib
+libnetcdf:
+- 4.9.2
+libpng:
+- '1.6'
+mpi:
+- openmpi
+mpich:
+- '4'
+numpy:
+- '1.23'
+openmpi:
+- '4'
+pin_run_as_build:
+  python:
+    min_pin: x.x
+    max_pin: x.x
+python:
+- 3.11.* *_cpython
+target_platform:
+- linux-64
+zip_keys:
+- - c_compiler_version
+  - cxx_compiler_version
+  - fortran_compiler_version
+  - cuda_compiler
+  - cuda_compiler_version
+  - cdt_name
+  - docker_image
+- - python
+  - numpy
+zlib:
+- '1.2'
