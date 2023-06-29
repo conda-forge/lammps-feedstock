@@ -74,7 +74,7 @@ requirements:
     - mlip  # [linux]
     - n2p2 =2.2.0  # [linux]
     - quippy =0.9.12  # [linux]
-    # - voro
+    - voro
     - plumed
 
   run:
