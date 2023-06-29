@@ -75,7 +75,7 @@ requirements:
     - n2p2 =2.2.0  # [linux]
     - quippy =0.9.12  # [linux]
     # - voro
-    # - plumed
+    - plumed
 
   run:
     - python
