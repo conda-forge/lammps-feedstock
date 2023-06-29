@@ -1,10 +1,11 @@
-{% set build = 4 %}
+{% set build = 6 %}
 {% set name = "lammps" %}
 {% set version = "patch_28Mar2023_update1" %}
 {% set version_plugins = "patch_22Dec2022" %}
 {% set sha256 = "dca4fb5747668c8c9a6d62d3f8c8637d06da9801f2b119a9a61e74eb7275ef2b" %}
 {% set date = datetime.datetime.strptime(version.split('_')[1], "%d%b%Y") %}
 {% set conda_version = "{:%Y.%m.%d}".format(date) %}
+{% set cuda_major = environ.get("cuda_compiler_version", "0.0").split(".")[0]|int %}
 
 package:
   name: {{ name|lower }}
@@ -37,6 +38,13 @@ build:
   skip: True  # [cuda_compiler_version == "10.2"]
   track_features:
     - cudatoolkit               # [cuda_compiler_version != "None"]
+  script_env:
+{% if cuda_major == 11 %}
+    - Kokkos_OPT_ARGS=-DKokkos_ARCH_KEPLER35=ON
+{% endif %}
+{% if cuda_major == 12 %}
+    - Kokkos_OPT_ARGS=-DKokkos_ARCH_MAXWELL50=ON
+{% endif %}
 
 requirements:
   build:
