@@ -1,4 +1,4 @@
-{% set build = 6 %}
+{% set build = 7 %}
 {% set name = "lammps" %}
 {% set version = "patch_28Mar2023_update1" %}
 {% set version_plugins = "patch_28Mar2023" %}
@@ -94,9 +94,6 @@ requirements:
     - kim-api
     - mlip  # [linux]
     - n2p2 =2.2.0  # [linux]
-    - quippy =0.9.12  # [linux]
-    - voro
-    - plumed
     - __cuda  # [cuda_compiler_version != "None"]
 
 test:
