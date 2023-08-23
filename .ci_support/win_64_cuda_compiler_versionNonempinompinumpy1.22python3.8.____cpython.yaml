@@ -25,7 +25,7 @@ libnetcdf:
 libpng:
 - '1.6'
 mpi:
-- mpich
+- nompi
 mpich:
 - '4'
 numpy:
