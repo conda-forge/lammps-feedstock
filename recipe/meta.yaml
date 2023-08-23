@@ -34,7 +34,6 @@ build:
   number: {{ build }}
   string: cuda{{ cuda_compiler_version | replace('.', '') }}_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ mpi }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
   string: cpu_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ mpi }}_{{ PKG_BUILDNUM }}                                                 # [cuda_compiler_version == "None"]
-  skip: True  # [win]
   skip: True  # [cuda_compiler_version == "10.2"]
   skip: True  # [cuda_compiler_version == "11.2"]
   track_features:
