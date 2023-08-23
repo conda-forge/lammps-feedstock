@@ -70,18 +70,25 @@ fi
 # Serial
 mkdir build_serial
 cd build_serial
-cmake -D BUILD_MPI=OFF -D BUILD_OMP=OFF -D PKG_MPIIO=OFF $args ${CMAKE_ARGS} ../cmake
-make # -j${NUM_CPUS}
-cp lmp $PREFIX/bin/lmp_serial
-cd ..
 
-# Parallel and library
-export LDFLAGS="-L$PREFIX/lib -lmpi $LDFLAGS"
-mkdir build_mpi
-cd build_mpi
-cmake -D BUILD_LIB=ON -D BUILD_SHARED_LIBS=ON -D LAMMPS_INSTALL_RPATH=ON -D BUILD_MPI=ON -D PKG_MPIIO=ON -D LAMMPS_EXCEPTIONS=yes $args ${CMAKE_ARGS} ../cmake
-make # -j${NUM_CPUS}
-cp lmp $PREFIX/bin/lmp_mpi
+if [[ "${mpi}" != "nompi" ]]; then
+  cmake -D BUILD_MPI=OFF -D BUILD_OMP=OFF -D PKG_MPIIO=OFF $args ${CMAKE_ARGS} ../cmake
+  make # -j${NUM_CPUS}
+  cp lmp $PREFIX/bin/lmp_serial
+  cd ..
+  # Parallel and library
+  export LDFLAGS="-L$PREFIX/lib -lmpi $LDFLAGS"
+  mkdir ../build_mpi
+  cd ../build_mpi
+  cmake -D BUILD_LIB=ON -D BUILD_SHARED_LIBS=ON -D LAMMPS_INSTALL_RPATH=ON -D BUILD_MPI=ON -D PKG_MPIIO=ON -D LAMMPS_EXCEPTIONS=yes $args ${CMAKE_ARGS} ../cmake
+  make # -j${NUM_CPUS}
+  cp lmp $PREFIX/bin/lmp_mpi
+else
+  cmake -D BUILD_LIB=ON -D BUILD_SHARED_LIBS=ON -D LAMMPS_INSTALL_RPATH=ON -D BUILD_MPI=OFF -D BUILD_OMP=OFF -D PKG_MPIIO=OFF -D LAMMPS_EXCEPTIONS=yes $args ${CMAKE_ARGS} ../cmake
+  make # -j${NUM_CPUS}
+  cp lmp $PREFIX/bin/lmp_serial
+fi
+
 cp liblammps${SHLIB_EXT}* ../src  # For compatibility with the original make system.
 cd ../python
 $PYTHON -m pip install . --no-deps -vv
