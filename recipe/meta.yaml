@@ -21,7 +21,7 @@ source:
       - fix-cython.patch
   - fn: lammps-plugins.tar.gz
     url: https://github.com/lammps/lammps-plugins/archive/{{ version_plugins }}.tar.gz
-    sha256: 9448dcdd10cfc663bcd7fb99d38321529ba0b05aaa77981ab5e4b05ed4c6bc52
+    sha256: 74bedc64941b49c964456d53590d3398af13a37cb82d9ede50326d562e5da429
     folder: lammps-plugins
   - fn: mlip.tar.gz
     url: https://gitlab.com/ashapeev/interface-lammps-mlip-2/-/archive/dd71d892c590fe79c9800946dc8984de91c05480/interface-lammps-mlip-2-master.tar.gz
