@@ -78,7 +78,7 @@ requirements:
     - kim-api
     - libcurl
     - mpi4py
-    - mlip =1.0  # [linux]
+    - mlip =3.0  # [linux]
     - n2p2 =2.2.0  # [linux]
     - quippy =0.9.12  # [linux]
     - voro
@@ -90,7 +90,7 @@ requirements:
     - {{ mpi }}
     - {{ pin_compatible("numpy") }}
     - kim-api
-    - mlip =1.0  # [linux]
+    - mlip =3.0  # [linux]
     - n2p2 =2.2.0  # [linux]
     - __cuda  # [cuda_compiler_version != "None"]
 
