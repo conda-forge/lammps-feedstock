@@ -25,7 +25,7 @@ source:
     folder: lammps-plugins
   - fn: mlip.tar.gz
     url: https://gitlab.com/ivannovikov/interface-lammps-mlip-3/-/archive/342e1dd60803c2f9a8678cf0741851d2a90bd65e/interface-lammps-mlip-3-342e1dd60803c2f9a8678cf0741851d2a90bd65e.tar.gz
-    sha256: ee720576097469e2c66db75625362a5e649a64fff7bddc9d0e36959bce4d72ff
+    sha256: 8d2cb7695392c0d96218f0ecb0aefd766142b6bd50c6ebe89f3549811139d268
     folder: mlip
     
 build:
