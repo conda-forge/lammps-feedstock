@@ -1,4 +1,4 @@
-{% set build = 0 %}
+{% set build = 1 %}
 {% set name = "lammps" %}
 {% set version = "stable_2Aug2023" %}
 {% set version_plugins = "stable_2Aug2023" %}
@@ -80,7 +80,7 @@ requirements:
     - kim-api
     - libcurl
     - mpi4py
-    - mlip  # [linux]
+    - mlip =1.0  # [linux]
     - n2p2 =2.2.0  # [linux]
     - quippy =0.9.12  # [linux]
     - voro
@@ -92,7 +92,7 @@ requirements:
     - {{ mpi }}
     - {{ pin_compatible("numpy") }}
     - kim-api
-    - mlip  # [linux]
+    - mlip =1.0  # [linux]
     - n2p2 =2.2.0  # [linux]
     - __cuda  # [cuda_compiler_version != "None"]
 
