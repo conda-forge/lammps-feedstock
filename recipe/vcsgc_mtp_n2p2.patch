@@ -47,7 +47,7 @@ index 00000000000..97c229ef148
 +#  MLIP_FOUND        - True if MLIP library was found.
 +#
 +
-+find_library(MLIP_LIBRARY NAMES mlip)
++find_library(MLIP_LIBRARY NAMES _mlip_interface)
 +
 +include(FindPackageHandleStandardArgs)
 +# handle the QUIETLY and REQUIRED arguments and set MLIP_FOUND to TRUE
