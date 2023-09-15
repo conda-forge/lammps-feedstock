@@ -1,4 +1,4 @@
-{% set build = 1 %}
+{% set build = 2 %}
 {% set name = "lammps" %}
 {% set version = "stable_2Aug2023" %}
 {% set version_plugins = "stable_2Aug2023" %}
@@ -24,11 +24,9 @@ source:
     sha256: 74bedc64941b49c964456d53590d3398af13a37cb82d9ede50326d562e5da429
     folder: lammps-plugins
   - fn: mlip.tar.gz
-    url: https://gitlab.com/ashapeev/interface-lammps-mlip-2/-/archive/dd71d892c590fe79c9800946dc8984de91c05480/interface-lammps-mlip-2-master.tar.gz
+    url: https://gitlab.com/ivannovikov/interface-lammps-mlip-3/-/archive/342e1dd60803c2f9a8678cf0741851d2a90bd65e/interface-lammps-mlip-3-342e1dd60803c2f9a8678cf0741851d2a90bd65e.tar.gz
     sha256: ee720576097469e2c66db75625362a5e649a64fff7bddc9d0e36959bce4d72ff
     folder: mlip
-    patches:
-      - mlip.patch
     
 build:
   number: {{ build }}
