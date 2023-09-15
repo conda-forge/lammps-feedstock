@@ -48,12 +48,10 @@ args+=" -D WITH_GZIP=ON"
 args+=" -D PKG_PLUMED=yes"
 args+=" -D PLUMED_MODE=runtime"
 
-# Plugins
-# Mlip and n2p2
+# Plugins - n2p2 and latte
 if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
-  args=$args" -D PKG_USER-MLIP=ON -D PKG_ML-HDNNP=ON -D DOWNLOAD_N2P2=OFF -D N2P2_DIR=${PREFIX} -D PKG_ML-QUIP=ON -D PKG_LATTE=ON -D DOWNLOAD_QUIP=OFF"
+  args=$args" -D PKG_ML-HDNNP=ON -D DOWNLOAD_N2P2=OFF -D N2P2_DIR=${PREFIX} -D PKG_ML-QUIP=ON -D PKG_LATTE=ON -D DOWNLOAD_QUIP=OFF"
   export LDFLAGS="-L$PREFIX/lib -lcblas -lblas -llapack -fopenmp $LDFLAGS"
-  cp -r mlip/LAMMPS/USER-MLIP src/
   if [[ ${cuda_compiler_version} != "None" ]]; then
     args=$args" -D PKG_KOKKOS=yes -D Kokkos_ENABLE_CUDA=yes ${Kokkos_OPT_ARGS}"
   fi
@@ -77,6 +75,11 @@ cd ..
 
 # Parallel and library
 export LDFLAGS="-L$PREFIX/lib -lmpi $LDFLAGS"
+# Mlip - only available in lmp_mpi 
+if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
+  args=$args" -D PKG_USER-MLIP=ON"
+  cp -r mlip/LAMMPS/USER-MLIP src/
+fi
 mkdir build_mpi
 cd build_mpi
 cmake -D BUILD_LIB=ON -D BUILD_SHARED_LIBS=ON -D LAMMPS_INSTALL_RPATH=ON -D BUILD_MPI=ON -D PKG_MPIIO=ON -D LAMMPS_EXCEPTIONS=yes $args ${CMAKE_ARGS} ../cmake
