@@ -1,4 +1,4 @@
-{% set build = 2 %}
+{% set build = 3 %}
 {% set name = "lammps" %}
 {% set version = "stable_2Aug2023" %}
 {% set version_plugins = "stable_2Aug2023" %}
