@@ -1,4 +1,4 @@
-{% set build = 3 %}
+{% set build = 4 %}
 {% set name = "lammps" %}
 {% set version = "stable_2Aug2023" %}
 {% set version_plugins = "stable_2Aug2023" %}
@@ -24,7 +24,7 @@ source:
     sha256: 74bedc64941b49c964456d53590d3398af13a37cb82d9ede50326d562e5da429
     folder: lammps-plugins
   - fn: mlip.tar.gz
-    url: https://gitlab.com/ivannovikov/interface-lammps-mlip-3/-/archive/342e1dd60803c2f9a8678cf0741851d2a90bd65e/interface-lammps-mlip-3-342e1dd60803c2f9a8678cf0741851d2a90bd65e.tar.gz
+    url: https://gitlab.com/ashapeev/interface-lammps-mlip-2/-/archive/master/interface-lammps-mlip-2-master.tar.gz
     sha256: 8d2cb7695392c0d96218f0ecb0aefd766142b6bd50c6ebe89f3549811139d268
     folder: mlip
     
@@ -78,7 +78,7 @@ requirements:
     - kim-api
     - libcurl
     - mpi4py
-    - mlip =3.0  # [linux]
+    - mlip =2.0  # [linux]
     - n2p2 =2.2.0  # [linux]
     - quippy =0.9.12  # [linux]
     - voro
@@ -90,7 +90,7 @@ requirements:
     - {{ mpi }}
     - {{ pin_compatible("numpy") }}
     - kim-api
-    - mlip =3.0  # [linux]
+    - mlip =2.0  # [linux]
     - n2p2 =2.2.0  # [linux]
     - __cuda  # [cuda_compiler_version != "None"]
 
