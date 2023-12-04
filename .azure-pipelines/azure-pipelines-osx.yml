@@ -23,6 +23,21 @@ jobs:
       osx_64_mpimpichnumpy1.23python3.11.____cpython:
         CONFIG: osx_64_mpimpichnumpy1.23python3.11.____cpython
         UPLOAD_PACKAGES: 'True'
+      osx_64_mpinompinumpy1.22python3.10.____cpython:
+        CONFIG: osx_64_mpinompinumpy1.22python3.10.____cpython
+        UPLOAD_PACKAGES: 'True'
+      osx_64_mpinompinumpy1.22python3.8.____cpython:
+        CONFIG: osx_64_mpinompinumpy1.22python3.8.____cpython
+        UPLOAD_PACKAGES: 'True'
+      osx_64_mpinompinumpy1.22python3.9.____73_pypy:
+        CONFIG: osx_64_mpinompinumpy1.22python3.9.____73_pypy
+        UPLOAD_PACKAGES: 'True'
+      osx_64_mpinompinumpy1.22python3.9.____cpython:
+        CONFIG: osx_64_mpinompinumpy1.22python3.9.____cpython
+        UPLOAD_PACKAGES: 'True'
+      osx_64_mpinompinumpy1.23python3.11.____cpython:
+        CONFIG: osx_64_mpinompinumpy1.23python3.11.____cpython
+        UPLOAD_PACKAGES: 'True'
       osx_64_mpiopenmpinumpy1.22python3.10.____cpython:
         CONFIG: osx_64_mpiopenmpinumpy1.22python3.10.____cpython
         UPLOAD_PACKAGES: 'True'
@@ -50,6 +65,18 @@ jobs:
       osx_arm64_mpimpichnumpy1.23python3.11.____cpython:
         CONFIG: osx_arm64_mpimpichnumpy1.23python3.11.____cpython
         UPLOAD_PACKAGES: 'True'
+      osx_arm64_mpinompinumpy1.22python3.10.____cpython:
+        CONFIG: osx_arm64_mpinompinumpy1.22python3.10.____cpython
+        UPLOAD_PACKAGES: 'True'
+      osx_arm64_mpinompinumpy1.22python3.8.____cpython:
+        CONFIG: osx_arm64_mpinompinumpy1.22python3.8.____cpython
+        UPLOAD_PACKAGES: 'True'
+      osx_arm64_mpinompinumpy1.22python3.9.____cpython:
+        CONFIG: osx_arm64_mpinompinumpy1.22python3.9.____cpython
+        UPLOAD_PACKAGES: 'True'
+      osx_arm64_mpinompinumpy1.23python3.11.____cpython:
+        CONFIG: osx_arm64_mpinompinumpy1.23python3.11.____cpython
+        UPLOAD_PACKAGES: 'True'
       osx_arm64_mpiopenmpinumpy1.22python3.10.____cpython:
         CONFIG: osx_arm64_mpiopenmpinumpy1.22python3.10.____cpython
         UPLOAD_PACKAGES: 'True'
@@ -68,6 +95,9 @@ jobs:
   # TODO: Fast finish on azure pipelines?
   - script: |
       export CI=azure
+      export flow_run_id=azure_$(Build.BuildNumber).$(System.JobAttempt)
+      export remote_url=$(Build.Repository.Uri)
+      export sha=$(Build.SourceVersion)
       export OSX_FORCE_SDK_DOWNLOAD="1"
       export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
       export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
