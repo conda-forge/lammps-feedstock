@@ -66,26 +66,32 @@ if [ "$PYTHON_IMPL" != "PyPy" ]; then
   args=$args" -D MLIAP_ENABLE_PYTHON=ON -D PKG_PYTHON=ON -D Python_ROOT_DIR=${PREFIX} -D Python_FIND_STRATEGY=LOCATION"
 fi
 
-# Serial
-mkdir build_serial
-cd build_serial
-cmake -D BUILD_MPI=OFF -D BUILD_OMP=OFF -D PKG_MPIIO=OFF $args ${CMAKE_ARGS} ../cmake
-make # -j${NUM_CPUS}
-cp lmp $PREFIX/bin/lmp_serial
-cd ..
-
 # Parallel and library
-export LDFLAGS="-L$PREFIX/lib -lmpi $LDFLAGS"
+export LDFLAGS="-L$PREFIX/lib $LDFLAGS"
+
+if [ "${mpi}" == "nompi" ]; then
+  ENABLE_MPI=OFF
+else
+  ENABLE_MPI=TRUE
+  export LDFLAGS="-lmpi ${LDFLAGS}"
+fi
+
 # Mlip - only available in lmp_mpi 
 if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
   args=$args" -D PKG_USER-MLIP=ON"
   cp -r mlip/LAMMPS/USER-MLIP src/
 fi
-mkdir build_mpi
-cd build_mpi
-cmake -D BUILD_LIB=ON -D BUILD_SHARED_LIBS=ON -D LAMMPS_INSTALL_RPATH=ON -D BUILD_MPI=ON -D PKG_MPIIO=ON -D LAMMPS_EXCEPTIONS=yes $args ${CMAKE_ARGS} ../cmake
+mkdir build
+cd build
+cmake -D BUILD_LIB=ON -D BUILD_SHARED_LIBS=ON -D LAMMPS_INSTALL_RPATH=ON -D BUILD_MPI=${ENABLE_MPI} -D PKG_MPIIO=${ENABLE_MPI} -D LAMMPS_EXCEPTIONS=yes $args ${CMAKE_ARGS} ../cmake
 make # -j${NUM_CPUS}
-cp lmp $PREFIX/bin/lmp_mpi
+cp lmp $PREFIX/bin/lmp
+if [ "${mpi}" == "nompi" ]; then
+  ln -s lmp ${PREFIX}/bin/lmp_serial
+else
+  ln -s lmp ${PREFIX}/bin/lmp_mpi
+fi
+
 cp liblammps${SHLIB_EXT}* ../src  # For compatibility with the original make system.
 cd ../python
 $PYTHON -m pip install . --no-deps -vv
