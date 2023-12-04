@@ -99,7 +99,7 @@ requirements:
     - setuptools
     - {{ mpi }}  # [mpi != 'nompi']
     - {{ pin_compatible("numpy") }}
-    - {{ pin_compatible("plumed"), max_pin="x.x" }}
+    - {{ pin_compatible("plumed", max_pin="x.x") }}
     - kim-api
     - mlip =3.0  # [linux]
     - n2p2 =2.2.0  # [linux]
