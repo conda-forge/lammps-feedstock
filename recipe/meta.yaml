@@ -90,14 +90,16 @@ requirements:
     - n2p2 =2.2.0  # [linux]
     - quippy =0.9.12  # [linux]
     - voro
-    - plumed
-    - plumed * mpi_{{ mpi }}_*  # [mpi != 'nompi']
+    # https://github.com/lammps/lammps/blob/8389e2eb8074712b6850b3bf25fd3c3852e36f10/src/PLUMED/fix_plumed.cpp#L80-L82
+    - plumed >=2.4, <2.9
+    - plumed * mpi_{{ mpi }}_*  # [mpi != 'nompi' and build_platform != target_platform]
 
   run:
     - python
     - setuptools
     - {{ mpi }}  # [mpi != 'nompi']
     - {{ pin_compatible("numpy") }}
+    - {{ pin_compatible("plumed"), max_pin="x.x" }}
     - kim-api
     - mlip =3.0  # [linux]
     - n2p2 =2.2.0  # [linux]
