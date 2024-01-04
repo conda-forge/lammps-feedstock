@@ -1,4 +1,4 @@
-{% set build = 6 %}
+{% set build = 7 %}
 {% set name = "lammps" %}
 {% set version = "stable_2Aug2023" %}
 {% set version_plugins = "stable_2Aug2023" %}
@@ -30,8 +30,13 @@ source:
     
 build:
   number: {{ build }}
-  string: cuda{{ cuda_compiler_version | replace('.', '') }}_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ mpi }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
-  string: cpu_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ mpi }}_{{ PKG_BUILDNUM }}                                                 # [cuda_compiler_version == "None"]
+  {% if mpi != 'nompi' %}
+  {% set mpi_prefix = "mpi_" + mpi %}
+  {% else %}
+  {% set mpi_prefix = "nompi" %}
+  {% endif %}
+  string: cuda{{ cuda_compiler_version | replace('.', '') }}_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ mpi_prefix }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
+  string: cpu_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ mpi_prefix }}_{{ PKG_BUILDNUM }}                                                 # [cuda_compiler_version == "None"]
   skip: True  # [win]
   skip: True  # [cuda_compiler_version == "10.2"]
   skip: True  # [cuda_compiler_version == "11.2"]
@@ -65,40 +70,50 @@ requirements:
     - numpy
     - setuptools
     - pip
-    - {{ mpi }}
+    - {{ mpi }}  # [mpi != 'nompi']
     - zlib
     - fftw
+    - fftw * {{ mpi_prefix }}_*
     - hdf5
+    - hdf5 * {{ mpi_prefix }}_*
     - libpng
     - libjpeg-turbo
     - libcblas  # [linux]
     - libblas  # [linux]
     - liblapack  # [linux]
     - libnetcdf
+    - libnetcdf * {{ mpi_prefix }}_*
     - kim-api
     - libcurl
-    - mpi4py
+    - mpi4py  # [mpi != 'nompi']
     - mlip =3.0  # [linux]
+    - mlip * {{ mpi_prefix }}_*  # [linux]
     - n2p2 =2.2.0  # [linux]
+    - n2p2 * {{ mpi_prefix }}_*  # [linux]
     - quippy =0.9.12  # [linux]
     - voro
-    - plumed
+    # https://github.com/lammps/lammps/blob/8389e2eb8074712b6850b3bf25fd3c3852e36f10/src/PLUMED/fix_plumed.cpp#L80-L82
+    - plumed >=2.4,<2.9
+    - plumed * {{ mpi_prefix }}_*  # [mpi != 'nompi' and build_platform == target_platform]
 
   run:
     - python
     - setuptools
-    - {{ mpi }}
+    - {{ mpi }}  # [mpi != 'nompi']
     - {{ pin_compatible("numpy") }}
+    - {{ pin_compatible("plumed", max_pin="x.x") }}
     - kim-api
     - mlip =3.0  # [linux]
+    - mlip * {{ mpi_prefix }}_*  # [linux]
     - n2p2 =2.2.0  # [linux]
+    - n2p2 * {{ mpi_prefix }}_*  # [linux]
     - __cuda  # [cuda_compiler_version != "None"]
 
 test:
   imports:
     - lammps
   commands: 
-    - lmp_serial -help > help_serial.txt  # [cuda_compiler_version == "None"]
+    - lmp_serial -help > help_serial.txt  # [mpi == 'nompi' and cuda_compiler_version == "None"]
     - mpiexec -n 1 lmp_mpi -help > help_mpi.txt  # [mpi == 'mpich' and cuda_compiler_version == "None"] 
 
 about:
