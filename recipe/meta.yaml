@@ -73,26 +73,28 @@ requirements:
     - {{ mpi }}  # [mpi != 'nompi']
     - zlib
     - fftw
-    - fftw * mpi_{{ mpi }}_*  # [mpi != 'nompi']
+    - fftw * {{ mpi_prefix }}_*
     - hdf5
-    - hdf5 * mpi_{{ mpi }}_*  # [mpi != 'nompi']
+    - hdf5 * {{ mpi_prefix }}_*
     - libpng
     - libjpeg-turbo
     - libcblas  # [linux]
     - libblas  # [linux]
     - liblapack  # [linux]
     - libnetcdf
-    - libnetcdf * mpi_{{ mpi }}_*  # [mpi != 'nompi']
+    - libnetcdf * {{ mpi_prefix }}_*
     - kim-api
     - libcurl
     - mpi4py  # [mpi != 'nompi']
     - mlip =3.0  # [linux]
+    - mlip * {{ mpi_prefix }}_*  # [linux]
     - n2p2 =2.2.0  # [linux]
+    - n2p2 * {{ mpi_prefix }}_*  # [linux]
     - quippy =0.9.12  # [linux]
     - voro
     # https://github.com/lammps/lammps/blob/8389e2eb8074712b6850b3bf25fd3c3852e36f10/src/PLUMED/fix_plumed.cpp#L80-L82
     - plumed >=2.4,<2.9
-    - plumed * mpi_{{ mpi }}_*  # [mpi != 'nompi' and build_platform == target_platform]
+    - plumed * {{ mpi_prefix }}_*  # [mpi != 'nompi' and build_platform == target_platform]
 
   run:
     - python
@@ -102,7 +104,9 @@ requirements:
     - {{ pin_compatible("plumed", max_pin="x.x") }}
     - kim-api
     - mlip =3.0  # [linux]
+    - mlip * {{ mpi_prefix }}_*  # [linux]
     - n2p2 =2.2.0  # [linux]
+    - n2p2 * {{ mpi_prefix }}_*  # [linux]
     - __cuda  # [cuda_compiler_version != "None"]
 
 test:
