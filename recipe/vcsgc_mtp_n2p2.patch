@@ -4,7 +4,7 @@ Date: Fri, 28 May 2021 09:11:33 +0200
 Subject: [PATCH] Patches
 
 ---
- cmake/CMakeLists.txt                   |  5 +++--
+ cmake/CMakeLists.txt                   |  6 ++++--
  cmake/Modules/FindMLIP.cmake           | 27 ++++++++++++++++++++++++++
  cmake/Modules/Packages/USER-MLIP.cmake |  2 ++
  3 files changed, 33 insertions(+), 2 deletions(-)
@@ -15,12 +15,13 @@ diff --git a/cmake/CMakeLists.txt b/cmake/CMakeLists.txt
 index 28e02bbee7b..4110d50bbc2 100644
 --- a/cmake/CMakeLists.txt
 +++ b/cmake/CMakeLists.txt
-@@ -297,7 +297,8 @@ set(STANDARD_PACKAGES
+@@ -297,7 +297,9 @@ set(STANDARD_PACKAGES
    UEF
    VORONOI
    VTK
 -  YAFF)
 +  YAFF
++  ML-M3GNET
 +  USER-MLIP)
  
  set(SUFFIX_PACKAGES CORESHELL GPU KOKKOS OPT INTEL OPENMP)
