@@ -4,10 +4,10 @@ Date: Fri, 28 May 2021 09:11:33 +0200
 Subject: [PATCH] Patches
 
 ---
- cmake/CMakeLists.txt                   |  5 +++--
+ cmake/CMakeLists.txt                   |  6 ++++--
  cmake/Modules/FindMLIP.cmake           | 27 ++++++++++++++++++++++++++
  cmake/Modules/Packages/USER-MLIP.cmake |  2 ++
- 3 files changed, 33 insertions(+), 2 deletions(-)
+ 3 files changed, 34 insertions(+), 2 deletions(-)
  create mode 100644 cmake/Modules/FindMLIP.cmake
  create mode 100644 cmake/Modules/Packages/USER-MLIP.cmake
 
@@ -15,12 +15,13 @@ diff --git a/cmake/CMakeLists.txt b/cmake/CMakeLists.txt
 index d03a0611db5..b6921251b6d 100644
 --- a/cmake/CMakeLists.txt
 +++ b/cmake/CMakeLists.txt
-@@ -306,7 +306,8 @@ set(STANDARD_PACKAGES
+@@ -306,7 +306,9 @@ set(STANDARD_PACKAGES
    UEF
    VORONOI
    VTK
 -  YAFF)
 +  YAFF
++  ML-M3GNET
 +  USER-MLIP)
  
  set(SUFFIX_PACKAGES CORESHELL GPU KOKKOS OPT INTEL OPENMP)
