@@ -30,7 +30,6 @@ args+=" -D PKG_MISC=ON"
 args+=" -D PKG_ML-IAP=ON"
 args+=" -D PKG_ML-PACE=ON"
 args+=" -D PKG_ML-SNAP=ON"
-args+=" -D PKG_USER-M3GNET=ON"
 args+=" -D PKG_MOLECULE=ON"
 args+=" -D PKG_MSCG=OFF"
 args+=" -D PKG_NETCDF=ON"
@@ -50,13 +49,6 @@ args+=" -D WITH_GZIP=ON"
 args+=" -D PKG_PLUMED=yes"
 args+=" -D PLUMED_MODE=runtime"
 
-# Debug build
-echo "Debug Build - Begin"
-ls src/USER-M3GNET
-ls src/USER-M3GNET/*.cpp
-ls src/USER-M3GNET/*.h
-echo "Debug Build - End"
-
 # Plugins - n2p2 and latte
 if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
   args=$args" -D PKG_ML-HDNNP=ON -D DOWNLOAD_N2P2=OFF -D N2P2_DIR=${PREFIX} -D PKG_ML-QUIP=ON -D PKG_LATTE=ON -D DOWNLOAD_QUIP=OFF"
@@ -71,7 +63,7 @@ fi
 # pypy does not support LAMMPS internal Python
 PYTHON_IMPL=$($PYTHON -c "import platform; print(platform.python_implementation())")
 if [ "$PYTHON_IMPL" != "PyPy" ]; then
-  args=$args" -D MLIAP_ENABLE_PYTHON=ON -D PKG_PYTHON=ON -D Python_ROOT_DIR=${PREFIX} -D Python_FIND_STRATEGY=LOCATION"
+  args=$args"-D PKG_USER-M3GNET=ON -D MLIAP_ENABLE_PYTHON=ON -D PKG_PYTHON=ON -D Python_ROOT_DIR=${PREFIX} -D Python_FIND_STRATEGY=LOCATION"
 fi
 
 # Parallel and library
