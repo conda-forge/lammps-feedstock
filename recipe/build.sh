@@ -63,7 +63,7 @@ fi
 # pypy does not support LAMMPS internal Python
 PYTHON_IMPL=$($PYTHON -c "import platform; print(platform.python_implementation())")
 if [ "$PYTHON_IMPL" != "PyPy" ]; then
-  args=$args"-D PKG_USER-M3GNET=ON -D MLIAP_ENABLE_PYTHON=ON -D PKG_PYTHON=ON -D Python_ROOT_DIR=${PREFIX} -D Python_FIND_STRATEGY=LOCATION"
+  args=$args" -D PKG_USER-M3GNET=ON -D MLIAP_ENABLE_PYTHON=ON -D PKG_PYTHON=ON -D Python_ROOT_DIR=${PREFIX} -D Python_FIND_STRATEGY=LOCATION"
 fi
 
 # Parallel and library
