@@ -50,6 +50,13 @@ args+=" -D WITH_GZIP=ON"
 args+=" -D PKG_PLUMED=yes"
 args+=" -D PLUMED_MODE=runtime"
 
+# Debug build
+echo "Debug Build - Begin"
+ls src/USER-M3GNET
+ls src/USER-M3GNET/*.cpp
+ls src/USER-M3GNET/*.h
+echo "Debug Build - End"
+
 # Plugins - n2p2 and latte
 if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
   args=$args" -D PKG_ML-HDNNP=ON -D DOWNLOAD_N2P2=OFF -D N2P2_DIR=${PREFIX} -D PKG_ML-QUIP=ON -D PKG_LATTE=ON -D DOWNLOAD_QUIP=OFF"
