@@ -1,4 +1,4 @@
-{% set build = 8 %}
+{% set build = 9 %}
 {% set name = "lammps" %}
 {% set version = "stable_2Aug2023" %}
 {% set version_plugins = "stable_2Aug2023" %}
@@ -19,6 +19,7 @@ source:
       - macos_install.patch
       - vcsgc_mtp_n2p2.patch
       - fix-cython.patch
+      - matgl.patch
   - fn: lammps-plugins.tar.gz
     url: https://github.com/lammps/lammps-plugins/archive/{{ version_plugins }}.tar.gz
     sha256: 74bedc64941b49c964456d53590d3398af13a37cb82d9ede50326d562e5da429
