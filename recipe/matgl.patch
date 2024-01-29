@@ -4,25 +4,25 @@ Date: Sun, 28 Jan 2024 15:43:43 +0100
 Subject: [PATCH] add matgl
 
 ---
- src/ML-M3GNET/m3gnet_driver.py   | 128 ++++++
- src/ML-M3GNET/matgl_driver.py    | 127 ++++++
- src/ML-M3GNET/pair_m3gnet.cpp    | 727 +++++++++++++++++++++++++++++++
- src/ML-M3GNET/pair_m3gnet.h      |  91 ++++
- src/ML-M3GNET/pair_m3gnet_d3.cpp |  31 ++
- src/ML-M3GNET/pair_m3gnet_d3.h   |  36 ++
+ src/USER-M3GNET/m3gnet_driver.py   | 128 ++++++
+ src/USER-M3GNET/matgl_driver.py    | 127 ++++++
+ src/USER-M3GNET/pair_m3gnet.cpp    | 727 +++++++++++++++++++++++++++++++
+ src/USER-M3GNET/pair_m3gnet.h      |  91 ++++
+ src/USER-M3GNET/pair_m3gnet_d3.cpp |  31 ++
+ src/USER-M3GNET/pair_m3gnet_d3.h   |  36 ++
  6 files changed, 1140 insertions(+)
- create mode 100644 src/ML-M3GNET/m3gnet_driver.py
- create mode 100644 src/ML-M3GNET/matgl_driver.py
- create mode 100644 src/ML-M3GNET/pair_m3gnet.cpp
- create mode 100644 src/ML-M3GNET/pair_m3gnet.h
- create mode 100644 src/ML-M3GNET/pair_m3gnet_d3.cpp
- create mode 100644 src/ML-M3GNET/pair_m3gnet_d3.h
+ create mode 100644 src/USER-M3GNET/m3gnet_driver.py
+ create mode 100644 src/USER-M3GNET/matgl_driver.py
+ create mode 100644 src/USER-M3GNET/pair_m3gnet.cpp
+ create mode 100644 src/USER-M3GNET/pair_m3gnet.h
+ create mode 100644 src/USER-M3GNET/pair_m3gnet_d3.cpp
+ create mode 100644 src/USER-M3GNET/pair_m3gnet_d3.h
 
-diff --git a/src/ML-M3GNET/m3gnet_driver.py b/src/ML-M3GNET/m3gnet_driver.py
+diff --git a/src/USER-M3GNET/m3gnet_driver.py b/src/USER-M3GNET/m3gnet_driver.py
 new file mode 100644
 index 00000000000..0025c7edcfd
 --- /dev/null
-+++ b/src/ML-M3GNET/m3gnet_driver.py
++++ b/src/USER-M3GNET/m3gnet_driver.py
 @@ -0,0 +1,128 @@
 +"""
 +Copyright (c) 2022, AdvanceSoft Corp.
@@ -152,11 +152,11 @@ index 00000000000..0025c7edcfd
 +
 +    return energy, forces, stress
 +
-diff --git a/src/ML-M3GNET/matgl_driver.py b/src/ML-M3GNET/matgl_driver.py
+diff --git a/src/USER-M3GNET/matgl_driver.py b/src/USER-M3GNET/matgl_driver.py
 new file mode 100644
 index 00000000000..90d39f78670
 --- /dev/null
-+++ b/src/ML-M3GNET/matgl_driver.py
++++ b/src/USER-M3GNET/matgl_driver.py
 @@ -0,0 +1,127 @@
 +"""
 +Copyright (c) 2023, AdvanceSoft Corp.
@@ -285,11 +285,11 @@ index 00000000000..90d39f78670
 +
 +    return energy, forces, stress
 +
-diff --git a/src/ML-M3GNET/pair_m3gnet.cpp b/src/ML-M3GNET/pair_m3gnet.cpp
+diff --git a/src/USER-M3GNET/pair_m3gnet.cpp b/src/USER-M3GNET/pair_m3gnet.cpp
 new file mode 100644
 index 00000000000..191e87f895d
 --- /dev/null
-+++ b/src/ML-M3GNET/pair_m3gnet.cpp
++++ b/src/USER-M3GNET/pair_m3gnet.cpp
 @@ -0,0 +1,727 @@
 +/*
 + * Copyright (C) 2022 AdvanceSoft Corporation
@@ -1018,11 +1018,11 @@ index 00000000000..191e87f895d
 +    elem[m] = '\0';
 +}
 +
-diff --git a/src/ML-M3GNET/pair_m3gnet.h b/src/ML-M3GNET/pair_m3gnet.h
+diff --git a/src/USER-M3GNET/pair_m3gnet.h b/src/USER-M3GNET/pair_m3gnet.h
 new file mode 100644
 index 00000000000..26912fa05f9
 --- /dev/null
-+++ b/src/ML-M3GNET/pair_m3gnet.h
++++ b/src/USER-M3GNET/pair_m3gnet.h
 @@ -0,0 +1,91 @@
 +/*
 + * Copyright (C) 2022 AdvanceSoft Corporation
@@ -1115,11 +1115,11 @@ index 00000000000..26912fa05f9
 +
 +#endif /* LMP_PAIR_M3GNET_H_ */
 +#endif
-diff --git a/src/ML-M3GNET/pair_m3gnet_d3.cpp b/src/ML-M3GNET/pair_m3gnet_d3.cpp
+diff --git a/src/USER-M3GNET/pair_m3gnet_d3.cpp b/src/USER-M3GNET/pair_m3gnet_d3.cpp
 new file mode 100644
 index 00000000000..e1afe423486
 --- /dev/null
-+++ b/src/ML-M3GNET/pair_m3gnet_d3.cpp
++++ b/src/USER-M3GNET/pair_m3gnet_d3.cpp
 @@ -0,0 +1,31 @@
 +/*
 + * Copyright (C) 2022 AdvanceSoft Corporation
@@ -1152,11 +1152,11 @@ index 00000000000..e1afe423486
 +    return 1;
 +}
 +
-diff --git a/src/ML-M3GNET/pair_m3gnet_d3.h b/src/ML-M3GNET/pair_m3gnet_d3.h
+diff --git a/src/USER-M3GNET/pair_m3gnet_d3.h b/src/USER-M3GNET/pair_m3gnet_d3.h
 new file mode 100644
 index 00000000000..a20b301d6a3
 --- /dev/null
-+++ b/src/ML-M3GNET/pair_m3gnet_d3.h
++++ b/src/USER-M3GNET/pair_m3gnet_d3.h
 @@ -0,0 +1,36 @@
 +/*
 + * Copyright (C) 2022 AdvanceSoft Corporation
