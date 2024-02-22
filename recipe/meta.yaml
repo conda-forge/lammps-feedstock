@@ -43,7 +43,7 @@ build:
   skip: True  # [cuda_compiler_version == "11.2"]
   track_features:
     - cudatoolkit               # [cuda_compiler_version != "None"]
-    - {{mpi_prefix}}
+    - {{ mpi_prefix }}
   script_env:
 {% if cuda_major == 11 %}
     - Kokkos_OPT_ARGS=-DKokkos_ARCH_KEPLER35=ON
