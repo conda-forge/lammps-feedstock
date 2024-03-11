@@ -50,7 +50,6 @@ args+=" -D PKG_PLUMED=yes"
 args+=" -D PLUMED_MODE=runtime"
 # electrode
 args+=" -D PKG_ELECTRODE=yes"
-args+=" -D USE_INTERNAL_LINALG=yes"
 
 # Plugins - n2p2 and latte
 if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
