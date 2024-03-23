@@ -89,8 +89,9 @@ jobs:
       osx_arm64_mpiopenmpinumpy1.23python3.11.____cpython:
         CONFIG: osx_arm64_mpiopenmpinumpy1.23python3.11.____cpython
         UPLOAD_PACKAGES: 'True'
-    maxParallel: 24
+    maxParallel: 19
   timeoutInMinutes: 360
+  variables: {}
 
   steps:
   # TODO: Fast finish on azure pipelines?
