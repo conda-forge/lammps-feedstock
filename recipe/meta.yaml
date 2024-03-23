@@ -114,7 +114,7 @@ requirements:
 
 test:
   imports:
-    - lammps  # [not (cuda_compiler_version or "").startswith("12")]
+    - lammps  # [cuda_compiler_version == "None"]
   commands: 
     - lmp_serial -help > help_serial.txt  # [mpi == 'nompi' and cuda_compiler_version == "None"]
     - mpiexec -n 1 lmp_mpi -help > help_mpi.txt  # [mpi == 'mpich' and cuda_compiler_version == "None"] 
