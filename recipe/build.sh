@@ -53,7 +53,10 @@ args+=" -D PKG_ELECTRODE=yes"
 
 # Plugins - n2p2 and latte
 if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
-  args=$args" -D PKG_ML-HDNNP=ON -D DOWNLOAD_N2P2=OFF -D N2P2_DIR=${PREFIX} -D PKG_ML-QUIP=ON -D PKG_LATTE=ON -D DOWNLOAD_QUIP=OFF"
+  if [[ ${PY_VER} != "3.12" ]]; then
+    args=$args" -D PKG_ML-QUIP=ON"
+  fi
+  args=$args" -D PKG_ML-HDNNP=ON -D DOWNLOAD_N2P2=OFF -D N2P2_DIR=${PREFIX} -D PKG_LATTE=ON -D DOWNLOAD_QUIP=OFF"
   export LDFLAGS="-L$PREFIX/lib -lcblas -lblas -llapack -fopenmp $LDFLAGS"
   if [[ ${cuda_compiler_version} != "None" ]]; then
     args=$args" -D PKG_KOKKOS=yes -D Kokkos_ENABLE_CUDA=yes ${Kokkos_OPT_ARGS}"
