@@ -45,6 +45,7 @@ args+=" -D PKG_SHOCK=ON"
 args+=" -D PKG_SRD=ON"
 args+=" -D PKG_VORONOI=ON"
 args+=" -D WITH_GZIP=ON"
+args+=" -D PKG_ML-MACE=ON"
 # plumed
 args+=" -D PKG_PLUMED=yes"
 args+=" -D PLUMED_MODE=runtime"
