@@ -20,7 +20,7 @@ source:
       - vcsgc_mtp_n2p2.patch
       - fix-cython.patch
       - matgl.patch
-      - mace.patch
+      - mace.patch  # [python_impl != "pypy"]
   - fn: lammps-plugins.tar.gz
     url: https://github.com/lammps/lammps-plugins/archive/{{ version_plugins }}.tar.gz
     sha256: 74bedc64941b49c964456d53590d3398af13a37cb82d9ede50326d562e5da429
@@ -92,7 +92,7 @@ requirements:
     - mlip * {{ mpi_prefix }}_*  # [linux]
     - n2p2 =2.2.0  # [linux]
     - n2p2 * {{ mpi_prefix }}_*  # [linux]
-    - pytorch
+    - pytorch  # [python_impl != "pypy"]
     - quippy =0.9.14  # [linux and py<312]
     - voro
     # https://github.com/lammps/lammps/blob/8389e2eb8074712b6850b3bf25fd3c3852e36f10/src/PLUMED/fix_plumed.cpp#L80-L82
