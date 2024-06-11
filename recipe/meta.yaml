@@ -1,4 +1,4 @@
-{% set build = 1 %}
+{% set build = 2 %}
 {% set name = "lammps" %}
 {% set version = "patch_7Feb2024_update1" %}
 {% set version_plugins = "stable_2Aug2023" %}
@@ -53,11 +53,11 @@ build:
 
 requirements:
   build:
+    - {{ stdlib("c") }}
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - {{ compiler('fortran') }}
     - {{ compiler('cuda') }}    # [cuda_compiler_version != "None"]
-    - sysroot_linux-64 2.17  # [linux]
     - cmake
     - make
     - pkg-config
