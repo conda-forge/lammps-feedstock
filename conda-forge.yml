@@ -6,4 +6,8 @@ conda_forge_output_validation: true
 github:
   branch_name: main
   tooling_branch_name: main
+os_version:
+  # cos7 to get c_stdlib_version 2.17
+  # which isn't working from conda_forge_config.yaml
+  linux_64: cos7
 test: native_and_emulated
