@@ -2,6 +2,10 @@ mpi:
 - mpich
 - openmpi
 - nompi
+
+# this isn't currently having an effect,
+# actually set by os_version in conda-forge.yml
+# https://github.com/conda-forge/conda-smithy/issues/1950
 c_stdlib_version:   # [linux]
   - "2.17"          # [linux]
 
