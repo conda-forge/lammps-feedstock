@@ -84,8 +84,8 @@ requirements:
     - liblapack  # [linux]
     - libnetcdf
     - libnetcdf * {{ mpi_prefix }}_*
-    - libpnetcdf
-    - libpnetcdf * {{ mpi_prefix }}_*
+    - libpnetcdf  # [mpi != 'nompi']
+    - libpnetcdf * {{ mpi_prefix }}_*  # [mpi != 'nompi']
     - kim-api
     - libcurl
     - mpi4py  # [mpi != 'nompi']
