@@ -57,7 +57,7 @@ requirements:
     - {{ compiler('cxx') }}
     - {{ compiler('fortran') }}
     - {{ compiler('cuda') }}    # [cuda_compiler_version != "None"]
-    - {{ stdlib("c") }}
+    - sysroot_linux-64 2.17  # [linux]
     - cmake
     - make
     - pkg-config
