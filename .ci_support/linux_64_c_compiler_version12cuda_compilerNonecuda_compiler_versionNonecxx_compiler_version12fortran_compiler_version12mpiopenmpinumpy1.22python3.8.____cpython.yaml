@@ -3,7 +3,7 @@ c_compiler:
 c_compiler_version:
 - '12'
 cdt_name:
-- cos6
+- cos7
 channel_sources:
 - conda-forge
 channel_targets:
@@ -41,7 +41,7 @@ libnetcdf:
 libpng:
 - '1.6'
 mpi:
-- mpich
+- openmpi
 mpich:
 - '4'
 numpy:

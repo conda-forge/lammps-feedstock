@@ -3,7 +3,7 @@ c_compiler:
 c_compiler_version:
 - '12'
 cdt_name:
-- cos6
+- cos7
 channel_sources:
 - conda-forge
 channel_targets:
@@ -41,11 +41,11 @@ libnetcdf:
 libpng:
 - '1.6'
 mpi:
-- nompi
+- openmpi
 mpich:
 - '4'
 numpy:
-- '1.23'
+- '1.22'
 openmpi:
 - '4'
 pin_run_as_build:
@@ -53,7 +53,7 @@ pin_run_as_build:
     min_pin: x.x
     max_pin: x.x
 python:
-- 3.11.* *_cpython
+- 3.10.* *_cpython
 target_platform:
 - linux-64
 zip_keys:
