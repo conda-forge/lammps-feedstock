@@ -54,6 +54,7 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}
+    - {{ stdlib("c") }}
     - {{ compiler('cxx') }}
     - {{ compiler('fortran') }}
     - {{ compiler('cuda') }}    # [cuda_compiler_version != "None"]
@@ -95,7 +96,7 @@ requirements:
     - quippy =0.9.14  # [linux and py<312]
     - voro
     # https://github.com/lammps/lammps/blob/8389e2eb8074712b6850b3bf25fd3c3852e36f10/src/PLUMED/fix_plumed.cpp#L80-L82
-    - plumed >=2.4,<2.9
+    - plumed >=2.4,<2.10
     - plumed * {{ mpi_prefix }}_*  # [mpi != 'nompi' and build_platform == target_platform]
 
   run:
