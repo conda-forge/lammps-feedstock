@@ -1,4 +1,4 @@
-{% set build = 3 %}
+{% set build = 4 %}
 {% set name = "lammps" %}
 {% set version = "patch_27Jun2024" %}
 {% set version_plugins = "patch_17Apr2024" %}
@@ -20,6 +20,7 @@ source:
       - vcsgc_mtp_n2p2.patch
       - fix-cython.patch
       - matgl.patch
+      - mpi4py.patch
   - fn: lammps-plugins.tar.gz
     url: https://github.com/lammps/lammps-plugins/archive/{{ version_plugins }}.tar.gz
     sha256: 173837c8362f9dfa773b0e1bf35d8f5cd1bd41b32dd02e8443c337852a87973e
