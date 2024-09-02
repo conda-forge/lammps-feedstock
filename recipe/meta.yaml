@@ -1,6 +1,6 @@
 {% set build = 4 %}
 {% set name = "lammps" %}
-{% set version = "patch_27Jun2024" %}
+{% set version = "29Aug2024" %}
 {% set version_plugins = "patch_17Apr2024" %}
 {% set sha256 = "2174a99d266279823a8c57629ee1c21ec357816aefd85f964d9f859fe9222aa5" %}
 {% set date = datetime.datetime.strptime(version.split('_')[1], "%d%b%Y") %}
