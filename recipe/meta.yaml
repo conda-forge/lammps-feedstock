@@ -1,8 +1,8 @@
-{% set build = 4 %}
+{% set build = 0 %}
 {% set name = "lammps" %}
-{% set version = "patch_27Jun2024" %}
+{% set version = "stable_29Aug2024" %}
 {% set version_plugins = "patch_17Apr2024" %}
-{% set sha256 = "2174a99d266279823a8c57629ee1c21ec357816aefd85f964d9f859fe9222aa5" %}
+{% set sha256 = "6112e0cc352c3140a4874c7f74db3c0c8e30134024164509ecf3772b305fde2e" %}
 {% set date = datetime.datetime.strptime(version.split('_')[1], "%d%b%Y") %}
 {% set conda_version = "{:%Y.%m.%d}".format(date) %}
 {% set cuda_major = environ.get("cuda_compiler_version", "0.0").split(".")[0]|int %}
@@ -20,7 +20,6 @@ source:
       - vcsgc_mtp_n2p2.patch
       - fix-cython.patch
       - matgl.patch
-      - mpi4py.patch
   - fn: lammps-plugins.tar.gz
     url: https://github.com/lammps/lammps-plugins/archive/{{ version_plugins }}.tar.gz
     sha256: 173837c8362f9dfa773b0e1bf35d8f5cd1bd41b32dd02e8443c337852a87973e
