@@ -29,7 +29,7 @@ fortran_compiler:
 fortran_compiler_version:
 - '11'
 hdf5:
-- 1.14.3
+- 1.14.4
 libblas:
 - 3.9 *netlib
 libcblas:
