@@ -75,7 +75,9 @@ if [ "$PYTHON_IMPL" != "PyPy" ]; then
   # conflict: mliap_unified_couple.cpp and mliap_model_python_couple.cpp (CPython only)
   # Safe due to Python's namespace isolation and identical Cython-generated code
   # TODO: Remove when upstream fixes duplicate Cython symbols
-  export LDFLAGS="-Wl,--allow-multiple-definition ${LDFLAGS}"
+  if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then # only for linux
+    export LDFLAGS="-Wl,--allow-multiple-definition ${LDFLAGS}"
+  fi
 fi
 
 # Parallel and library
