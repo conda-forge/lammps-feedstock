@@ -70,6 +70,12 @@ fi
 PYTHON_IMPL=$($PYTHON -c "import platform; print(platform.python_implementation())")
 if [ "$PYTHON_IMPL" != "PyPy" ]; then
   args=$args" -D PKG_USER-M3GNET=ON -D MLIAP_ENABLE_PYTHON=ON -D PKG_PYTHON=ON -D Python_ROOT_DIR=${PREFIX} -D Python_FIND_STRATEGY=LOCATION"
+  # Fix Cython symbol conflicts: __pyx_CommonTypesMetaclass_get_module in LAMMPS ML-IAP package:
+  # https://docs.lammps.org/Packages_details.html#pkg-ml-iap
+  # conflict: mliap_unified_couple.cpp and mliap_model_python_couple.cpp (CPython only)
+  # Safe due to Python's namespace isolation and identical Cython-generated code
+  # TODO: Remove when upstream fixes duplicate Cython symbols
+  export LDFLAGS="-Wl,--allow-multiple-definition ${LDFLAGS}"
 fi
 
 # Parallel and library
