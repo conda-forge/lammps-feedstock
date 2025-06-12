@@ -79,8 +79,8 @@ if [ "$PYTHON_IMPL" != "PyPy" ]; then
     # Linux: use GNU ld flag to suppress duplicate symbol errors
     export LDFLAGS="-Wl,--allow-multiple-definition ${LDFLAGS}"
   else
-    # macOS: use Apple ld flag to suppress duplicate symbol errors
-    export LDFLAGS="-Wl,-multiply_defined,suppress ${LDFLAGS}"
+    # macOS: use Apple ld flag to allow dynamic lookup of symbols
+    export LDFLAGS="-Wl,-undefined,dynamic_lookup ${LDFLAGS}"
   fi
 fi
 
