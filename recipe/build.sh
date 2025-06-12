@@ -69,7 +69,6 @@ fi
 # pypy does not support LAMMPS internal Python
 PYTHON_IMPL=$($PYTHON -c "import platform; print(platform.python_implementation())")
 if [ "$PYTHON_IMPL" != "PyPy" ]; then
-  args=$args" -D PKG_USER-M3GNET=ON -D MLIAP_ENABLE_PYTHON=ON -D PKG_PYTHON=ON -D Python_ROOT_DIR=${PREFIX} -D Python_FIND_STRATEGY=LOCATION"
   # Fix Cython symbol conflicts: __pyx_CommonTypesMetaclass_get_module in LAMMPS ML-IAP package:
   # https://docs.lammps.org/Packages_details.html#pkg-ml-iap
   # conflict: mliap_unified_couple.cpp and mliap_model_python_couple.cpp (CPython only)
@@ -78,14 +77,10 @@ if [ "$PYTHON_IMPL" != "PyPy" ]; then
   if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
     # Linux: use GNU ld flag to suppress duplicate symbol errors
     export LDFLAGS="-Wl,--allow-multiple-definition ${LDFLAGS}"
+    args=$args" -D PKG_USER-M3GNET=ON -D MLIAP_ENABLE_PYTHON=ON -D PKG_PYTHON=ON -D Python_ROOT_DIR=${PREFIX} -D Python_FIND_STRATEGY=LOCATION"
   else
     # macOS: use Apple ld flag to allow dynamic lookup of symbols
-    export LDFLAGS="-Wl,-v ${LDFLAGS}"
-    echo "DEBUG: Current LDFLAGS = $LDFLAGS"
-    echo "DEBUG: Current CMAKE_ARGS = $CMAKE_ARGS"
-    # Try the CMake approach
-    args=$args" -DCMAKE_SHARED_LINKER_FLAGS=-Wl,-undefined,dynamic_lookup"
-    echo "DEBUG: Updated args = $args"
+    args=$args" -D PKG_USER-M3GNET=ON -D MLIAP_ENABLE_PYTHON=OFF -D PKG_PYTHON=ON -D Python_ROOT_DIR=${PREFIX} -D Python_FIND_STRATEGY=LOCATION"
   fi
 fi
 
