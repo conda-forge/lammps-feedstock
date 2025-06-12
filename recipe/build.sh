@@ -80,7 +80,12 @@ if [ "$PYTHON_IMPL" != "PyPy" ]; then
     export LDFLAGS="-Wl,--allow-multiple-definition ${LDFLAGS}"
   else
     # macOS: use Apple ld flag to allow dynamic lookup of symbols
-    export LDFLAGS="-Wl,-undefined,dynamic_lookup ${LDFLAGS}"
+    export LDFLAGS="-Wl,-v ${LDFLAGS}"
+    echo "DEBUG: Current LDFLAGS = $LDFLAGS"
+    echo "DEBUG: Current CMAKE_ARGS = $CMAKE_ARGS"
+    # Try the CMake approach
+    args=$args" -DCMAKE_SHARED_LINKER_FLAGS=-Wl,-undefined,dynamic_lookup"
+    echo "DEBUG: Updated args = $args"
   fi
 fi
 
