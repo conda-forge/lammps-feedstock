@@ -68,7 +68,7 @@ requirements:
   host:
     - python
     - cython
-    - numpy
+    - numpy <2
     - setuptools
     - pip
     - {{ mpi }}  # [mpi != 'nompi']
