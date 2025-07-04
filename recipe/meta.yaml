@@ -68,7 +68,7 @@ requirements:
   host:
     - python
     - cython
-    - numpy <2
+    - numpy
     - setuptools
     - pip
     - {{ mpi }}  # [mpi != 'nompi']
@@ -93,7 +93,6 @@ requirements:
     - mlip * {{ mpi_prefix }}_*  # [linux]
     - n2p2 =2.2.0  # [linux]
     - n2p2 * {{ mpi_prefix }}_*  # [linux]
-    - quippy =0.9.14  # [linux and py<312]
     - voro
     # https://github.com/lammps/lammps/blob/8389e2eb8074712b6850b3bf25fd3c3852e36f10/src/PLUMED/fix_plumed.cpp#L80-L82
     - plumed >=2.4,<2.10
