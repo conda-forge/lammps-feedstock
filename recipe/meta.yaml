@@ -1,4 +1,4 @@
-{% set build = 4 %}
+{% set build = 5 %}
 {% set name = "lammps" %}
 {% set version = "stable_29Aug2024" %}
 {% set version_plugins = "patch_17Apr2024" %}
@@ -91,7 +91,7 @@ requirements:
     - mpi4py  # [mpi != 'nompi']
     - mlip =3.0  # [linux]
     - mlip * {{ mpi_prefix }}_*  # [linux]
-    - n2p2 =2.2.0  # [linux]
+    - n2p2 =2.3.0  # [linux]
     - n2p2 * {{ mpi_prefix }}_*  # [linux]
     - voro
     # https://github.com/lammps/lammps/blob/8389e2eb8074712b6850b3bf25fd3c3852e36f10/src/PLUMED/fix_plumed.cpp#L80-L82
@@ -107,7 +107,7 @@ requirements:
     - kim-api
     - mlip =3.0  # [linux]
     - mlip * {{ mpi_prefix }}_*  # [linux]
-    - n2p2 =2.2.0  # [linux]
+    - n2p2 =2.3.0  # [linux]
     - n2p2 * {{ mpi_prefix }}_*  # [linux]
     - __cuda  # [cuda_compiler_version != "None"]
 
