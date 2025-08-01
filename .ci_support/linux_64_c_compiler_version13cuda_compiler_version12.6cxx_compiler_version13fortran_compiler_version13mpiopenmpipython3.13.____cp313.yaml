@@ -43,11 +43,11 @@ liblapack:
 libnetcdf:
 - 4.9.2
 libpnetcdf:
-- 1.14.0
+- 1.14.1
 libpng:
 - '1.6'
 mpi:
-- mpich
+- openmpi
 mpich:
 - '4'
 numpy:

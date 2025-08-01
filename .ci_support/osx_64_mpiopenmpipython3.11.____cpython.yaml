@@ -5,7 +5,7 @@ MACOSX_SDK_VERSION:
 c_compiler:
 - clang
 c_compiler_version:
-- '18'
+- '19'
 c_stdlib:
 - macosx_deployment_target
 c_stdlib_version:
@@ -19,13 +19,13 @@ cuda_compiler_version:
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
-- '18'
+- '19'
 fftw:
 - '3'
 fortran_compiler:
 - gfortran
 fortran_compiler_version:
-- '13'
+- '14'
 hdf5:
 - 1.14.6
 libcurl:
@@ -35,7 +35,7 @@ libjpeg_turbo:
 libnetcdf:
 - 4.9.2
 libpnetcdf:
-- 1.14.0
+- 1.14.1
 libpng:
 - '1.6'
 macos_machine:
