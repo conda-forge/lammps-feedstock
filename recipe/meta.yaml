@@ -2,7 +2,7 @@
 {% set name = "lammps" %}
 {% set version = "stable_22Jul2025_update1" %}
 {% set version_plugins = "patch_17Apr2024" %}
-{% set sha256 = "6112e0cc352c3140a4874c7f74db3c0c8e30134024164509ecf3772b305fde2e" %}
+{% set sha256 = "4ba3648fae360ea1d3106e08bce13e21f856318196f4965f2a09fd812d572928" %}
 {% set date = datetime.datetime.strptime(version.split('_')[1], "%d%b%Y") %}
 {% set conda_version = "{:%Y.%m.%d}".format(date) %}
 {% set cuda_major = environ.get("cuda_compiler_version", "0.0").split(".")[0]|int %}
