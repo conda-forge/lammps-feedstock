@@ -88,7 +88,11 @@ if [ "${mpi}" == "nompi" ]; then
   ENABLE_MPI=OFF
 else
   ENABLE_MPI=TRUE
-  export CXX=${PREFIX}/bin/mpicxx
+  if [[ ${cuda_compiler_version} != "None" ]]; then
+    export CXX=${PREFIX}/bin/nvcc
+  else
+    export CXX=${PREFIX}/bin/mpicxx
+  fi
   export LDFLAGS="-lmpi ${LDFLAGS}"
 fi
 
