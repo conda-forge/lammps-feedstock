@@ -33,7 +33,7 @@ libcurl:
 libjpeg_turbo:
 - '3'
 libnetcdf:
-- 4.9.2
+- 4.9.3
 libpnetcdf:
 - 1.14.1
 libpng:
