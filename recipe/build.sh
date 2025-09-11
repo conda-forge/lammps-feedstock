@@ -88,7 +88,7 @@ if [ "${mpi}" == "nompi" ]; then
   ENABLE_MPI=OFF
 else
   ENABLE_MPI=TRUE
-  export CXX=${PREFIX}/bin/mpicxx
+  export MPI_CXX=${PREFIX}/bin/mpicxx
   export LDFLAGS="-lmpi ${LDFLAGS}"
 fi
 
