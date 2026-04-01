@@ -64,7 +64,6 @@ requirements:
     - python                                 # [build_platform != target_platform]
     - cython                                 # [build_platform != target_platform]
     - cross-python_{{ target_platform }}     # [build_platform != target_platform]
-    - pymdi
     - numpy                                  # [build_platform != target_platform]
   host:
     - python
@@ -109,6 +108,7 @@ requirements:
     - kim-api
     - mlip =3.0  # [linux]
     - mlip * {{ mpi_prefix }}_*  # [linux]
+    - pymdi
     - n2p2 =2.3.0  # [linux]
     - n2p2 * {{ mpi_prefix }}_*  # [linux]
     - __cuda  # [cuda_compiler_version != "None"]
