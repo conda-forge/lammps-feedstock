@@ -95,6 +95,11 @@ else
   export LDFLAGS="-lmpi ${LDFLAGS}"
 fi
 
+# Need this because it persitently looks /usr/lib64 for libc_nonshared.a
+if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
+    export LDFLAGS="-L$BUILD_PREFIX/x86_64-conda-linux-gnu/sysroot/usr/lib64 $LDFLAGS"
+fi
+
 # Mlip - only available in lmp_mpi 
 if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
   args=$args" -D PKG_USER-MLIP=ON"
