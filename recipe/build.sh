@@ -97,7 +97,11 @@ fi
 
 # Need this because it persitently looks /usr/lib64 for libc_nonshared.a
 if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
-    export LDFLAGS="-L$BUILD_PREFIX/x86_64-conda-linux-gnu/sysroot/usr/lib64 $LDFLAGS"
+    export LDFLAGS="$LDFLAGS -L$BUILD_PREFIX/x86_64-conda-linux-gnu/sysroot/usr/lib64"
+fi
+# This might fix errors with ::isgreater in atom.cpp due to new version of GCC
+if [[ ${cuda_compiler_version} != "None" ]]; then
+    export CUDAFLAGS="${CUDAFLAGS} -Xcompiler=-include,cmath"
 fi
 
 # Mlip - only available in lmp_mpi 
