@@ -96,13 +96,14 @@ if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
     export LDFLAGS="$LDFLAGS -L$BUILD_PREFIX/x86_64-conda-linux-gnu/sysroot/usr/lib64"
 fi
 
-if [[ ${cuda_compiler_version} == "None" ]]; then
+# if [[ ${cuda_compiler_version} == "None" ]]; then
     # Only add MDI for non-CUDA versions, due to compilation issues.
-    args+=" -D PKG_MDI=ON"
-    args+=" -D DOWNLOAD_MDI=OFF"
-    args+=" -D mdi_LIBRARY=${PREFIX}/lib/libmdi.so"
-    args+=" -D mdi_INCLUDE_DIR=${PREFIX}/include"
-else
+args+=" -D PKG_MDI=ON"
+args+=" -D DOWNLOAD_MDI=OFF"
+args+=" -D mdi_LIBRARY=${PREFIX}/lib/libmdi.so"
+args+=" -D mdi_INCLUDE_DIR=${PREFIX}/include"
+# else
+if [[ ${cuda_compiler_version} != "None" ]]; then
     # This might fix errors with ::isgreater in atom.cpp due to new version of GCC
     export CXXFLAGS="-isystem $PREFIX/targets/x86_64-linux/include $CXXFLAGS"
 
@@ -133,11 +134,12 @@ if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
   args=$args" -D PKG_USER-MLIP=ON"
   cp -r mlip/LAMMPS/USER-MLIP src/
 fi
+
 mkdir build
 cd build
 cmake -D BUILD_LIB=ON -D BUILD_SHARED_LIBS=ON -D LAMMPS_INSTALL_RPATH=ON -D BUILD_MPI=${ENABLE_MPI} -D PKG_MPIIO=${ENABLE_MPI} -D LAMMPS_EXCEPTIONS=yes $args ${CMAKE_ARGS} ../cmake
 make -j${NUM_CPUS}
-#pws make VERBOSE=1# -j${NUM_CPUS}
+
 cp lmp $PREFIX/bin/lmp
 if [ "${mpi}" == "nompi" ]; then
   ln -s lmp ${PREFIX}/bin/lmp_serial

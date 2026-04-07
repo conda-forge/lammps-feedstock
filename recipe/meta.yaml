@@ -93,9 +93,7 @@ requirements:
     - mlip * {{ mpi_prefix }}_*  # [linux]
     - n2p2 =2.3.0  # [linux]
     - n2p2 * {{ mpi_prefix }}_*  # [linux]
-    {% if cuda_compiler_version == "None" %}
     - pymdi
-    {% endif %}
     - voro
     # https://github.com/lammps/lammps/blob/8389e2eb8074712b6850b3bf25fd3c3852e36f10/src/PLUMED/fix_plumed.cpp#L80-L82
     - plumed >=2.4,<2.10
@@ -110,9 +108,7 @@ requirements:
     - kim-api
     - mlip =3.0  # [linux]
     - mlip * {{ mpi_prefix }}_*  # [linux]
-    {% if cuda_compiler_version == "None" %}
     - pymdi
-    {% endif %}
     - n2p2 =2.3.0  # [linux]
     - n2p2 * {{ mpi_prefix }}_*  # [linux]
     - __cuda  # [cuda_compiler_version != "None"]
