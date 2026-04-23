@@ -57,7 +57,7 @@ if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
   args=$args" -D PKG_ML-HDNNP=ON -D DOWNLOAD_N2P2=OFF -D N2P2_DIR=${PREFIX} -D PKG_LATTE=ON"
   export LDFLAGS="-L$PREFIX/lib -lcblas -lblas -llapack -fopenmp $LDFLAGS"
   if [[ ${cuda_compiler_version} != "None" ]]; then
-    args=$args" -D PKG_KOKKOS=yes -D Kokkos_ENABLE_CUDA=yes ${Kokkos_OPT_ARGS}"
+    args=$args" -D PKG_KOKKOS=yes -D Kokkos_ENABLE_CUDA=yes -D Kokkos_ENABLE_CUDA_CONSTEXPR=ON ${Kokkos_OPT_ARGS}"
   fi
 else
   CXXFLAGS="${CXXFLAGS} -DTARGET_OS_OSX=1"
@@ -91,15 +91,57 @@ else
   export LDFLAGS="-lmpi ${LDFLAGS}"
 fi
 
+# Need this because it persistently looks /usr/lib64 for libc_nonshared.a
+if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
+    export LDFLAGS="$LDFLAGS -L$BUILD_PREFIX/x86_64-conda-linux-gnu/sysroot/usr/lib64"
+fi
+
+# if [[ ${cuda_compiler_version} == "None" ]]; then
+    # Only add MDI for non-CUDA versions, due to compilation issues.
+args+=" -D PKG_MDI=ON"
+args+=" -D DOWNLOAD_MDI=OFF"
+args+=" -D mdi_LIBRARY=${PREFIX}/lib/libmdi.so"
+args+=" -D mdi_INCLUDE_DIR=${PREFIX}/include"
+# else
+if [[ ${cuda_compiler_version} != "None" ]]; then
+    # This might fix errors with ::isgreater in atom.cpp due to new version of GCC
+    export CXXFLAGS="-isystem $PREFIX/targets/x86_64-linux/include $CXXFLAGS"
+
+    cat > ${SRC_DIR}/cuda_cmath_fix.h << 'EOF'
+#pragma once
+#include <cmath>
+#ifdef __CUDACC__
+using std::isgreater;
+using std::isgreaterequal;
+using std::isless;
+using std::islessequal;
+using std::islessgreater;
+#endif
+EOF
+
+    # Patch ambiguous call to log2 with int.
+    sed -i 's/int(log2(vectorsize)/int(log2(double(vectorsize))/g' ${SRC_DIR}/src/KOKKOS/pair_kokkos.h
+    # And signbit
+    sed -i 's/(signbit(/(std::signbit(/g' ${SRC_DIR}/src/KOKKOS/pair_pace_kokkos.cpp    
+    sed -i 's/(signbit(/(std::signbit(/g' ${SRC_DIR}/src/KOKKOS/pair_pace_extrapolation_kokkos.cpp
+
+    export CXXFLAGS="-include ${SRC_DIR}/cuda_cmath_fix.h ${CXXFLAGS}"
+    export CUDAFLAGS="${CUDAFLAGS} -Xcompiler=-include,cmath"
+fi
+
 # Mlip - only available in lmp_mpi 
 if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
   args=$args" -D PKG_USER-MLIP=ON"
   cp -r mlip/LAMMPS/USER-MLIP src/
 fi
+
 mkdir build
 cd build
 cmake -D BUILD_LIB=ON -D BUILD_SHARED_LIBS=ON -D LAMMPS_INSTALL_RPATH=ON -D BUILD_MPI=${ENABLE_MPI} -D PKG_MPIIO=${ENABLE_MPI} -D LAMMPS_EXCEPTIONS=yes $args ${CMAKE_ARGS} ../cmake
-make # -j${NUM_CPUS}
+
+# CondaForge running out of memory....
+make -j2
+
 cp lmp $PREFIX/bin/lmp
 if [ "${mpi}" == "nompi" ]; then
   ln -s lmp ${PREFIX}/bin/lmp_serial
