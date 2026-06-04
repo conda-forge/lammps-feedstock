@@ -58,7 +58,7 @@ requirements:
     - {{ compiler('cxx') }}
     - {{ compiler('fortran') }}
     - {{ compiler('cuda') }}    # [cuda_compiler_version != "None"]
-    - cmake =4.1.1
+    - cmake
     - make
     - pkg-config
     - python                                 # [build_platform != target_platform]
