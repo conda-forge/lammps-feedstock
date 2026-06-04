@@ -1,4 +1,4 @@
-{% set build = 9 %}
+{% set build = 10 %}
 {% set name = "lammps" %}
 {% set version = "stable_29Aug2024" %}
 {% set version_plugins = "patch_17Apr2024" %}
@@ -58,7 +58,7 @@ requirements:
     - {{ compiler('cxx') }}
     - {{ compiler('fortran') }}
     - {{ compiler('cuda') }}    # [cuda_compiler_version != "None"]
-    - cmake
+    - cmake =4.1.1
     - make
     - pkg-config
     - python                                 # [build_platform != target_platform]
