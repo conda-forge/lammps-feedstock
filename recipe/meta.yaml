@@ -67,6 +67,7 @@ requirements:
     - numpy                                  # [build_platform != target_platform]
   host:
     - libcublas-dev                              # [cuda_compiler_version != "None"]
+    - cuda-libraries-dev                         # [cuda_compiler_version != "None"]
     - cuda-version ={{ cuda_compiler_version }}  # [cuda_compiler_version != "None"]
     - python
     - cython
