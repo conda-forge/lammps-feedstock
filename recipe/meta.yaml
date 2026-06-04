@@ -66,6 +66,8 @@ requirements:
     - cross-python_{{ target_platform }}     # [build_platform != target_platform]
     - numpy                                  # [build_platform != target_platform]
   host:
+    - libcublas-dev                             # [cuda_compiler_version != "None"]
+    - cuda-version={{ cuda_compiler_version }}  # [cuda_compiler_version != "None"]
     - python
     - cython
     - numpy
@@ -109,7 +111,6 @@ requirements:
     - mlip * {{ mpi_prefix }}_*  # [linux]
     - n2p2 =2.3.0  # [linux]
     - n2p2 * {{ mpi_prefix }}_*  # [linux]
-    - __cuda  # [cuda_compiler_version != "None"]
 
 test:
   imports:
