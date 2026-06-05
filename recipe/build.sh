@@ -57,7 +57,8 @@ if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
   args=$args" -D PKG_ML-HDNNP=ON -D DOWNLOAD_N2P2=OFF -D N2P2_DIR=${PREFIX} -D PKG_LATTE=ON"
   export LDFLAGS="-L$PREFIX/lib -lcblas -lblas -llapack -fopenmp $LDFLAGS"
   if [[ ${cuda_compiler_version} != "None" ]]; then
-    export CXXFLAGS="$CXXFLAGS --expt-relaxed-constexpr"
+    echo $NVCC_PREPEND_FLAGS
+    echo $NVCC_APPEND_FLAGS
     args=$args" -D PKG_KOKKOS=yes -D Kokkos_ENABLE_CUDA=yes ${Kokkos_OPT_ARGS}"
   fi
 else
