@@ -100,7 +100,7 @@ if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
 fi
 mkdir build
 cd build
-cmake -D BUILD_LIB=ON -D BUILD_SHARED_LIBS=ON -D LAMMPS_INSTALL_RPATH=ON -D BUILD_MPI=${ENABLE_MPI} -D PKG_MPIIO=${ENABLE_MPI} -D LAMMPS_EXCEPTIONS=yes $args ${CMAKE_ARGS} ../cmake
+cmake -v -D BUILD_LIB=ON -D BUILD_SHARED_LIBS=ON -D LAMMPS_INSTALL_RPATH=ON -D BUILD_MPI=${ENABLE_MPI} -D PKG_MPIIO=${ENABLE_MPI} -D LAMMPS_EXCEPTIONS=yes $args ${CMAKE_ARGS} ../cmake
 make # -j${NUM_CPUS}
 cp lmp $PREFIX/bin/lmp
 if [ "${mpi}" == "nompi" ]; then
