@@ -59,7 +59,7 @@ if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
   if [[ ${cuda_compiler_version} != "None" ]]; then
     echo "NVCC_PREPEND_FLAGS=" $NVCC_PREPEND_FLAGS
     echo "NVCC_APPEND_FLAGS=" $NVCC_APPEND_FLAGS
-    export NVCC_APPEND_FLAGS="$NVCC_APPEND_FLAGS --expt-relaxed-constexpr"
+    export NVCC_APPEND_FLAGS="$NVCC_APPEND_FLAGS -I$PREFIX/targets/x86_64-linux/include/cccl"
     args=$args" -D PKG_KOKKOS=yes -D Kokkos_ENABLE_CUDA=yes ${Kokkos_OPT_ARGS}"
   fi
 else
