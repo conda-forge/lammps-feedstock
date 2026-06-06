@@ -58,7 +58,7 @@ if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
   export LDFLAGS="-L$PREFIX/lib -lcblas -lblas -llapack -fopenmp $LDFLAGS"
   if [[ ${cuda_compiler_version} != "None" ]]; then
     export NVCC_WRAPPER_SHOW_COMMANDS_BEING_RUN=1
-    export CMAKE_ARGS="-D CMAKE_INCLUDE_PATH=$PREFIX/include $CMAKE_ARGS"
+    export CMAKE_ARGS="-D CMAKE_INSTALL_INCLUDEDIR=$PREFIX/include $CMAKE_ARGS"
     args=$args" -D PKG_KOKKOS=yes -D Kokkos_ENABLE_CUDA_CONSTEXPR=ON -D Kokkos_ENABLE_CUDA=yes ${Kokkos_OPT_ARGS}"
   fi
 else
