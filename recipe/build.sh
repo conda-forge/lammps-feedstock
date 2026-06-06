@@ -55,7 +55,7 @@ args+=" -D PKG_ELECTRODE=yes"
 # Plugins - n2p2 and latte
 if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
   args=$args" -D PKG_ML-HDNNP=ON -D DOWNLOAD_N2P2=OFF -D N2P2_DIR=${PREFIX} -D PKG_LATTE=ON"
-  export LDFLAGS="-L$PREFIX/lib -lcblas -lblas -llapack =-fopenmp $LDFLAGS"
+  export LDFLAGS="-L$PREFIX/lib -lcblas -lblas -llapack -fopenmp $LDFLAGS"
   if [[ ${cuda_compiler_version} != "None" ]]; then
     export NVCC_WRAPPER_SHOW_COMMANDS_BEING_RUN=1
     export CXXFLAGS="$CXXFLAGS -D_GNU_SOURCE -D_DEFAULT_SOURCE -D_ISOC99_SOURCE"
