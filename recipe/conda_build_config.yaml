@@ -1,4 +1,8 @@
+c_compiler_version:        # [linux]
+  - 12                     # [linux]
+cxx_compiler_version:      # [linux]
+  - 12                     # [linux]
 mpi:
-- mpich
-- openmpi
-- nompi
+  - mpich
+  - openmpi
+  - nompi
