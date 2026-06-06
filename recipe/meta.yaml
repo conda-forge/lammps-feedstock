@@ -53,8 +53,6 @@ build:
 
 requirements:
   build:
-    - {{ compiler('c') }} {{ c_compiler_version }}.*  # [linux]
-    - {{ compiler('cxx') }} {{ cxx_compiler_version }}.*  # [linux]
     - {{ compiler('c') }}
     - {{ stdlib("c") }}
     - {{ compiler('cxx') }}
