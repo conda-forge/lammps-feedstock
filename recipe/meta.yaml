@@ -57,7 +57,6 @@ requirements:
     - {{ stdlib("c") }}
     - {{ compiler('cxx') }}
     - {{ compiler('fortran') }}
-    - {{ compiler('cuda') }}    # [cuda_compiler_version != "None"]
     - cmake
     - make
     - pkg-config
@@ -109,7 +108,6 @@ requirements:
     - mlip * {{ mpi_prefix }}_*  # [linux]
     - n2p2 =2.3.0  # [linux]
     - n2p2 * {{ mpi_prefix }}_*  # [linux]
-    - __cuda  # [cuda_compiler_version != "None"]
 
 test:
   imports:
