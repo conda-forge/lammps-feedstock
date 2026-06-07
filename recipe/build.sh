@@ -58,8 +58,7 @@ if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
   export LDFLAGS="-L$PREFIX/lib -lcblas -lblas -llapack -fopenmp $LDFLAGS"
   if [[ ${cuda_compiler_version} != "None" ]]; then
     export NVCC_WRAPPER_SHOW_COMMANDS_BEING_RUN=1
-    rm $BUILD_PREFIX/x86_64-conda-linux-gnu/sysroot/usr/include/math.h $PREFIX/x86_64-conda-linux-gnu/sysroot/usr/include/math.h
-    export CXXFLAGS="-I$PREFIX/lib/gcc/x86_64-conda-linux-gnu/14.3.0/include/c++ $CXXFLAGS"
+    rm $BUILD_PREFIX/x86_64-conda-linux-gnu/sysroot/usr/include/math.h
     args=$args" -D PKG_KOKKOS=yes -D Kokkos_ENABLE_CUDA_CONSTEXPR=ON -D Kokkos_ENABLE_CUDA=yes ${Kokkos_OPT_ARGS}"
   fi
 else
