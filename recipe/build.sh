@@ -59,7 +59,8 @@ if [[ -z "$MACOSX_DEPLOYMENT_TARGET" ]]; then
   if [[ ${cuda_compiler_version} != "None" ]]; then
     export NVCC_WRAPPER_SHOW_COMMANDS_BEING_RUN=1
     rm $BUILD_PREFIX/x86_64-conda-linux-gnu/sysroot/usr/include/math.h
-    export CMAKE_ARGS="-DCMAKE_FIND_ROOT_PATH=$PREFIX;$PREFIX/x86_64-conda-linux-gnu/sysroot $CMAKE_ARGS"
+    export CMAKE_ARGS="$CMAKE_ARGS -DCMAKE_FIND_ROOT_PATH=$PREFIX;$PREFIX/x86_64-conda-linux-gnu/sysroot"
+    export CXXFLAGS="-I$PREFIX/x86_64-conda-linux-gnu/sysroot $CXXFLAGS"
     args=$args" -D PKG_KOKKOS=yes -D Kokkos_ENABLE_CUDA_CONSTEXPR=ON -D Kokkos_ENABLE_CUDA=yes ${Kokkos_OPT_ARGS}"
   fi
 else
