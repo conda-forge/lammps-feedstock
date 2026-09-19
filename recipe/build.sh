@@ -30,6 +30,12 @@ args+=" -D PKG_MISC=ON"
 args+=" -D PKG_MISC=ON"
 args+=" -D PKG_ML-IAP=ON"
 args+=" -D PKG_ML-PACE=ON"
+# GRACE (bundled in ML-PACE) ships TensorFlow-based pair styles as well as a
+# native, dependency-free evaluator (pair_style grace/fs and, when Kokkos/CUDA
+# is enabled below, its Kokkos-accelerated variants). Conda-forge has no
+# packaged libtensorflow_cc suitable for linking here, so keep the TF-based
+# styles disabled for now and ship the native evaluator only.
+args+=" -D NO_GRACE_TF=yes"
 args+=" -D PKG_ML-SNAP=ON"
 args+=" -D PKG_MOLECULE=ON"
 args+=" -D PKG_MSCG=OFF"
