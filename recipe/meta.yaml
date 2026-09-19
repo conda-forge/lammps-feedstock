@@ -101,8 +101,6 @@ requirements:
     - plumed * {{ mpi_prefix }}_*  # [mpi != 'nompi' and build_platform == target_platform]
     - cuda-version {{ cuda_compiler_version }}  # [(cuda_compiler_version or "None") != "None"]
     - yaml-cpp
-    # cuBLAS is used by the GRACE (ML-PACE) Kokkos pair styles on the CUDA backend
-    - libcublas-dev  # [cuda_compiler_version != "None"]
 
   run:
     - python
@@ -115,7 +113,6 @@ requirements:
     - mlip * {{ mpi_prefix }}_*  # [linux]
     - n2p2 =2.3.0  # [linux]
     - n2p2 * {{ mpi_prefix }}_*  # [linux]
-    - libcublas  # [cuda_compiler_version != "None"]
 
 test:
   imports:
