@@ -1,4 +1,4 @@
-{% set build = 4 %}
+{% set build = 5 %}
 {% set name = "lammps" %}
 {% set version = "stable_22Jul2025_update6" %}
 {% set version_plugins = "patch_17Apr2024" %}
@@ -15,11 +15,12 @@ source:
   - fn: {{ name }}-{{ conda_version }}.tar.gz
     url: https://github.com/lammps/lammps/archive/{{ version }}.tar.gz
     sha256: {{ sha256 }}
-    patches: 
+    patches:
       - macos_install.patch
       - vcsgc_mtp_n2p2.patch
       - fix-cython.patch
       - matgl.patch
+      - grace.patch
   - fn: lammps-plugins.tar.gz
     url: https://github.com/lammps/lammps-plugins/archive/{{ version_plugins }}.tar.gz
     sha256: 173837c8362f9dfa773b0e1bf35d8f5cd1bd41b32dd02e8443c337852a87973e
