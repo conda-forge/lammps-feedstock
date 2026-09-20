@@ -30,13 +30,12 @@ args+=" -D PKG_MISC=ON"
 args+=" -D PKG_MISC=ON"
 args+=" -D PKG_ML-IAP=ON"
 args+=" -D PKG_ML-PACE=ON"
-# GRACE (bundled in ML-PACE) ships TensorFlow-based pair styles as well as a
-# native, dependency-free evaluator (pair_style grace/fs). Conda-forge has no
-# packaged libtensorflow_cc suitable for linking here, so keep the TF-based
-# styles disabled for now and ship the native evaluator only. The Kokkos
-# GRACE styles are not part of this patch yet (they need a not-yet-ported
-# LAMMPS Kokkos mixed-precision type-system extension), so this flag makes
-# no difference between the CPU and CUDA/Kokkos variants of this build.
+# GRACE (bundled in ML-PACE) ships TensorFlow-based pair styles, a native
+# dependency-free evaluator (pair_style grace/fs), and -- on the CUDA/Kokkos
+# build below -- Kokkos-accelerated native evaluators (grace/{1,2,3}l/kk,
+# grace/fs/kk). Conda-forge has no packaged libtensorflow_cc suitable for
+# linking here, so keep the TF-based styles disabled; the native and Kokkos
+# evaluators are unaffected by this flag.
 args+=" -D NO_GRACE_TF=yes"
 args+=" -D PKG_ML-SNAP=ON"
 args+=" -D PKG_MOLECULE=ON"
