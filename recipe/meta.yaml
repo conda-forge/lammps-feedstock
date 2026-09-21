@@ -1,4 +1,4 @@
-{% set build = 5 %}
+{% set build = 6 %}
 {% set name = "lammps" %}
 {% set version = "stable_22Jul2025_update6" %}
 {% set version_plugins = "patch_17Apr2024" %}
@@ -20,7 +20,23 @@ source:
       - vcsgc_mtp_n2p2.patch
       - fix-cython.patch
       - matgl.patch
-      - grace.patch
+      # grace.patch adds the Kokkos-accelerated GRACE pair styles
+      # (grace/{1,2,3}l/kk, grace/fs/kk) on top of the TensorFlow-free
+      # GRACE support both variants share. On cuda_compiler_version ==
+      # "13.4" (paired with gcc 15 here), compiling pair_grace_fs_kokkos.cpp
+      # hits an upstream CCCL bug: cub/agent/agent_merge.cuh's Hopper
+      # TMA bulk-copy fast path (used by cub::DeviceMergeSort) calls
+      # unqualified data()/size() relying on ADL to find cuda::std::data,
+      # which is ambiguous with std::data under gcc 15's libstdc++
+      # ("more than one instance of overloaded function \"data\" matches
+      # the argument list"). Confirmed this is not a general Kokkos+CCCL+
+      # gcc15 problem (pair_pace_kokkos.cpp and pair_grace_{1,2,3}l_kokkos.cpp
+      # all compile clean under the same toolchain) and not fixable from
+      # our side (NVIDIA-owned header). cuda_compiler_version == "12.9"
+      # (gcc 14) is unaffected, so it gets the full patch; revisit this
+      # split once upstream CCCL/cuda-nvcc ships a fix for 13.4.
+      - grace.patch             # [cuda_compiler_version != "13.4"]
+      - grace-no-kokkos.patch   # [cuda_compiler_version == "13.4"]
   - fn: lammps-plugins.tar.gz
     url: https://github.com/lammps/lammps-plugins/archive/{{ version_plugins }}.tar.gz
     sha256: 173837c8362f9dfa773b0e1bf35d8f5cd1bd41b32dd02e8443c337852a87973e
@@ -101,6 +117,9 @@ requirements:
     - plumed * {{ mpi_prefix }}_*  # [mpi != 'nompi' and build_platform == target_platform]
     - cuda-version {{ cuda_compiler_version }}  # [(cuda_compiler_version or "None") != "None"]
     - yaml-cpp
+    # cuBLAS is used by the GRACE (ML-PACE) Kokkos pair styles on the CUDA
+    # backend -- only pulled in by grace.patch, not grace-no-kokkos.patch
+    - libcublas-dev  # [cuda_compiler_version not in ("None", "13.4")]
 
   run:
     - python
@@ -113,6 +132,7 @@ requirements:
     - mlip * {{ mpi_prefix }}_*  # [linux]
     - n2p2 =2.3.0  # [linux]
     - n2p2 * {{ mpi_prefix }}_*  # [linux]
+    - libcublas  # [cuda_compiler_version not in ("None", "13.4")]
 
 test:
   imports:
