@@ -5,20 +5,20 @@ Subject: [PATCH] Patches
 
 ---
  cmake/CMakeLists.txt                   |  6 ++++--
- cmake/Modules/FindMLIP.cmake           | 27 ++++++++++++++++++++++++++
+ cmake/Modules/FindMLIP.cmake           | 27 +++++++++++++++++++++++++++
  cmake/Modules/Packages/USER-MLIP.cmake |  2 ++
  3 files changed, 33 insertions(+), 2 deletions(-)
  create mode 100644 cmake/Modules/FindMLIP.cmake
  create mode 100644 cmake/Modules/Packages/USER-MLIP.cmake
 
 diff --git a/cmake/CMakeLists.txt b/cmake/CMakeLists.txt
-index 723015c1f99..bda25dad167 100644
+index 3862383..7591e8b 100644
 --- a/cmake/CMakeLists.txt
 +++ b/cmake/CMakeLists.txt
-@@ -338,7 +338,9 @@ set(STANDARD_PACKAGES
+@@ -372,7 +372,9 @@ set(STANDARD_PACKAGES
+   TALLY
    UEF
    VORONOI
-   VTK
 -  YAFF)
 +  YAFF
 +  USER-M3GNET
@@ -26,18 +26,18 @@ index 723015c1f99..bda25dad167 100644
  
  set(SUFFIX_PACKAGES CORESHELL GPU KOKKOS OPT INTEL OPENMP)
  
-@@ -580,7 +582,7 @@ else()
+@@ -617,7 +619,7 @@ else()
  endif()
  
- foreach(PKG_WITH_INCL KSPACE PYTHON ML-IAP VORONOI COLVARS ML-HDNNP MDI MOLFILE NETCDF
--        PLUMED QMMM ML-QUIP SCAFACOS MACHDYN VTK KIM COMPRESS ML-PACE LEPTON EXTRA-COMMAND)
-+        PLUMED QMMM ML-QUIP SCAFACOS MACHDYN VTK KIM COMPRESS ML-PACE LEPTON EXTRA-COMMAND USER-MLIP)
+ foreach(PKG_WITH_INCL GRAPHICS KSPACE PYTHON ML-IAP VORONOI COLVARS ML-HDNNP MDI MOLFILE NETCDF
+-        PLUMED QMMM QMMM-XTB ML-QUIP ML-RUNNER SCAFACOS MACHDYN KIM COMPRESS ML-PACE LEPTON FENIX EXTRA-COMMAND MBX)
++        PLUMED QMMM QMMM-XTB ML-QUIP ML-RUNNER SCAFACOS MACHDYN KIM COMPRESS ML-PACE LEPTON FENIX EXTRA-COMMAND MBX USER-MLIP)
    if(PKG_${PKG_WITH_INCL})
      include(Packages/${PKG_WITH_INCL})
    endif()
 diff --git a/cmake/Modules/FindMLIP.cmake b/cmake/Modules/FindMLIP.cmake
 new file mode 100644
-index 00000000000..97c229ef148
+index 0000000..3d4c95a
 --- /dev/null
 +++ b/cmake/Modules/FindMLIP.cmake
 @@ -0,0 +1,27 @@
@@ -70,7 +70,7 @@ index 00000000000..97c229ef148
 +mark_as_advanced(MLIP_LIBRARY)
 diff --git a/cmake/Modules/Packages/USER-MLIP.cmake b/cmake/Modules/Packages/USER-MLIP.cmake
 new file mode 100644
-index 00000000000..15df686bdc4
+index 0000000..15df686
 --- /dev/null
 +++ b/cmake/Modules/Packages/USER-MLIP.cmake
 @@ -0,0 +1,2 @@

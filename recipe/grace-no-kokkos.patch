@@ -1,95 +1,13 @@
 diff --git a/cmake/Modules/Packages/ML-PACE.cmake b/cmake/Modules/Packages/ML-PACE.cmake
-index 7d3d1a452e..4e4935e06b 100644
+index 5163b58..0442fa5 100644
 --- a/cmake/Modules/Packages/ML-PACE.cmake
 +++ b/cmake/Modules/Packages/ML-PACE.cmake
-@@ -1,68 +1,312 @@
- # PACE library support for ML-PACE package
--find_package(pace QUIET)
- 
--if(pace_FOUND)
--    find_package(pace)
--    target_link_libraries(lammps PRIVATE pace::pace)
-+# set policy to silence warnings about timestamps of downloaded files. review occasionally if it may be set to NEW
-+if(POLICY CMP0135)
-+  cmake_policy(SET CMP0135 NEW)
-+endif()
-+
-+set(PACELIB_URL "https://github.com/ICAMS/lammps-user-pace/archive/refs/tags/v.2025.12.4.p1.tar.gz" CACHE STRING "URL for PACE evaluator library sources")
-+set(PACELIB_SHA256 "21e9d7ad2094eef0f19958d154866fc725fc6ccfa82ec3681ef2b006545ced96" CACHE STRING "SHA256 checksum of PACE evaluator library tarball")
-+mark_as_advanced(PACELIB_URL PACELIB_SHA256)
-+GetFallbackURL(PACELIB_URL PACELIB_FALLBACK)
-+
-+if(LOCAL_ML-PACE)
-+  message(STATUS "Using LOCAL ML-PACE ${LOCAL_ML-PACE}")
-+  set(lib-pace "${LOCAL_ML-PACE}")
- else()
--    # set policy to silence warnings about timestamps of downloaded files. review occasionally if it may be set to NEW
--    if(POLICY CMP0135)
--      cmake_policy(SET CMP0135 OLD)
-+  set(_pace_archive "${CMAKE_BINARY_DIR}/libpace.tar.gz")
-+  set(_pace_stamp   "${CMAKE_BINARY_DIR}/.pace_extracted_sha256")
-+
-+  # Download archive if missing or hash mismatch
-+  if(EXISTS "${_pace_archive}")
-+    file(SHA256 "${_pace_archive}" _pace_dl_sha256)
-+  endif()
-+  if(NOT "${_pace_dl_sha256}" STREQUAL "${PACELIB_SHA256}")
-+    message(STATUS "Downloading ${PACELIB_URL}")
-+    file(DOWNLOAD "${PACELIB_URL}" "${_pace_archive}"
-+      EXPECTED_HASH SHA256=${PACELIB_SHA256}
-+      STATUS _dl_status
-+    )
-+    list(GET _dl_status 0 _dl_code)
-+    if(NOT _dl_code EQUAL 0)
-+      message(WARNING "Download from primary URL ${PACELIB_URL} failed. Trying fallback ${PACELIB_FALLBACK}")
-+      file(DOWNLOAD "${PACELIB_FALLBACK}" "${_pace_archive}"
-+        EXPECTED_HASH SHA256=${PACELIB_SHA256}
-+        SHOW_PROGRESS
-+      )
+@@ -66,3 +66,244 @@ else()
+       target_link_libraries(lammps PRIVATE pace)
      endif()
-+    set(_pace_dl_sha256 "${PACELIB_SHA256}")
-+  else()
-+    message(STATUS "Using cached ${_pace_archive}")
-+  endif()
- 
--    set(PACELIB_URL "https://github.com/ICAMS/lammps-user-pace/archive/refs/tags/v.2023.11.25.fix2.tar.gz" CACHE STRING "URL for PACE evaluator library sources")
--    set(PACELIB_MD5 "a53bd87cfee8b07d9f44bc17aad69c3f" CACHE STRING "MD5 checksum of PACE evaluator library tarball")
--    mark_as_advanced(PACELIB_URL)
--    mark_as_advanced(PACELIB_MD5)
--    GetFallbackURL(PACELIB_URL PACELIB_FALLBACK)
-+  # Extract only when archive changed or directory missing
-+  file(GLOB _pace_dirs "${CMAKE_BINARY_DIR}/lammps-user-pace*")
-+  if(EXISTS "${_pace_stamp}")
-+    file(READ "${_pace_stamp}" _pace_stamp_sha256)
-+    string(STRIP "${_pace_stamp_sha256}" _pace_stamp_sha256)
-+  endif()
-+  if(NOT "${_pace_stamp_sha256}" STREQUAL "${_pace_dl_sha256}" OR NOT _pace_dirs)
-+    file(GLOB _pace_dirs "${CMAKE_BINARY_DIR}/lammps-user-pace*")
-+    foreach(_d ${_pace_dirs})
-+      file(REMOVE_RECURSE "${_d}")
-+    endforeach()
-+    execute_process(
-+      COMMAND ${CMAKE_COMMAND} -E tar xzf "${_pace_archive}"
-+      WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
-+      RESULT_VARIABLE _pace_tar_result
-+    )
-+    if(_pace_tar_result EQUAL 0)
-+      file(WRITE "${_pace_stamp}" "${_pace_dl_sha256}")
-+    else()
-+      message(FATAL_ERROR "Failed to extract ${_pace_archive} (exit code ${_pace_tar_result})")
-+    endif()
-+  endif()
- 
--    # LOCAL_ML-PACE points to top-level dir with local lammps-user-pace repo,
--    # to make it easier to check local build without going through the public github releases
--    if(LOCAL_ML-PACE)
--     set(lib-pace "${LOCAL_ML-PACE}")
-+  get_newest_file(${CMAKE_BINARY_DIR}/lammps-user-pace-* lib-pace)
-+endif()
+ endif()
 +
-+add_subdirectory(${lib-pace} build-pace)
-+set_target_properties(pace PROPERTIES CXX_EXTENSIONS ON OUTPUT_NAME lammps_pace${LAMMPS_MACHINE})
-+
++# GRACE support (TensorFlow-based and native evaluators)
 +if(NOT DEFINED NO_GRACE_TF)
 +
 +  # --- Locate TensorFlow ---
@@ -117,10 +35,7 @@ index 7d3d1a452e..4e4935e06b 100644
 +      set(TF_LIB_FILE "${TF_PATH}/libtensorflow_cc.2.dylib")
 +    elseif(WIN32)
 +      set(TF_LIB_FILE "${TF_PATH}/tensorflow.dll")
-     else()
--      # download library sources to build folder
--      if(EXISTS ${CMAKE_BINARY_DIR}/libpace.tar.gz)
--        file(MD5 ${CMAKE_BINARY_DIR}/libpace.tar.gz DL_MD5)
++    else()
 +      set(TF_LIB_FILE "${TF_PATH}/libtensorflow_cc.so.2")
 +    endif()
 +    set(TF_INCLUDE_PATH "${TF_PATH}/include")
@@ -142,14 +57,7 @@ index 7d3d1a452e..4e4935e06b 100644
 +        set(_tf_sha256  "6ca25aae03548cf76f6f68f00bdf53ec39710f08cee23bf6419b9e6e27feca5c")
 +        set(_tf_archive "${CMAKE_BINARY_DIR}/libtensorflow.tar.gz")
 +        set(_tf_extract ${CMAKE_COMMAND} -E tar xzf)
-       endif()
--      if(NOT "${DL_MD5}" STREQUAL "${PACELIB_MD5}")
--        message(STATUS "Downloading ${PACELIB_URL}")
--        file(DOWNLOAD ${PACELIB_URL} ${CMAKE_BINARY_DIR}/libpace.tar.gz STATUS DL_STATUS SHOW_PROGRESS)
--        file(MD5 ${CMAKE_BINARY_DIR}/libpace.tar.gz DL_MD5)
--        if((NOT DL_STATUS EQUAL 0) OR (NOT "${DL_MD5}" STREQUAL "${PACELIB_MD5}"))
--          message(WARNING "Download from primary URL ${PACELIB_URL} failed\nTrying fallback URL ${PACELIB_FALLBACK}")
--          file(DOWNLOAD ${PACELIB_FALLBACK} ${CMAKE_BINARY_DIR}/libpace.tar.gz EXPECTED_HASH MD5=${PACELIB_MD5} SHOW_PROGRESS)
++      endif()
 +
 +      if(NOT EXISTS "${_tf_archive}")
 +        message(STATUS "Downloading TensorFlow from ${_tf_url}")
@@ -162,9 +70,8 @@ index 7d3d1a452e..4e4935e06b 100644
 +        list(GET _tf_dl_status 1 _tf_dl_msg)
 +        if(NOT _tf_dl_code EQUAL 0)
 +          message(FATAL_ERROR "Failed to download TensorFlow from ${_tf_url}. Error: ${_tf_dl_msg}")
-         endif()
-       else()
--        message(STATUS "Using already downloaded archive ${CMAKE_BINARY_DIR}/libpace.tar.gz")
++        endif()
++      else()
 +        message(STATUS "Using cached ${_tf_archive}")
 +      endif()
 +
@@ -186,8 +93,8 @@ index 7d3d1a452e..4e4935e06b 100644
 +        else()
 +          message(FATAL_ERROR "Failed to extract ${_tf_archive} (exit code ${_tf_tar_result})")
 +        endif()
-       endif()
- 
++      endif()
++
 +      set(TF_PATH "${CMAKE_BINARY_DIR}")
 +      if(WIN32)
 +        set(TF_LIB_FILE "${TF_PATH}/lib/tensorflow.dll")
@@ -200,14 +107,7 @@ index 7d3d1a452e..4e4935e06b 100644
 +      set(TF_INCLUDE_PATH "${TF_PATH}/include")
 +    endif()
 +  endif()
- 
--      # uncompress downloaded sources
--      execute_process(
--        COMMAND ${CMAKE_COMMAND} -E remove_directory lammps-user-pace*
--        COMMAND ${CMAKE_COMMAND} -E tar xzf libpace.tar.gz
--        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
--      )
--      get_newest_file(${CMAKE_BINARY_DIR}/lammps-user-pace-* lib-pace)
++
 +  # --- Import TensorFlow target ---
 +  if(EXISTS "${TF_LIB_FILE}")
 +    message(STATUS "TensorFlow library found at ${TF_LIB_FILE}")
@@ -237,12 +137,8 @@ index 7d3d1a452e..4e4935e06b 100644
 +        IMPORTED_LOCATION    "${TF_LIB_FILE}"
 +        INTERFACE_INCLUDE_DIRECTORIES "${TF_INCLUDE_PATH}"
 +        INTERFACE_LINK_LIBRARIES "${_tf_iface_libs}")
-     endif()
- 
--    # some preinstalled yaml-cpp versions don't provide a namespaced target
--    find_package(yaml-cpp QUIET)
--    if(TARGET yaml-cpp AND NOT TARGET yaml-cpp::yaml-cpp)
--      add_library(yaml-cpp::yaml-cpp ALIAS yaml-cpp)
++    endif()
++
 +    # In newer TF versions (e.g. 2.20+), TF_Message and other symbols were moved
 +    # to libtensorflow_framework.so.2, which must be explicitly linked if present.
 +    if(APPLE)
@@ -258,13 +154,8 @@ index 7d3d1a452e..4e4935e06b 100644
 +      add_library(tensorflow_framework SHARED IMPORTED)
 +      set_target_properties(tensorflow_framework PROPERTIES
 +              IMPORTED_LOCATION "${TF_FW_LIB_FILE}")
-     endif()
- 
--    # fixup yaml-cpp/emitterutils.cpp for GCC 15+ until patch is applied
--    file(READ ${lib-pace}/yaml-cpp/src/emitterutils.cpp yaml_emitterutils)
--    string(REPLACE "#include <sstream>" "#include <sstream>\n#include <cinttypes>" yaml_tmp_emitterutils "${yaml_emitterutils}")
--    string(REPLACE "#include <cinttypes>\n#include <cinttypes>" "#include <cinttypes>" yaml_emitterutils "${yaml_tmp_emitterutils}")
--    file(WRITE ${lib-pace}/yaml-cpp/src/emitterutils.cpp "${yaml_emitterutils}")
++    endif()
++
 +    # --- cppflow ---
 +    if(DEFINED CPPFLOW_PATH AND EXISTS "${CPPFLOW_PATH}")
 +      message(STATUS "Using provided local cppflow at: ${CPPFLOW_PATH}")
@@ -274,9 +165,7 @@ index 7d3d1a452e..4e4935e06b 100644
 +      set(CPPFLOW_SHA256 "10a0956dd5acb3515a94ef8172261c77494e70d3116ba078b3aac10b8be199e5")
 +      set(_cppflow_archive "${CMAKE_BINARY_DIR}/libcppflow.tar.gz")
 +      set(_cppflow_stamp   "${CMAKE_BINARY_DIR}/.cppflow_extracted_sha256")
- 
--    add_subdirectory(${lib-pace} build-pace EXCLUDE_FROM_ALL)
--    set_target_properties(pace PROPERTIES CXX_EXTENSIONS ON OUTPUT_NAME lammps_pace${LAMMPS_MACHINE})
++
 +      if(NOT EXISTS "${_cppflow_archive}")
 +        message(STATUS "Downloading cppflow from ${CPPFLOW_URL}")
 +        file(DOWNLOAD "${CPPFLOW_URL}" "${_cppflow_archive}"
@@ -310,9 +199,7 @@ index 7d3d1a452e..4e4935e06b 100644
 +          message(FATAL_ERROR "Failed to extract ${_cppflow_archive} (exit code ${_cppflow_tar_result})")
 +        endif()
 +      endif()
- 
--    if(CMAKE_PROJECT_NAME STREQUAL "lammps")
--      target_link_libraries(lammps PRIVATE pace)
++
 +      set(CPPFLOW_PATH "${CMAKE_BINARY_DIR}/cppflow-${CPPFLOW_VERSION}")
 +    endif()
 +
@@ -332,8 +219,6 @@ index 7d3d1a452e..4e4935e06b 100644
 +endif()
 +
 +if(CMAKE_PROJECT_NAME STREQUAL "lammps")
-+  target_link_libraries(lammps PRIVATE pace)
-+
 +  if(DEFINED PACE_TP)
 +    target_compile_definitions(lammps PRIVATE PACE_TP)
 +    target_link_libraries(lammps PRIVATE tensorflow)
@@ -359,30 +244,30 @@ index 7d3d1a452e..4e4935e06b 100644
 +      target_compile_definitions(lammps PRIVATE YAML_CPP_DLL)
 +    else()
 +      target_compile_definitions(lammps PRIVATE YAML_CPP_STATIC_DEFINE)
-     endif()
++    endif()
 +  endif()
- endif()
++endif()
 diff --git a/doc/src/Commands_pair.rst b/doc/src/Commands_pair.rst
-index 48acf3b499..e1d35677e2 100644
+index 379c9de..1fb4d0a 100644
 --- a/doc/src/Commands_pair.rst
 +++ b/doc/src/Commands_pair.rst
-@@ -109,6 +109,11 @@ OPT.
-    * :doc:`gauss (go) <pair_gauss>`
-    * :doc:`gauss/cut (o) <pair_gauss>`
+@@ -120,6 +120,11 @@ parenthesis: g = GPU, i = INTEL, k = KOKKOS, o = OPENMP, t = OPT.
+    * :doc:`gauss (gko) <pair_gauss>`
+    * :doc:`gauss/cut (ko) <pair_gauss>`
     * :doc:`gayberne (gio) <pair_gayberne>`
 +   * :doc:`grace <pair_grace>`
 +   * :doc:`grace/1layer/chunk <pair_grace>`
 +   * :doc:`grace/2layer/chunk <pair_grace>`
 +   * :doc:`grace/2layer/parallel <pair_grace>`
 +   * :doc:`grace/fs <pair_grace>`
-    * :doc:`gran/hertz/history (o) <pair_gran>`
-    * :doc:`gran/hooke (o) <pair_gran>`
+    * :doc:`gran/hertz/history (ko) <pair_gran>`
+    * :doc:`gran/hooke (ko) <pair_gran>`
     * :doc:`gran/hooke/history (ko) <pair_gran>`
 diff --git a/doc/src/Packages_details.rst b/doc/src/Packages_details.rst
-index f3f70c1ff7..946de12434 100644
+index 849a839..7c72f2e 100644
 --- a/doc/src/Packages_details.rst
 +++ b/doc/src/Packages_details.rst
-@@ -1851,11 +1851,12 @@ ML-PACE package
+@@ -1989,11 +1989,12 @@ ML-PACE package
  
  **Contents:**
  
@@ -397,7 +282,7 @@ index f3f70c1ff7..946de12434 100644
  
  **Authors:**
  
-@@ -1884,6 +1885,7 @@ as a plugin to avoid licensing conflicts when distributing binaries.
+@@ -2022,6 +2023,7 @@ as a plugin to avoid licensing conflicts when distributing binaries.
  
  * ``src/ML-PACE``: filenames -> commands
  * :doc:`pair_style pace <pair_pace>`
@@ -407,7 +292,7 @@ index f3f70c1ff7..946de12434 100644
  ----------
 diff --git a/doc/src/pair_grace.rst b/doc/src/pair_grace.rst
 new file mode 100644
-index 0000000000..12f79c777b
+index 0000000..12f79c7
 --- /dev/null
 +++ b/doc/src/pair_grace.rst
 @@ -0,0 +1,641 @@
@@ -1053,10 +938,10 @@ index 0000000000..12f79c777b
 +
 +**(Lysogorskiy25)** Lysogorskiy, Bochkarev, Drautz, arXiv:2508.17936 (2025).
 diff --git a/doc/src/pair_pace.rst b/doc/src/pair_pace.rst
-index 001214370c..f4c8387098 100644
+index 3e0167a..3db057b 100644
 --- a/doc/src/pair_pace.rst
 +++ b/doc/src/pair_pace.rst
-@@ -191,6 +191,7 @@ LAMMPS was built with that package.  See the :doc:`Build package
+@@ -232,6 +232,7 @@ LAMMPS was built with that package.  See the :doc:`Build package
  Related commands
  """"""""""""""""
  
@@ -1065,10 +950,10 @@ index 001214370c..f4c8387098 100644
  :doc:`fix pair  <fix_pair>`
  
 diff --git a/doc/src/pair_style.rst b/doc/src/pair_style.rst
-index dd0d1031a2..3cd195e8a8 100644
+index 78bed83..508b9f6 100644
 --- a/doc/src/pair_style.rst
 +++ b/doc/src/pair_style.rst
-@@ -201,6 +201,11 @@ accelerated styles exist.
+@@ -206,6 +206,11 @@ accelerated styles exist.
  * :doc:`gauss <pair_gauss>` - Gaussian potential
  * :doc:`gauss/cut <pair_gauss>` - generalized Gaussian potential
  * :doc:`gayberne <pair_gayberne>` - Gay-Berne ellipsoidal potential
@@ -1078,295 +963,13 @@ index dd0d1031a2..3cd195e8a8 100644
 +* :doc:`grace/2layer/parallel <pair_grace>` - two-layer GRACE MPI TensorFlow evaluator without chunking
 +* :doc:`grace/fs <pair_grace>` - native GRACE/FS evaluator
  * :doc:`granular <pair_granular>` - Generalized granular potential
+ * :doc:`granular/superellipsoid <pair_granular_superellipsoid>` - Generalized granular potential for superellipsoids
  * :doc:`gran/hertz/history <pair_gran>` - granular potential with Hertzian interactions
- * :doc:`gran/hooke <pair_gran>` - granular potential with history effects
-diff --git a/src/DIELECTRIC/fix_polarize_bem_gmres.cpp b/src/DIELECTRIC/fix_polarize_bem_gmres.cpp
-index 588a8b8eab..a883a06ea1 100644
---- a/src/DIELECTRIC/fix_polarize_bem_gmres.cpp
-+++ b/src/DIELECTRIC/fix_polarize_bem_gmres.cpp
-@@ -350,8 +350,10 @@ void FixPolarizeBEMGMRES::compute_induced_charges()
-   double *em = atom->em;
-   double *epsilon = atom->epsilon;
-   int nlocal = atom->nlocal;
--  int eflag = 1;
--  int vflag = 0;
-+
-+  // flag that we only need to compute the global energy
-+  int eflag = ENERGY_GLOBAL | ENERGY_ONLY;
-+  int vflag = VIRIAL_NONE;
- 
-   // compute the right hand side (vector b) of Eq. (40) according to Eq. (42)
-   // keep the scaled real charges intact here to compute efield for the right hand side (b)
-diff --git a/src/DIELECTRIC/fix_polarize_bem_icc.cpp b/src/DIELECTRIC/fix_polarize_bem_icc.cpp
-index 85459df863..a6c8f2fdf6 100644
---- a/src/DIELECTRIC/fix_polarize_bem_icc.cpp
-+++ b/src/DIELECTRIC/fix_polarize_bem_icc.cpp
-@@ -255,10 +255,12 @@ void FixPolarizeBEMICC::compute_induced_charges()
-   double *epsilon = atom->epsilon;
-   int *mask = atom->mask;
-   int nlocal = atom->nlocal;
--  int eflag = 1;
--  int vflag = 0;
-   int itr;
- 
-+  // flag that we only need to compute the global energy
-+  int eflag = ENERGY_GLOBAL | ENERGY_ONLY;
-+  int vflag = VIRIAL_NONE;
-+
-   // use Eq. (64) in Barros et al. to initialize the induced charges
-   // Note: area[i] is included here to ensure correct charge unit
-   //   for direct use in force/efield compute
-diff --git a/src/EXTRA-FIX/fix_numdiff.cpp b/src/EXTRA-FIX/fix_numdiff.cpp
-index 87bd456181..fbebe159e6 100644
---- a/src/EXTRA-FIX/fix_numdiff.cpp
-+++ b/src/EXTRA-FIX/fix_numdiff.cpp
-@@ -296,18 +296,20 @@ double FixNumDiff::update_energy()
- {
-   force_clear(atom->f);
- 
--  int eflag = 1;
-+  // flag that we only need to compute the global energy
-+  int eflag = ENERGY_GLOBAL | ENERGY_ONLY;
-+  int vflag = VIRIAL_NONE;
- 
--  if (pair_compute_flag) force->pair->compute(eflag, 0);
-+  if (pair_compute_flag) force->pair->compute(eflag, vflag);
- 
-   if (atom->molecular != Atom::ATOMIC) {
--    if (force->bond) force->bond->compute(eflag, 0);
--    if (force->angle) force->angle->compute(eflag, 0);
--    if (force->dihedral) force->dihedral->compute(eflag, 0);
--    if (force->improper) force->improper->compute(eflag, 0);
-+    if (force->bond) force->bond->compute(eflag, vflag);
-+    if (force->angle) force->angle->compute(eflag, vflag);
-+    if (force->dihedral) force->dihedral->compute(eflag, vflag);
-+    if (force->improper) force->improper->compute(eflag, vflag);
-   }
- 
--  if (kspace_compute_flag) force->kspace->compute(eflag, 0);
-+  if (kspace_compute_flag) force->kspace->compute(eflag, vflag);
- 
-   double energy = pe->compute_scalar();
-   return energy;
-diff --git a/src/EXTRA-FIX/fix_numdiff_virial.cpp b/src/EXTRA-FIX/fix_numdiff_virial.cpp
-index 826d1975c0..beff4b616d 100644
---- a/src/EXTRA-FIX/fix_numdiff_virial.cpp
-+++ b/src/EXTRA-FIX/fix_numdiff_virial.cpp
-@@ -272,18 +272,20 @@ void FixNumDiffVirial::restore_atoms(int nall, int idir)
- 
- double FixNumDiffVirial::update_energy()
- {
--  int eflag = 1;
-+  // flag that we only need to compute the global energy
-+  int eflag = ENERGY_GLOBAL | ENERGY_ONLY;
-+  int vflag = VIRIAL_NONE;
- 
--  if (pair_compute_flag) force->pair->compute(eflag, 0);
-+  if (pair_compute_flag) force->pair->compute(eflag, vflag);
- 
-   if (atom->molecular != Atom::ATOMIC) {
--    if (force->bond) force->bond->compute(eflag, 0);
--    if (force->angle) force->angle->compute(eflag, 0);
--    if (force->dihedral) force->dihedral->compute(eflag, 0);
--    if (force->improper) force->improper->compute(eflag, 0);
-+    if (force->bond) force->bond->compute(eflag, vflag);
-+    if (force->angle) force->angle->compute(eflag, vflag);
-+    if (force->dihedral) force->dihedral->compute(eflag, vflag);
-+    if (force->improper) force->improper->compute(eflag, vflag);
-   }
- 
--  if (kspace_compute_flag) force->kspace->compute(eflag, 0);
-+  if (kspace_compute_flag) force->kspace->compute(eflag, vflag);
- 
-   double energy = pe->compute_scalar();
-   return energy;
-diff --git a/src/FEP/compute_fep.cpp b/src/FEP/compute_fep.cpp
-index 47fc332900..116fc69ade 100644
---- a/src/FEP/compute_fep.cpp
-+++ b/src/FEP/compute_fep.cpp
-@@ -267,8 +267,9 @@ void ComputeFEP::compute_vector()
- {
-   double pe0, pe1;
- 
--  eflag = 1;
--  vflag = 0;
-+  // flag that we only need to compute the global energy
-+  int eflag = ENERGY_GLOBAL | ENERGY_ONLY;
-+  int vflag = VIRIAL_NONE;
- 
-   invoked_vector = update->ntimestep;
- 
-diff --git a/src/FEP/compute_fep.h b/src/FEP/compute_fep.h
-index ef25cb2ccb..af56a0eb15 100644
---- a/src/FEP/compute_fep.h
-+++ b/src/FEP/compute_fep.h
-@@ -41,7 +41,6 @@ class ComputeFEP : public Compute {
-   int chgflag;
-   int tailflag, volumeflag;
-   int fepinitflag;
--  int eflag, vflag;
-   double temp_fep;
- 
-   int nmax;
-diff --git a/src/FEP/compute_fep_ta.cpp b/src/FEP/compute_fep_ta.cpp
-index 786bf53bfa..32f397b326 100644
---- a/src/FEP/compute_fep_ta.cpp
-+++ b/src/FEP/compute_fep_ta.cpp
-@@ -149,8 +149,9 @@ void ComputeFEPTA::compute_vector()
- {
-   double pe0, pe1;
- 
--  eflag = 1;
--  vflag = 0;
-+  // flag that we only need to compute the global energy
-+  int eflag = ENERGY_GLOBAL | ENERGY_ONLY;
-+  int vflag = VIRIAL_NONE;
- 
-   invoked_vector = update->ntimestep;
- 
-diff --git a/src/FEP/compute_fep_ta.h b/src/FEP/compute_fep_ta.h
-index 5b5891660e..de876d7b62 100644
---- a/src/FEP/compute_fep_ta.h
-+++ b/src/FEP/compute_fep_ta.h
-@@ -38,7 +38,6 @@ class ComputeFEPTA : public Compute {
-  private:
-   int tailflag;
-   int fepinitflag;
--  int eflag, vflag;
-   double temp_fep;
-   double scale_factor;
-   int tan_axis1, tan_axis2, norm_axis;
-diff --git a/src/MC/fix_atom_swap.cpp b/src/MC/fix_atom_swap.cpp
-index 5332fba820..a2216cea68 100644
---- a/src/MC/fix_atom_swap.cpp
-+++ b/src/MC/fix_atom_swap.cpp
-@@ -609,8 +609,9 @@ int FixAtomSwap::attempt_swap()
- 
- double FixAtomSwap::energy_full()
- {
--  int eflag = 1;
--  int vflag = 0;
-+  // flag that we only need to compute the global energy
-+  int eflag = ENERGY_GLOBAL | ENERGY_ONLY;
-+  int vflag = VIRIAL_NONE;
- 
-   if (modify->n_pre_force) modify->pre_force(vflag);
- 
-diff --git a/src/MC/fix_charge_regulation.cpp b/src/MC/fix_charge_regulation.cpp
-index d6f0135be8..98b0ec3176 100644
---- a/src/MC/fix_charge_regulation.cpp
-+++ b/src/MC/fix_charge_regulation.cpp
-@@ -1125,6 +1125,11 @@ int FixChargeRegulation::get_random_particle(int ptype, double charge, double rd
- /* ---------------------------------------------------------------------- */
- 
- double FixChargeRegulation::energy_full() {
-+
-+  // flag that we only need to compute the global energy
-+  int eflag = ENERGY_GLOBAL | ENERGY_ONLY;
-+  int vflag = VIRIAL_NONE;
-+
-   if (triclinic) domain->x2lamda(atom->nlocal);
-   domain->pbc();
-   comm->exchange();
-@@ -1133,8 +1138,6 @@ double FixChargeRegulation::energy_full() {
-   if (triclinic) domain->lamda2x(atom->nlocal + atom->nghost);
-   if (modify->n_pre_neighbor) modify->pre_neighbor();
-   neighbor->build(1);
--  int eflag = 1;
--  int vflag = 0;
-   if (overlap_flag) {
-     int overlaptestall;
-     int overlaptest = 0;
-diff --git a/src/MC/fix_gcmc.cpp b/src/MC/fix_gcmc.cpp
-index d1b1dd5cec..a79e5a7448 100644
---- a/src/MC/fix_gcmc.cpp
-+++ b/src/MC/fix_gcmc.cpp
-@@ -2384,8 +2384,10 @@ double FixGCMC::energy_full()
-   if (triclinic) domain->lamda2x(atom->nlocal+atom->nghost);
-   if (modify->n_pre_neighbor) modify->pre_neighbor();
-   neighbor->build(1);
--  int eflag = 1;
--  int vflag = 0;
-+
-+  // flag that we only need to compute the global energy
-+  int eflag = ENERGY_GLOBAL | ENERGY_ONLY;
-+  int vflag = VIRIAL_NONE;
- 
-   // if overlap check requested, if overlap,
-   // return signal value for energy
-diff --git a/src/MC/fix_mol_swap.cpp b/src/MC/fix_mol_swap.cpp
-index d7f65b376b..cb4195a959 100644
---- a/src/MC/fix_mol_swap.cpp
-+++ b/src/MC/fix_mol_swap.cpp
-@@ -379,8 +379,9 @@ int FixMolSwap::attempt_swap()
- 
- double FixMolSwap::energy_full()
- {
--  int eflag = 1;
--  int vflag = 0;
-+  // flag that we only need to compute the global energy
-+  int eflag = ENERGY_GLOBAL | ENERGY_ONLY;
-+  int vflag = VIRIAL_NONE;
- 
-   if (modify->n_pre_force) modify->pre_force(vflag);
- 
-diff --git a/src/MC/fix_neighbor_swap.cpp b/src/MC/fix_neighbor_swap.cpp
-index fc1b301521..30137a0c24 100644
---- a/src/MC/fix_neighbor_swap.cpp
-+++ b/src/MC/fix_neighbor_swap.cpp
-@@ -583,8 +583,9 @@ int FixNeighborSwap::attempt_swap()
- 
- double FixNeighborSwap::energy_full()
- {
--  int eflag = 1;
--  int vflag = 0;
-+  // flag that we only need to compute the global energy
-+  int eflag = ENERGY_GLOBAL | ENERGY_ONLY;
-+  int vflag = VIRIAL_NONE;
- 
-   if (modify->n_pre_force) modify->pre_force(vflag);
- 
-diff --git a/src/MC/fix_sgcmc.cpp b/src/MC/fix_sgcmc.cpp
-index 66a810e88a..e14287cb55 100644
---- a/src/MC/fix_sgcmc.cpp
-+++ b/src/MC/fix_sgcmc.cpp
-@@ -896,10 +896,11 @@ double FixSemiGrandCanonicalMC::computeEnergyChangeGeneric(int flipAtom, int old
-  *********************************************************************/
- double FixSemiGrandCanonicalMC::computeTotalEnergy()
- {
--  int eflag = 1;
--  int vflag = 0;
-+  // flag that we only need to compute the global energy
-+  int eflag = ENERGY_GLOBAL | ENERGY_ONLY;
-+  int vflag = VIRIAL_NONE;
- 
--  if (force->pair) force->pair->compute(eflag,vflag);
-+  if (force->pair) force->pair->compute(eflag, vflag);
- 
-   if (atom->molecular) {
-     if (force->bond) force->bond->compute(eflag,vflag);
-diff --git a/src/MC/fix_widom.cpp b/src/MC/fix_widom.cpp
-index 93a15c41a4..eef0383e86 100644
---- a/src/MC/fix_widom.cpp
-+++ b/src/MC/fix_widom.cpp
-@@ -1051,8 +1051,10 @@ double FixWidom::energy_full()
-   if (triclinic) domain->lamda2x(atom->nlocal+atom->nghost);
-   if (modify->n_pre_neighbor) modify->pre_neighbor();
-   neighbor->build(1);
--  int eflag = 1;
--  int vflag = 0;
-+
-+  // flag that we only need to compute the global energy
-+  int eflag = ENERGY_GLOBAL | ENERGY_ONLY;
-+  int vflag = VIRIAL_NONE;
- 
-   // clear forces so they don't accumulate over multiple
-   // calls within fix widom timestep
 diff --git a/src/ML-PACE/README b/src/ML-PACE/README
-index 7909b68dd3..51bc266cb4 100644
+index e99022f..51bc266 100644
 --- a/src/ML-PACE/README
 +++ b/src/ML-PACE/README
-@@ -1,23 +1,45 @@
+@@ -1,19 +1,45 @@
 -The ML-PACE package provides the pace pair style,
 -an efficient implementation of the Atomic Cluster Expansion
 -potential (ACE).
@@ -1392,13 +995,9 @@ index 7909b68dd3..51bc266cb4 100644
  Ruhr University Bochum, Germany (http://www.icams.de).
  
 -This package requires a library that can be downloaded and built
--in lib/pace or somewhere else, which must be done before building
--LAMMPS with this package. Details of the download, build, and
--install process for this package using traditional make (not CMake)
--are given in the lib/pace/README file, and scripts are
--provided to help automate the process.  Also see the LAMMPS manual for
--general information on building LAMMPS with external libraries
--using either traditional make or CMake.
+-separately or while building LAMMPS with CMake. See the LAMMPS manual
+-more information on building LAMMPS with external libraries
+-using CMake.
 +Dependencies and Building:
 +
 +This package requires the external PACE library and, optionally, the
@@ -1428,7 +1027,7 @@ index 7909b68dd3..51bc266cb4 100644
 +* GRACE documentation and model generation tools: https://gracemaker.readthedocs.io
 diff --git a/src/ML-PACE/pair_grace.cpp b/src/ML-PACE/pair_grace.cpp
 new file mode 100644
-index 0000000000..e2b31a45ee
+index 0000000..e2b31a4
 --- /dev/null
 +++ b/src/ML-PACE/pair_grace.cpp
 @@ -0,0 +1,1594 @@
@@ -3028,7 +2627,7 @@ index 0000000000..e2b31a45ee
 +#endif    //#ifndef NO_GRACE_TF
 diff --git a/src/ML-PACE/pair_grace.h b/src/ML-PACE/pair_grace.h
 new file mode 100644
-index 0000000000..8e2493439b
+index 0000000..8e24934
 --- /dev/null
 +++ b/src/ML-PACE/pair_grace.h
 @@ -0,0 +1,192 @@
@@ -3226,7 +2825,7 @@ index 0000000000..8e2493439b
 +#endif    //#ifndef NO_GRACE_TF
 diff --git a/src/ML-PACE/pair_grace_1layer_chunk.cpp b/src/ML-PACE/pair_grace_1layer_chunk.cpp
 new file mode 100644
-index 0000000000..b3d8de066e
+index 0000000..b3d8de0
 --- /dev/null
 +++ b/src/ML-PACE/pair_grace_1layer_chunk.cpp
 @@ -0,0 +1,687 @@
@@ -3919,7 +3518,7 @@ index 0000000000..b3d8de066e
 +#endif
 diff --git a/src/ML-PACE/pair_grace_1layer_chunk.h b/src/ML-PACE/pair_grace_1layer_chunk.h
 new file mode 100644
-index 0000000000..06538b36e7
+index 0000000..06538b3
 --- /dev/null
 +++ b/src/ML-PACE/pair_grace_1layer_chunk.h
 @@ -0,0 +1,100 @@
@@ -4025,7 +3624,7 @@ index 0000000000..06538b36e7
 +#endif    //#ifndef NO_GRACE_TF
 diff --git a/src/ML-PACE/pair_grace_2layer_chunk.cpp b/src/ML-PACE/pair_grace_2layer_chunk.cpp
 new file mode 100644
-index 0000000000..3a33d5b075
+index 0000000..3a33d5b
 --- /dev/null
 +++ b/src/ML-PACE/pair_grace_2layer_chunk.cpp
 @@ -0,0 +1,997 @@
@@ -5028,7 +4627,7 @@ index 0000000000..3a33d5b075
 +#endif
 diff --git a/src/ML-PACE/pair_grace_2layer_chunk.h b/src/ML-PACE/pair_grace_2layer_chunk.h
 new file mode 100644
-index 0000000000..1475524644
+index 0000000..1475524
 --- /dev/null
 +++ b/src/ML-PACE/pair_grace_2layer_chunk.h
 @@ -0,0 +1,121 @@
@@ -5155,7 +4754,7 @@ index 0000000000..1475524644
 +#endif    //#ifndef NO_GRACE_TF
 diff --git a/src/ML-PACE/pair_grace_2layer_parallel.cpp b/src/ML-PACE/pair_grace_2layer_parallel.cpp
 new file mode 100644
-index 0000000000..b147668085
+index 0000000..b147668
 --- /dev/null
 +++ b/src/ML-PACE/pair_grace_2layer_parallel.cpp
 @@ -0,0 +1,1156 @@
@@ -6317,7 +5916,7 @@ index 0000000000..b147668085
 +#endif
 diff --git a/src/ML-PACE/pair_grace_2layer_parallel.h b/src/ML-PACE/pair_grace_2layer_parallel.h
 new file mode 100644
-index 0000000000..52b31ad56d
+index 0000000..52b31ad
 --- /dev/null
 +++ b/src/ML-PACE/pair_grace_2layer_parallel.h
 @@ -0,0 +1,122 @@
@@ -6445,7 +6044,7 @@ index 0000000000..52b31ad56d
 +#endif    //#ifndef NO_GRACE_TF
 diff --git a/src/ML-PACE/pair_grace_fs.cpp b/src/ML-PACE/pair_grace_fs.cpp
 new file mode 100644
-index 0000000000..04394da351
+index 0000000..04394da
 --- /dev/null
 +++ b/src/ML-PACE/pair_grace_fs.cpp
 @@ -0,0 +1,485 @@
@@ -6936,7 +6535,7 @@ index 0000000000..04394da351
 +}
 diff --git a/src/ML-PACE/pair_grace_fs.h b/src/ML-PACE/pair_grace_fs.h
 new file mode 100644
-index 0000000000..3fc1ea403c
+index 0000000..3fc1ea4
 --- /dev/null
 +++ b/src/ML-PACE/pair_grace_fs.h
 @@ -0,0 +1,86 @@
@@ -7027,19 +6626,9 @@ index 0000000000..3fc1ea403c
 +#endif
 +#endif
 diff --git a/src/ML-PACE/pair_pace.cpp b/src/ML-PACE/pair_pace.cpp
-index c7b5414ef3..bdacdb39d5 100644
+index 7495010..1f2bb49 100644
 --- a/src/ML-PACE/pair_pace.cpp
 +++ b/src/ML-PACE/pair_pace.cpp
-@@ -31,8 +31,8 @@ Copyright 2021 Yury Lysogorskiy^1, Cas van der Oord^2, Anton Bochkarev^1,
- #include "atom.h"
- #include "comm.h"
- #include "error.h"
--#include "info.h"
- #include "force.h"
-+#include "info.h"
- #include "math_const.h"
- #include "memory.h"
- #include "neigh_list.h"
 @@ -48,6 +48,8 @@ Copyright 2021 Yury Lysogorskiy^1, Cas van der Oord^2, Anton Bochkarev^1,
  #include "ace-evaluator/ace_version.h"
  #include "ace/ace_b_basis.h"
@@ -7071,39 +6660,25 @@ index c7b5414ef3..bdacdb39d5 100644
 -}
 -
  /* ---------------------------------------------------------------------- */
- PairPACE::PairPACE(LAMMPS *lmp) : Pair(lmp)
- {
-@@ -91,6 +76,7 @@ PairPACE::PairPACE(LAMMPS *lmp) : Pair(lmp)
+ PairPACE::PairPACE(LAMMPS *lmp) :
+     Pair(lmp), aceimpl(nullptr), corerep_factor(nullptr), scale(nullptr)
+@@ -92,12 +77,15 @@ PairPACE::PairPACE(LAMMPS *lmp) :
  
    nmax_corerep = 0;
    flag_corerep_factor = 0;
 +  debug_no_energy_only_calc = false;
-   corerep_factor = nullptr;
  
    aceimpl = new ACEImpl;
-@@ -99,6 +85,8 @@ PairPACE::PairPACE(LAMMPS *lmp) : Pair(lmp)
-   scale = nullptr;
+   recursive = false;
  
    chunksize = 4096;
+   neigh_scratch_request = NEIGH_SCRATCH_AUTO;
 +
 +  centroidstressflag = CENTROID_AVAIL;
  }
  
  /* ----------------------------------------------------------------------
-@@ -128,8 +116,10 @@ void PairPACE::compute(int eflag, int vflag)
-   double fij[3];
-   int *ilist, *jlist, *numneigh, **firstneigh;
- 
--  if (copymode) ev_init(eflag, vflag, 0);
--  else ev_init(eflag, vflag, 1);
-+  if (copymode)
-+    ev_init(eflag, vflag, 0);
-+  else
-+    ev_init(eflag, vflag, 1);
- 
-   double **x = atom->x;
-   double **f = atom->f;
-@@ -170,6 +160,10 @@ void PairPACE::compute(int eflag, int vflag)
+@@ -171,6 +159,10 @@ void PairPACE::compute(int eflag, int vflag)
    }
  
    aceimpl->ace->resize_neighbours_cache(max_jnum);
@@ -7114,7 +6689,7 @@ index c7b5414ef3..bdacdb39d5 100644
  
    //loop over atoms
    for (ii = 0; ii < inum; ii++) {
-@@ -191,39 +185,67 @@ void PairPACE::compute(int eflag, int vflag)
+@@ -192,8 +184,10 @@ void PairPACE::compute(int eflag, int vflag)
      // jnum(0) = 50
      // jlist(neigh ind of 0-atom) = [1,2,10,7,99,25, .. 50 element in total]
  
@@ -7126,13 +6701,10 @@ index c7b5414ef3..bdacdb39d5 100644
      } catch (std::exception &e) {
        error->one(FLERR, e.what());
      }
- 
--    if (flag_corerep_factor)
--      corerep_factor[i] = 1 - aceimpl->ace->ace_fcut;
-+    if (flag_corerep_factor) corerep_factor[i] = 1 - aceimpl->ace->ace_fcut;
+@@ -202,28 +196,56 @@ void PairPACE::compute(int eflag, int vflag)
  
      // 'compute_atom' will update the `aceimpl->ace->e_atom` and `aceimpl->ace->neighbours_forces(jj, alpha)` arrays
--
+ 
 -    for (jj = 0; jj < jnum; jj++) {
 -      j = jlist[jj];
 -      j &= NEIGHMASK;
@@ -7208,32 +6780,17 @@ index c7b5414ef3..bdacdb39d5 100644
      }
  
      // tally energy contribution
-@@ -277,6 +299,9 @@ void PairPACE::settings(int narg, char **arg)
+@@ -278,6 +300,9 @@ void PairPACE::settings(int narg, char **arg)
      } else if (strcmp(arg[iarg], "chunksize") == 0) {
        chunksize = utils::inumeric(FLERR, arg[iarg + 1], false, lmp);
        iarg += 2;
 +    } else if (strcmp(arg[iarg], "debug_no_energy_only_calc") == 0) {
 +      debug_no_energy_only_calc = true;
 +      iarg += 1;
-     } else
-       error->all(FLERR, "Unknown pair_style pace keyword: {}", arg[iarg]);
-   }
-@@ -307,12 +332,12 @@ void PairPACE::coeff(int narg, char **arg)
-   delete aceimpl->basis_set;
-   if (comm->me == 0) utils::logmesg(lmp, "Loading {}\n", potential_file_name);
-   // if potential is in ACEBBasisSet (YAML) format, then convert to ACECTildeBasisSet automatically
--  if (utils::strmatch(potential_file_name,".*\\.yaml$")) {
-+  if (utils::strmatch(potential_file_name, ".*\\.yaml$")) {
-     ACEBBasisSet bBasisSet = ACEBBasisSet(potential_file_name);
-     ACECTildeBasisSet cTildeBasisSet = bBasisSet.to_ACECTildeBasisSet();
-     aceimpl->basis_set = new ACECTildeBasisSet(cTildeBasisSet);
-   } else {
--      aceimpl->basis_set = new ACECTildeBasisSet(potential_file_name);
-+    aceimpl->basis_set = new ACECTildeBasisSet(potential_file_name);
-   }
- 
-   if (comm->me == 0) {
-@@ -345,7 +370,7 @@ void PairPACE::coeff(int narg, char **arg)
+     } else if (strcmp(arg[iarg], "neigh") == 0) {
+       // KOKKOS-only: selects the team scratch memory level used to build the
+       // short neighbor list.  Parsed but ignored by this style, so that an
+@@ -360,7 +385,7 @@ void PairPACE::coeff(int narg, char **arg)
        map[i] = -1;
        if (comm->me == 0) utils::logmesg(lmp, "Skipping LAMMPS atom type #{}(NULL)\n", i);
      } else {
@@ -7242,7 +6799,7 @@ index c7b5414ef3..bdacdb39d5 100644
        if (atomic_number == -1) error->all(FLERR, "'{}' is not a valid element\n", elemname);
        SPECIES_TYPE mu = aceimpl->basis_set->get_species_index_by_name(elemname);
        if (mu != -1) {
-@@ -403,7 +428,6 @@ double PairPACE::init_one(int i, int j)
+@@ -418,7 +443,6 @@ double PairPACE::init_one(int i, int j)
  void *PairPACE::extract(const char *str, int &dim)
  {
    dim = 0;
@@ -7251,10 +6808,10 @@ index c7b5414ef3..bdacdb39d5 100644
  
    dim = 2;
 diff --git a/src/ML-PACE/pair_pace.h b/src/ML-PACE/pair_pace.h
-index a972e857d2..a32ccac9eb 100644
+index d4c4c00..9cfcedb 100644
 --- a/src/ML-PACE/pair_pace.h
 +++ b/src/ML-PACE/pair_pace.h
-@@ -56,7 +56,8 @@ class PairPACE : public Pair {
+@@ -57,7 +57,8 @@ class PairPACE : public Pair {
  
    virtual void allocate();
    double *corerep_factor;    //per-atom core-rep factor (= 1 - fcut)
@@ -7265,7 +6822,7 @@ index a972e857d2..a32ccac9eb 100644
    double **scale;
    bool recursive;    // "recursive" option for ACERecursiveEvaluator
 diff --git a/src/ML-PACE/pair_pace_extrapolation.cpp b/src/ML-PACE/pair_pace_extrapolation.cpp
-index d32a84988e..23859935b8 100644
+index 05cbaef..8c9ffcf 100644
 --- a/src/ML-PACE/pair_pace_extrapolation.cpp
 +++ b/src/ML-PACE/pair_pace_extrapolation.cpp
 @@ -42,6 +42,8 @@ Copyright 2022 Yury Lysogorskiy^1, Anton Bochkarev^1, Matous Mrovec^1, Ralf Drau
@@ -7421,9 +6978,9 @@ index d32a84988e..23859935b8 100644
    // end modifications YL
  }
  
-@@ -313,6 +344,9 @@ void PairPACEExtrapolation::settings(int narg, char **arg)
-     if (strcmp(arg[iarg], "chunksize") == 0) {
-       chunksize = utils::inumeric(FLERR, arg[iarg + 1], false, lmp);
+@@ -328,6 +359,9 @@ void PairPACEExtrapolation::settings(int narg, char **arg)
+       else
+         error->all(FLERR, "Unknown pair_style pace/extrapolation neigh keyword: {}", arg[iarg+1]);
        iarg += 2;
 +    } else if (strcmp(arg[iarg], "debug_no_energy_only_calc") == 0) {
 +      debug_no_energy_only_calc = true;
@@ -7431,7 +6988,7 @@ index d32a84988e..23859935b8 100644
      } else
        error->all(FLERR, "Unknown pair_style pace keyword: {}", arg[iarg]);
    }
-@@ -388,7 +422,7 @@ void PairPACEExtrapolation::coeff(int narg, char **arg)
+@@ -403,7 +437,7 @@ void PairPACEExtrapolation::coeff(int narg, char **arg)
        if (comm->me == 0) utils::logmesg(lmp, "Skipping LAMMPS atom type #{}(NULL)\n", i);
      } else {
        // dump species types for reconstruction of atomic configurations
@@ -7440,7 +6997,7 @@ index d32a84988e..23859935b8 100644
        if (atomic_number == -1) error->all(FLERR, "'{}' is not a valid element\n", elemname);
        SPECIES_TYPE mu = aceimpl->basis_set->get_species_index_by_name(elemname);
        if (mu != -1) {
-@@ -458,11 +492,12 @@ double PairPACEExtrapolation::init_one(int i, int j)
+@@ -473,11 +507,12 @@ double PairPACEExtrapolation::init_one(int i, int j)
  void *PairPACEExtrapolation::extract(const char *str, int &dim)
  {
    dim = 0;
@@ -7456,7 +7013,7 @@ index d32a84988e..23859935b8 100644
    if (strcmp(str, "scale") == 0) return (void *) scale;
    return nullptr;
 diff --git a/src/ML-PACE/pair_pace_extrapolation.h b/src/ML-PACE/pair_pace_extrapolation.h
-index e01fdd2329..8e22f7cbfd 100644
+index 7d965f1..6352d18 100644
 --- a/src/ML-PACE/pair_pace_extrapolation.h
 +++ b/src/ML-PACE/pair_pace_extrapolation.h
 @@ -55,6 +55,7 @@ class PairPACEExtrapolation : public Pair {
@@ -7469,7 +7026,7 @@ index e01fdd2329..8e22f7cbfd 100644
  
 diff --git a/src/ML-PACE/utils_grace.cpp b/src/ML-PACE/utils_grace.cpp
 new file mode 100644
-index 0000000000..f6099bd9c0
+index 0000000..f6099bd
 --- /dev/null
 +++ b/src/ML-PACE/utils_grace.cpp
 @@ -0,0 +1,237 @@
@@ -7712,7 +7269,7 @@ index 0000000000..f6099bd9c0
 +#endif
 diff --git a/src/ML-PACE/utils_grace.h b/src/ML-PACE/utils_grace.h
 new file mode 100644
-index 0000000000..d658af26a6
+index 0000000..d658af2
 --- /dev/null
 +++ b/src/ML-PACE/utils_grace.h
 @@ -0,0 +1,246 @@
@@ -7965,7 +7522,7 @@ index 0000000000..d658af26a6
 \ No newline at end of file
 diff --git a/src/ML-PACE/utils_pace.h b/src/ML-PACE/utils_pace.h
 new file mode 100644
-index 0000000000..8b34e5249c
+index 0000000..8b34e52
 --- /dev/null
 +++ b/src/ML-PACE/utils_pace.h
 @@ -0,0 +1,103 @@
@@ -8072,360 +7629,3 @@ index 0000000000..8b34e5249c
 +}
 +
 +#endif //LAMMPS_PACE_UTILS_H
-diff --git a/src/angle.cpp b/src/angle.cpp
-index 168b8fe806..97aa4e3682 100644
---- a/src/angle.cpp
-+++ b/src/angle.cpp
-@@ -100,6 +100,7 @@ void Angle::settings(int narg, char **args)
-      eflag_global != 0 if ENERGY_GLOBAL bit of eflag set
-      eflag_atom   != 0 if ENERGY_ATOM bit of eflag set
-      eflag_either != 0 if eflag_global or eflag_atom is set
-+     eflag_only   != 0 if ENERGY_GLOBAL and ENERGY_ONLY bits of eflag are set
-      vflag_global != 0 if VIRIAL_PAIR or VIRIAL_FDOTR bit of vflag set
-      vflag_atom   != 0 if VIRIAL_ATOM bit of vflag set
-      vflag_atom   != 0 if VIRIAL_CENTROID bit of vflag set
-@@ -115,9 +116,10 @@ void Angle::ev_setup(int eflag, int vflag, int alloc)
- 
-   evflag = 1;
- 
--  eflag_either = eflag;
-+  eflag_either = eflag & (ENERGY_GLOBAL | ENERGY_ATOM);
-   eflag_global = eflag & ENERGY_GLOBAL;
-   eflag_atom = eflag & ENERGY_ATOM;
-+  eflag_only = eflag_global ? (eflag & ENERGY_ONLY) : 0;
- 
-   vflag_global = vflag & (VIRIAL_PAIR | VIRIAL_FDOTR);
-   vflag_atom = vflag & VIRIAL_ATOM;
-diff --git a/src/angle.h b/src/angle.h
-index 58ca188df5..239ed86dd7 100644
---- a/src/angle.h
-+++ b/src/angle.h
-@@ -74,7 +74,7 @@ class Angle : protected Pointers {
-   int suffix_flag;    // suffix compatibility flag
- 
-   int evflag;
--  int eflag_either, eflag_global, eflag_atom;
-+  int eflag_either, eflag_global, eflag_atom, eflag_only;
-   int vflag_either, vflag_global, vflag_atom, cvflag_atom;
-   int maxeatom, maxvatom, maxcvatom;
- 
-@@ -83,8 +83,8 @@ class Angle : protected Pointers {
-     if (eflag || vflag)
-       ev_setup(eflag, vflag, alloc);
-     else
--      evflag = eflag_either = eflag_global = eflag_atom = vflag_either = vflag_global = vflag_atom =
--          cvflag_atom = 0;
-+      evflag = eflag_either = eflag_global = eflag_atom = eflag_only = vflag_either = vflag_global =
-+          vflag_atom = cvflag_atom = 0;
-   }
-   void ev_setup(int, int, int alloc = 1);
-   void ev_tally(int, int, int, int, int, double, double *, double *, double, double, double, double,
-diff --git a/src/bond.cpp b/src/bond.cpp
-index 802ac2b6c1..d773a8872b 100644
---- a/src/bond.cpp
-+++ b/src/bond.cpp
-@@ -108,6 +108,7 @@ void Bond::settings(int narg, char **args)
-      eflag_global != 0 if ENERGY_GLOBAL bit of eflag set
-      eflag_atom   != 0 if ENERGY_ATOM bit of eflag set
-      eflag_either != 0 if eflag_global or eflag_atom is set
-+     eflag_only   != 0 if ENERGY_GLOBAL and ENERGY_ONLY bits of eflag are set
-      vflag_global != 0 if VIRIAL_PAIR or VIRIAL_FDOTR bit of vflag set
-      vflag_atom   != 0 if VIRIAL_ATOM or VIRIAL_CENTROID bit of vflag set
-                        two-body and centroid stress are identical for bonds
-@@ -120,9 +121,10 @@ void Bond::ev_setup(int eflag, int vflag, int alloc)
- 
-   evflag = 1;
- 
--  eflag_either = eflag;
-+  eflag_either = eflag & (ENERGY_GLOBAL | ENERGY_ATOM);
-   eflag_global = eflag & ENERGY_GLOBAL;
-   eflag_atom = eflag & ENERGY_ATOM;
-+  eflag_only = eflag_global ? (eflag & ENERGY_ONLY) : 0;
- 
-   vflag_either = vflag;
-   vflag_global = vflag & (VIRIAL_PAIR | VIRIAL_FDOTR);
-diff --git a/src/bond.h b/src/bond.h
-index 3b1740b2d4..288be646e1 100644
---- a/src/bond.h
-+++ b/src/bond.h
-@@ -88,7 +88,7 @@ class Bond : protected Pointers {
-   int suffix_flag;    // suffix compatibility flag
- 
-   int evflag;
--  int eflag_either, eflag_global, eflag_atom;
-+  int eflag_either, eflag_global, eflag_atom, eflag_only;
-   int vflag_either, vflag_global, vflag_atom;
-   int maxeatom, maxvatom;
- 
-@@ -97,8 +97,8 @@ class Bond : protected Pointers {
-     if (eflag || vflag)
-       ev_setup(eflag, vflag, alloc);
-     else
--      evflag = eflag_either = eflag_global = eflag_atom = vflag_either = vflag_global = vflag_atom =
--          0;
-+      evflag = eflag_either = eflag_global = eflag_atom = eflag_only = vflag_either = vflag_global =
-+          vflag_atom = 0;
-   }
-   void ev_setup(int, int, int alloc = 1);
-   void ev_tally(int, int, int, int, double, double, double, double, double);
-diff --git a/src/dihedral.cpp b/src/dihedral.cpp
-index 7be96c8c5d..c0a7dfb7b4 100644
---- a/src/dihedral.cpp
-+++ b/src/dihedral.cpp
-@@ -99,6 +99,7 @@ void Dihedral::settings(int narg, char **args)
-      eflag_global != 0 if ENERGY_GLOBAL bit of eflag set
-      eflag_atom   != 0 if ENERGY_ATOM bit of eflag set
-      eflag_either != 0 if eflag_global or eflag_atom is set
-+     eflag_only   != 0 if ENERGY_GLOBAL and ENERGY_ONLY bits of eflag are set
-      vflag_global != 0 if VIRIAL_PAIR or VIRIAL_FDOTR bit of vflag set
-      vflag_atom   != 0 if VIRIAL_ATOM bit of vflag set
-      vflag_atom   != 0 if VIRIAL_CENTROID bit of vflag set
-@@ -114,9 +115,10 @@ void Dihedral::ev_setup(int eflag, int vflag, int alloc)
- 
-   evflag = 1;
- 
--  eflag_either = eflag;
-+  eflag_either = eflag & (ENERGY_GLOBAL | ENERGY_ATOM);
-   eflag_global = eflag & ENERGY_GLOBAL;
-   eflag_atom = eflag & ENERGY_ATOM;
-+  eflag_only = eflag_global ? (eflag & ENERGY_ONLY) : 0;
- 
-   vflag_global = vflag & (VIRIAL_PAIR | VIRIAL_FDOTR);
-   vflag_atom = vflag & VIRIAL_ATOM;
-diff --git a/src/dihedral.h b/src/dihedral.h
-index 7ca3379e44..257a84289f 100644
---- a/src/dihedral.h
-+++ b/src/dihedral.h
-@@ -72,7 +72,7 @@ class Dihedral : protected Pointers {
-   int suffix_flag;    // suffix compatibility flag
- 
-   int evflag;
--  int eflag_either, eflag_global, eflag_atom;
-+  int eflag_either, eflag_global, eflag_atom, eflag_only;
-   int vflag_either, vflag_global, vflag_atom, cvflag_atom;
-   int maxeatom, maxvatom, maxcvatom;
- 
-@@ -81,8 +81,8 @@ class Dihedral : protected Pointers {
-     if (eflag || vflag)
-       ev_setup(eflag, vflag, alloc);
-     else
--      evflag = eflag_either = eflag_global = eflag_atom = vflag_either = vflag_global = vflag_atom =
--          cvflag_atom = 0;
-+      evflag = eflag_either = eflag_global = eflag_atom = eflag_only = vflag_either = vflag_global =
-+          vflag_atom = cvflag_atom = 0;
-   }
-   void ev_setup(int, int, int alloc = 1);
-   void ev_tally(int, int, int, int, int, int, double, double *, double *, double *, double, double,
-diff --git a/src/fix.cpp b/src/fix.cpp
-index 593edb5671..0868ca7c23 100644
---- a/src/fix.cpp
-+++ b/src/fix.cpp
-@@ -197,6 +197,9 @@ void Fix::set_molecule(int, tagint, int, double *, double *, double *)
-    if thermo_energy is not set, energy tallying is disabled
-    if thermo_virial is not set, virial tallying is disabled
-    global energy is tallied separately, output by compute_scalar() method
-+   ENERGY_ONLY flag should only be set manually and may be ignored
-+   it is meant to be used for cases where computation of only the
-+   energy is *much* faster.
- ------------------------------------------------------------------------- */
- 
- void Fix::ev_setup(int eflag, int vflag)
-@@ -205,11 +208,12 @@ void Fix::ev_setup(int eflag, int vflag)
- 
-   evflag = 1;
- 
--  if (!thermo_energy) eflag_either = eflag_global = eflag_atom = 0;
-+  if (!thermo_energy) eflag_either = eflag_global = eflag_atom = eflag_only = 0;
-   else {
--    eflag_either = eflag;
-+    eflag_either = eflag & (ENERGY_GLOBAL | ENERGY_ATOM);
-     eflag_global = eflag & ENERGY_GLOBAL;
-     eflag_atom = eflag & ENERGY_ATOM;
-+    eflag_only = eflag_global ? (eflag & ENERGY_ONLY) : 0;
-   }
- 
-   if (!thermo_virial) vflag_either = vflag_global = vflag_atom = 0;
-diff --git a/src/fix.h b/src/fix.h
-index ebf5224171..a04087bd44 100644
---- a/src/fix.h
-+++ b/src/fix.h
-@@ -270,7 +270,7 @@ class Fix : protected Pointers {
-   int instance_me;    // which Fix class instantiation I am
- 
-   int evflag;
--  int eflag_either, eflag_global, eflag_atom;
-+  int eflag_either, eflag_global, eflag_atom, eflag_only;
-   int vflag_either, vflag_global, vflag_atom, cvflag_atom;
-   int maxeatom, maxvatom, maxcvatom;
- 
-@@ -284,8 +284,8 @@ class Fix : protected Pointers {
-     if ((eflag && thermo_energy) || (vflag && thermo_virial))
-       ev_setup(eflag, vflag);
-     else
--      evflag = eflag_either = eflag_global = eflag_atom = vflag_either = vflag_global = vflag_atom =
--          cvflag_atom = 0;
-+      evflag = eflag_either = eflag_global = eflag_atom = eflag_only = vflag_either = vflag_global =
-+          vflag_atom = cvflag_atom = 0;
-   }
-   void ev_setup(int, int);
-   void ev_tally(int, int *, double, double, double *);
-diff --git a/src/force.h b/src/force.h
-index 09d2dca98f..5f2b1e39d1 100644
---- a/src/force.h
-+++ b/src/force.h
-@@ -26,9 +26,14 @@ class Improper;
- class KSpace;
- class Pair;
- 
--enum { ENERGY_NONE = 0x00, ENERGY_GLOBAL = 0x01, ENERGY_ATOM = 0x02 };
--
- // clang-format off
-+enum {
-+  ENERGY_NONE   = 0x00,
-+  ENERGY_GLOBAL = 0x01,
-+  ENERGY_ATOM   = 0x02,
-+  ENERGY_ONLY   = 0x04
-+};
-+
- enum {
-   VIRIAL_NONE     = 0x00,
-   VIRIAL_PAIR     = 0x01,
-diff --git a/src/improper.cpp b/src/improper.cpp
-index ab1d91df85..26790f84dd 100644
---- a/src/improper.cpp
-+++ b/src/improper.cpp
-@@ -99,6 +99,7 @@ void Improper::settings(int narg, char **args)
-      eflag_global != 0 if ENERGY_GLOBAL bit of eflag set
-      eflag_atom   != 0 if ENERGY_ATOM bit of eflag set
-      eflag_either != 0 if eflag_global or eflag_atom is set
-+     eflag_only   != 0 if ENERGY_GLOBAL and ENERGY_ONLY bits of eflag are set
-      vflag_global != 0 if VIRIAL_PAIR or VIRIAL_FDOTR bit of vflag set
-      vflag_atom   != 0 if VIRIAL_ATOM bit of vflag set
-      vflag_atom   != 0 if VIRIAL_CENTROID bit of vflag set
-@@ -114,9 +115,10 @@ void Improper::ev_setup(int eflag, int vflag, int alloc)
- 
-   evflag = 1;
- 
--  eflag_either = eflag;
-+  eflag_either = eflag & (ENERGY_GLOBAL | ENERGY_ATOM);
-   eflag_global = eflag & ENERGY_GLOBAL;
-   eflag_atom = eflag & ENERGY_ATOM;
-+  eflag_only = eflag_global ? (eflag & ENERGY_ONLY) : 0;
- 
-   vflag_global = vflag & (VIRIAL_PAIR | VIRIAL_FDOTR);
-   vflag_atom = vflag & VIRIAL_ATOM;
-diff --git a/src/improper.h b/src/improper.h
-index 0f539bdece..bbda6fec5c 100644
---- a/src/improper.h
-+++ b/src/improper.h
-@@ -77,7 +77,7 @@ class Improper : protected Pointers {
-   int suffix_flag;    // suffix compatibility flag
- 
-   int evflag;
--  int eflag_either, eflag_global, eflag_atom;
-+  int eflag_either, eflag_global, eflag_atom, eflag_only;
-   int vflag_either, vflag_global, vflag_atom, cvflag_atom;
-   int maxeatom, maxvatom, maxcvatom;
- 
-@@ -86,8 +86,8 @@ class Improper : protected Pointers {
-     if (eflag || vflag)
-       ev_setup(eflag, vflag, alloc);
-     else
--      evflag = eflag_either = eflag_global = eflag_atom = vflag_either = vflag_global = vflag_atom =
--          cvflag_atom = 0;
-+      evflag = eflag_either = eflag_global = eflag_atom = eflag_only = vflag_either = vflag_global =
-+          vflag_atom = cvflag_atom = 0;
-   }
-   void ev_setup(int, int, int alloc = 1);
-   void ev_tally(int, int, int, int, int, int, double, double *, double *, double *, double, double,
-diff --git a/src/kspace.cpp b/src/kspace.cpp
-index f27c8a83d2..5da93c15b4 100644
---- a/src/kspace.cpp
-+++ b/src/kspace.cpp
-@@ -227,6 +227,7 @@ void KSpace::pair_check()
-      eflag_global != 0 if ENERGY_GLOBAL bit of eflag set
-      eflag_atom   != 0 if ENERGY_ATOM bit of eflag set
-      eflag_either != 0 if eflag_global or eflag_atom is set
-+     eflag_only   != 0 if ENERGY_GLOBAL and ENERGY_ONLY bits of eflag are set
-      vflag_global != 0 if VIRIAL_PAIR or VIRIAL_FDOTR bit of vflag set
-      vflag_atom   != 0 if VIRIAL_ATOM bit of vflag set
-                        no current support for centroid stress
-@@ -240,9 +241,10 @@ void KSpace::ev_setup(int eflag, int vflag, int alloc)
- 
-   evflag = 1;
- 
--  eflag_either = eflag;
-+  eflag_either = eflag & (ENERGY_GLOBAL | ENERGY_ATOM);
-   eflag_global = eflag & ENERGY_GLOBAL;
-   eflag_atom = eflag & ENERGY_ATOM;
-+  eflag_only = eflag_global ? (eflag & ENERGY_ONLY) : 0;
- 
-   vflag_either = vflag;
-   vflag_global = vflag & (VIRIAL_PAIR | VIRIAL_FDOTR);
-diff --git a/src/kspace.h b/src/kspace.h
-index 0a3db05ee7..3d4f80e9b4 100644
---- a/src/kspace.h
-+++ b/src/kspace.h
-@@ -231,7 +231,7 @@ class KSpace : protected Pointers {
-   double **gcons, **dgcons;    // accumulated per-atom energy/virial
- 
-   int evflag, evflag_atom;
--  int eflag_either, eflag_global, eflag_atom;
-+  int eflag_either, eflag_global, eflag_atom, eflag_only;
-   int vflag_either, vflag_global, vflag_atom;
-   int maxeatom, maxvatom;
- 
-@@ -244,7 +244,7 @@ class KSpace : protected Pointers {
-     if (eflag || vflag)
-       ev_setup(eflag, vflag, alloc);
-     else
--      evflag = evflag_atom = eflag_either = eflag_global = eflag_atom = vflag_either =
-+      evflag = evflag_atom = eflag_either = eflag_global = eflag_atom = eflag_only = vflag_either =
-           vflag_global = vflag_atom = 0;
-   }
-   void ev_setup(int, int, int alloc = 1);
-diff --git a/src/pair.cpp b/src/pair.cpp
-index f511dd90d5..44aa782b8b 100644
---- a/src/pair.cpp
-+++ b/src/pair.cpp
-@@ -892,6 +892,7 @@ void Pair::map_element2type(int narg, char **arg, bool update_setflag)
-      eflag_global != 0 if ENERGY_GLOBAL bit of eflag set
-      eflag_atom   != 0 if ENERGY_ATOM bit of eflag set
-      eflag_either != 0 if eflag_global or eflag_atom is set
-+     eflag_only   != 0 if ENERGY_GLOBAL and ENERGY_ONLY bits of eflag are set
-      vflag_global != 0 if VIRIAL_PAIR bit of vflag set, OR
-                        if VIRIAL_FDOTR bit of vflag is set but no_virial_fdotr = 1
-      vflag_fdotr  != 0 if VIRIAL_FDOTR bit of vflag set and no_virial_fdotr = 0
-@@ -912,9 +913,10 @@ void Pair::ev_setup(int eflag, int vflag, int alloc)
- {
-   int i,n;
- 
--  eflag_either = eflag;
-+  eflag_either = eflag & (ENERGY_GLOBAL | ENERGY_ATOM);
-   eflag_global = eflag & ENERGY_GLOBAL;
-   eflag_atom = eflag & ENERGY_ATOM;
-+  eflag_only = eflag_global ? (eflag & ENERGY_ONLY) : 0;
- 
-   vflag_global = vflag & VIRIAL_PAIR;
-   if (vflag & VIRIAL_FDOTR && no_virial_fdotr_compute == 1) vflag_global = 1;
-@@ -1014,6 +1016,7 @@ void Pair::ev_unset()
-   eflag_either = 0;
-   eflag_global = 0;
-   eflag_atom = 0;
-+  eflag_only = 0;
- 
-   vflag_either = 0;
-   vflag_global = 0;
-diff --git a/src/pair.h b/src/pair.h
-index 5ec5674eb2..25b6f4afaf 100644
---- a/src/pair.h
-+++ b/src/pair.h
-@@ -88,7 +88,7 @@ class Pair : protected Pointers {
-   int trim_flag;    // pair_modify flag for trimming neigh list
- 
-   int evflag;    // energy,virial settings
--  int eflag_either, eflag_global, eflag_atom;
-+  int eflag_either, eflag_global, eflag_atom, eflag_only;
-   int vflag_either, vflag_global, vflag_atom, cvflag_atom;
- 
-   int ncoultablebits;    // size of Coulomb table, accessed by KSpace
