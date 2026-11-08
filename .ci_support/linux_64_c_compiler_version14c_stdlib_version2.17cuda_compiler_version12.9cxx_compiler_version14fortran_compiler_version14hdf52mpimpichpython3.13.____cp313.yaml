@@ -1,3 +1,5 @@
+DOCKER_PLATFORM:
+- linux/amd64
 c_compiler:
 - gcc
 c_compiler_version:
@@ -41,7 +43,7 @@ liblapack:
 libnetcdf:
 - 4.10.1
 libpnetcdf:
-- 1.15.0
+- 1.15.1
 libpng:
 - '1.6'
 mpi:
