@@ -212,6 +212,174 @@ Current build status
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lammps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_hdf52mpiopenmpipython3.14.____cp314" alt="variant">
                 </a>
               </td>
+            </tr><tr>
+              <td>osx_arm64_hdf51.14.6mpimpichpython3.11.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4708&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lammps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf51.14.6mpimpichpython3.11.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_hdf51.14.6mpimpichpython3.12.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4708&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lammps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf51.14.6mpimpichpython3.12.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_hdf51.14.6mpimpichpython3.13.____cp313</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4708&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lammps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf51.14.6mpimpichpython3.13.____cp313" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_hdf51.14.6mpimpichpython3.14.____cp314</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4708&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lammps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf51.14.6mpimpichpython3.14.____cp314" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_hdf51.14.6mpinompipython3.11.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4708&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lammps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf51.14.6mpinompipython3.11.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_hdf51.14.6mpinompipython3.12.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4708&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lammps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf51.14.6mpinompipython3.12.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_hdf51.14.6mpinompipython3.13.____cp313</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4708&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lammps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf51.14.6mpinompipython3.13.____cp313" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_hdf51.14.6mpinompipython3.14.____cp314</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4708&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lammps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf51.14.6mpinompipython3.14.____cp314" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_hdf51.14.6mpiopenmpipython3.11.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4708&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lammps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf51.14.6mpiopenmpipython3.11.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_hdf51.14.6mpiopenmpipython3.12.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4708&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lammps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf51.14.6mpiopenmpipython3.12.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_hdf51.14.6mpiopenmpipython3.13.____cp313</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4708&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lammps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf51.14.6mpiopenmpipython3.13.____cp313" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_hdf51.14.6mpiopenmpipython3.14.____cp314</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4708&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lammps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf51.14.6mpiopenmpipython3.14.____cp314" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_hdf52mpimpichpython3.11.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4708&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lammps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf52mpimpichpython3.11.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_hdf52mpimpichpython3.12.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4708&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lammps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf52mpimpichpython3.12.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_hdf52mpimpichpython3.13.____cp313</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4708&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lammps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf52mpimpichpython3.13.____cp313" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_hdf52mpimpichpython3.14.____cp314</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4708&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lammps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf52mpimpichpython3.14.____cp314" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_hdf52mpinompipython3.11.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4708&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lammps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf52mpinompipython3.11.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_hdf52mpinompipython3.12.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4708&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lammps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf52mpinompipython3.12.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_hdf52mpinompipython3.13.____cp313</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4708&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lammps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf52mpinompipython3.13.____cp313" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_hdf52mpinompipython3.14.____cp314</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4708&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lammps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf52mpinompipython3.14.____cp314" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_hdf52mpiopenmpipython3.11.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4708&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lammps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf52mpiopenmpipython3.11.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_hdf52mpiopenmpipython3.12.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4708&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lammps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf52mpiopenmpipython3.12.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_hdf52mpiopenmpipython3.13.____cp313</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4708&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lammps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf52mpiopenmpipython3.13.____cp313" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_hdf52mpiopenmpipython3.14.____cp314</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4708&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/lammps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_hdf52mpiopenmpipython3.14.____cp314" alt="variant">
+                </a>
+              </td>
             </tr>
           </tbody>
         </table>
